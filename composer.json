@@ -1,0 +1,20 @@
+{
+    "name": "evondu/yii2-vue-adminlte",
+	"description": "Yii2中使用AdminLte并进行vue组件化",
+    "authors": [
+        {
+            "name": "EvonDu",
+            "email": "298550274@qq.com"
+        }
+    ],
+    "require": {
+		"yiisoft/yii2": "*"
+	},
+	"autoload": {
+		"psr-4": {
+			"vuelte\\": "src"
+		}
+	},
+	"license": "MIT",
+	"minimum-stability": "dev"
+}
