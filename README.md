@@ -69,7 +69,9 @@ return [
             "content"=>"后端开发",
             "url"=>"#",
         ]
-    ]
+    ],
+    //配置页脚
+    'footer' => '<strong>Copyright &copy; 2017-2018 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights reserved.',
 ];
 ?>
 ```

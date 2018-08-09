@@ -53,7 +53,7 @@ if(file_exists($config_path)){
         <div class="content"><?= $content ?></div>
     </div>
     <div id="app-footer">
-        <lte-footer><strong>Copyright &copy; 2017-2018 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights reserved.</lte-footer>
+        <lte-footer><?= isset($config['footer']) ? $config['footer'] : '<strong>Copyright &copy; 2017-2018 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights reserved.'?></lte-footer>
         <lte-sidebar-setting></lte-sidebar-setting>
     </div>
 </div>
@@ -82,7 +82,7 @@ if(file_exists($config_path)){
                     notifications: <?= isset($config['notifications']) ? json_encode($config['notifications']) : '[]'?>,
                     tasks: <?= isset($config['tasks']) ? json_encode($config['tasks']) : '[]'?>,
                 },
-                nav: <?= isset($config['nav']) ? json_encode($config['nav']) : '[]'?>
+                nav: <?= isset($config['nav']) ? json_encode($config['nav']) : '[]'?>,
             }
         }
     });
