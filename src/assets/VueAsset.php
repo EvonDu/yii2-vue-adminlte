@@ -14,8 +14,9 @@ class VueAsset extends AssetBundle
     public $css = [];
     public $js = [
         //'https://unpkg.com/vue/dist/vue.js',
-        'vue.js',
-        'https://unpkg.com/vuex@3.0.1/dist/vuex.js',
+        //'https://unpkg.com/vuex@3.0.1/dist/vuex.js',
+        'vue.min.js',
+        'vuex.js',
     ];
     public $jsOptions = [
         'position' => \yii\web\View::POS_HEAD

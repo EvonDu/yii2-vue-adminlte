@@ -11,7 +11,7 @@ Vue.component('lte-sidebar', {
                 }
             }
         },
-        'nodes':{
+        'nav':{
             type: Array,
             default: function(){
                 return [
@@ -45,7 +45,7 @@ Vue.component('lte-sidebar', {
         return {};
     },
     created:function(){
-        set_active(this.nodes);
+        set_active(this.nav);
         function set_active(nodes){
             for(var key in nodes){
                 var node = nodes[key];
@@ -103,7 +103,7 @@ Vue.component('lte-sidebar', {
                 </div>
             </form>
             <ul class="sidebar-menu" data-widget="tree">
-                <template v-for="item in nodes">
+                <template v-for="item in nav">
                     <li v-if="item.header" class="header">{{item.title}}</li>
                     <li v-else :class="[item.active?'active':'',item.nodes?'treeview':'']">
                         <a href="item.nodes?'#':item.url">

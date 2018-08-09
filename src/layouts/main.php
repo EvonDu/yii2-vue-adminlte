@@ -17,6 +17,14 @@ use vuelte\assets\AdminLteComponentsAsset;
 AppAsset::register($this);
 ElementAsset::register($this);
 AdminLteComponentsAsset::register($this);
+
+//读取配置信息
+$config = [];
+$config_path = Yii::getAlias("@app/config/adminlte.php");
+if(file_exists($config_path)){
+    $config = include($config_path);
+    $config = is_array($config) ? $config : [];
+}
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -34,9 +42,9 @@ AdminLteComponentsAsset::register($this);
 
 <div class="wrapper">
     <div id="app-header">
-        <lte-header title="YII-Admin2" :messages="header.messages" :notifications="header.notifications" :tasks="header.tasks" :user="user"
+        <lte-header :title="title" :messages="header.messages" :notifications="header.notifications" :tasks="header.tasks" :user="user"
                     :url-home="urlHome" :url-signout="urlSignOut"></lte-header>
-        <lte-sidebar :nodes="nodes" :user="user"></lte-sidebar>
+        <lte-sidebar :nav="nav" :user="user"></lte-sidebar>
     </div>
     <div class="content-wrapper">
         <div id="content-header">
@@ -60,34 +68,21 @@ AdminLteComponentsAsset::register($this);
         store:store,
         data: function() {
             return {
+                title:"<?= isset($config['productName']) ? $config['productName'] : 'Yii AdminLet'?>",
                 urlHome:"<?=Url::home()?>",
                 urlSignOut:"<?=Url::to(["site/logout"])?>",
                 user:{
-                    'name': "User",
-                    'image': "https://adminlte.io/themes/AdminLTE/dist/img/user8-128x128.jpg",
-                    'job': "Developer",
-                    'abstract':'Member since Nov. 2012'
+                    'name': "<?= isset($config['user']['name']) ? $config['user']['name'] : 'Admin'?>",
+                    'image': "<?= isset($config['user']['image']) ? $config['user']['image'] : 'https://adminlte.io/themes/AdminLTE/dist/img/user8-128x128.jpg'?>",
+                    'job': "<?= isset($config['user']['job']) ? $config['user']['job'] : 'Developer'?>",
+                    'abstract': "<?= isset($config['user']['abstract']) ? $config['user']['abstract'] : 'Member since Nov. 2012'?>"
                 },
                 header:{
-                    messages:[],
-                    notifications:[],
-                    tasks:[{"progress":"68","content":"后端开发","url":"#"}]
+                    messages: <?= isset($config['messages']) ? json_encode($config['messages']) : '[]'?>,
+                    notifications: <?= isset($config['notifications']) ? json_encode($config['notifications']) : '[]'?>,
+                    tasks: <?= isset($config['tasks']) ? json_encode($config['tasks']) : '[]'?>,
                 },
-                nodes:[
-                    { "title": "Gii", "header": true },
-                    {
-                        "url": "#",
-                        "title": "Yii Code Generator",
-                        "icon": "fa fa-dashboard",
-                        "active": true,
-                        "tags": [{"content": "Yii", "class": "bg-green"}],
-                        "nodes": [
-                            {"title": "Model Generator", "url": "<?=Url::to(["/gii/default/view","id"=>"model"])?>"},
-                            {"title": "CRUD Generator", "url": "<?=Url::to(["/gii/default/view","id"=>"crud"])?>"},
-                            {"title": "Module Generator", "url": "<?=Url::to(["/gii/default/view","id"=>"module"])?>"},
-                        ]
-                    }
-                ]
+                nav: <?= isset($config['nav']) ? json_encode($config['nav']) : '[]'?>
             }
         }
     });
