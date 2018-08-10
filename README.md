@@ -9,7 +9,7 @@
 ## 配置方法
 #### 配置布局
 * 配置文件：backend/config/main.php
-* `'layout' => vuelte\Assets::layout('lte')`
+* `'layout' => vuelte\Assets::layout('main')`
 
 #### 配置布局信息
 * 新建配置文件：backend/config/adminlte.php
