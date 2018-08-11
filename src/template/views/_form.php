@@ -28,16 +28,19 @@ vuelte\assets\PluginComponentsAsset::register($this);
 
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form">
 
-    <?= "<?php " ?>$form = ActiveElementForm::begin(); ?>
+    <?= "<?php " ?>$form = ActiveElementForm::begin(["options"=>[
+        "label-width" => "100px",
+        "status-icon" => true,
+    ]]); ?>
 
 <?php foreach ($generator->getColumnNames() as $attribute) {
     if (in_array($attribute, $safeAttributes)) {
         echo "    <?= " . generateVueActiveField($attribute, $generator) . " ?>\n\n";
     }
 } ?>
-    <div class="form-group">
-        <?= "<?= " ?>Html::tag("lte-btn","<i class='glyphicon glyphicon-floppy-disk'></i> 保存",["type" => "success", "submit" => true]) ?>
-    </div>
+    <el-form-item>
+        <?= "<?= " ?>Html::tag("lte-btn","<i class='glyphicon glyphicon-floppy-disk'></i> 保存",["type" => "success", "@click" => "submit"]) ?>
+    </el-form-item>
 
     <?= "<?php " ?>ActiveElementForm::end(); ?>
 
@@ -55,11 +58,11 @@ vuelte\assets\PluginComponentsAsset::register($this);
         }
         $column = $tableSchema->columns[$attribute];
         if ($column->phpType === 'boolean') {
-            return "\$form->field(\$model, '$attribute')->el_switch('data.$attribute')";
+            return "\$form->field(\$model, '$attribute')->el_switch(['v-model' => 'data.$attribute'])";
         }
 
         if ($column->type === 'text') {
-            return "\$form->field(\$model, '$attribute')->el_textarea('data.$attribute', ['rows' => 6])";
+            return "\$form->field(\$model, '$attribute')->el_textarea(['v-model' => 'data.$attribute', 'rows' => 6])";
         }
 
         if (preg_match('/^(password|pass|passwd|passcode)$/i', $column->name)) {
@@ -73,14 +76,14 @@ vuelte\assets\PluginComponentsAsset::register($this);
             foreach ($column->enumValues as $enumValue) {
                 $dropDownOptions[$enumValue] = Inflector::humanize($enumValue);
             }
-            return "\$form->field(\$model, '$attribute')->el_select('data.$attribute', "
-                . preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions)).", ['prompt' => ''])";
+            return "\$form->field(\$model, '$attribute')->el_select("
+                . preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions)).", ['v-model' => 'data.$attribute', 'prompt' => ''])";
         }
 
         if ($column->phpType !== 'string' || $column->size === null) {
-            return "\$form->field(\$model, '$attribute')->el_input('data.$attribute', ['type' => '$input'])";
+            return "\$form->field(\$model, '$attribute')->el_input(['v-model' => 'data.$attribute', 'type' => '$input'])";
         }
 
-        return "\$form->field(\$model, '$attribute')->el_input('data.$attribute', ['maxlength' => true])";
+        return "\$form->field(\$model, '$attribute')->el_input(['v-model' => 'data.$attribute', 'maxlength' => true])";
     }
 ?>

@@ -10,6 +10,7 @@ echo "<?php\n";
 ?>
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 use vuelte\widgets\ActiveElementForm;
 
 vuelte\assets\PluginComponentsAsset::register($this);
@@ -21,7 +22,7 @@ vuelte\assets\PluginComponentsAsset::register($this);
 
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-search">
 
-    <?= "<?php " ?>$form = ActiveElementForm::begin([
+    <?= "<?php " ?>$form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
 <?php if ($generator->enablePjax): ?>
@@ -45,7 +46,7 @@ foreach ($generator->getColumnNames() as $attribute) {
         <?= "<?= " ?>Html::tag("lte-btn","<i class='glyphicon glyphicon-search'></i> 搜索",["type" => "primary", "submit" => true]) ?>
     </div>
 
-    <?= "<?php " ?>ActiveElementForm::end(); ?>
+    <?= "<?php " ?>ActiveForm::end(); ?>
 
 </div>
 
@@ -54,15 +55,15 @@ function generateActiveSearchField($attribute,yii\gii\generators\crud\Generator 
 {
     $tableSchema = $generator->getTableSchema();
     if ($tableSchema === false) {
-        return "\$form->field(\$model, '$attribute')->el_input()";
+        return "\$form->field(\$model, '$attribute')";
     }
 
     $column = $tableSchema->columns[$attribute];
     if ($column->phpType === 'boolean') {
-        return "\$form->field(\$model, '$attribute')->el_switch()";
+        return "\$form->field(\$model, '$attribute')->checkbox()";
     }
 
-    return "\$form->field(\$model, '$attribute')->el_input()";
+    return "\$form->field(\$model, '$attribute')";
 }
 
 ?>

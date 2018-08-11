@@ -78,6 +78,11 @@ vuelte\tools\VarConvert::run($this, $model, "data");
         el:'#app',
         data:{
             data:data
+        },
+        methods:{
+            submit:function(event){
+                YiiFormSubmit(this.data,"<?= "<?= " ?>$model->formName()?>");
+            }
         }
     })
 </script>

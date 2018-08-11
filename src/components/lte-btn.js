@@ -27,8 +27,9 @@ Vue.component('lte-btn', {
         click:function(e){
             if(this.href)
                 window.location.href = this.href;
+            this.$emit('click');
         }
     },
-    template: `<a :class="btnClass" :href="href" v-if="a"><slot></slot></a>
+    template: `<a :class="btnClass" @click="click" :href="href" v-if="a"><slot></slot></a>
         <button :class="btnClass" @click="click" :type="submit?'submit':'button'" v-else><slot></slot></button>`
 });
