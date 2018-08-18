@@ -28,6 +28,16 @@ return [
         'job'=> "Developer",
         'abstract'=> 'Member since Nov. 2012',
     ],
+    //用户按钮
+    'userButtons' => [
+        ['text' => '用户信息', 'url' => '#'],
+        ['text' => '修改密码', 'url' => '#'],
+        ['text' => '我的收藏', 'url' => '#'],
+    ],
+    //配置简介
+    'profile' => ['text' => '设置', 'url' => '#'],
+    //配置登出
+    'signOut' => ['text' => '退出', 'url' => '#'],
     //配置导航
     'nav' => [
         [ "title"=>"Gii", "header" => true ],
