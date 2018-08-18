@@ -43,7 +43,7 @@ foreach ($generator->getColumnNames() as $attribute) {
 }
 ?>
     <div class="form-group">
-        <?= "<?= " ?>Html::tag("lte-btn","<i class='glyphicon glyphicon-search'></i> 搜索",["type" => "primary", "submit" => true]) ?>
+        <?= "<?= " ?>Html::tag("lte-btn","<i class='glyphicon glyphicon-search'></i> 搜索",["type" => "info", "submit" => true]) ?>
     </div>
 
     <?= "<?php " ?>ActiveForm::end(); ?>

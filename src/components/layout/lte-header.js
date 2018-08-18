@@ -24,15 +24,19 @@ Vue.component('lte-header', {
             'type':Array,
             default: function(){ return [] }//[{"progress":"50","content":"内容","url":"https://www.baidu.com"}]
         },
+        'userButtons': {
+            'type': Array,
+            default: function () { return [] }//[{"text": "用户信息", "url": "https://www.baidu.com"},] }
+        },
+        'profile' : {
+            'type' : Object,
+            default: function () { return {'text': '用户', 'url' : '#'} }
+        },
+        'signout' : {
+            'type' : Object,
+            default: function () { return {'text': '退出', 'url' : '#'} }
+        },
         'urlHome':{'type':String,default:"#"},
-        'urlFollowers':{'type':String,default:"#"},
-        'urlSales':{'type':String,default:"#"},
-        'urlFriends':{'type':String,default:"#"},
-        'urlProfile':{'type':String,default:"#"},
-        'urlSignout':{'type':String,default:"#"},
-    },
-    data:function(){
-        return {};
     },
     computed: {
         messageCount: function () {
@@ -43,7 +47,14 @@ Vue.component('lte-header', {
         },
         taskCount: function () {
             return this.tasks.length;
-        }
+        },
+        buttonClass:function() {
+            var num = parseInt(12/this.userButtons.length);
+            var result = {};
+            result['text-center'] = true;
+            result['col-xs-'+num] = true;
+            return result;
+        },
     },
     template:`<header class="main-header">
         <a :href="urlHome" class="logo">
@@ -151,26 +162,20 @@ Vue.component('lte-header', {
                                     <small>{{user.abstract}}</small>
                                 </p>
                             </li>
-                            <li class="user-body">
+                            <li class="user-body" v-if='userButtons.length > 0'>
                                 <div class="row">
-                                    <div class="col-xs-4 text-center">
-                                        <a :href="urlFollowers">Followers</a>
-                                    </div>
-                                    <div class="col-xs-4 text-center">
-                                        <a :href="urlSales">Sales</a>
-                                    </div>
-                                    <div class="col-xs-4 text-center">
-                                        <a :href="urlFriends">Friends</a>
+                                    <div :class="buttonClass" v-for='item in userButtons'>
+                                        <a :href="item.url">{{item.text}}</a>
                                     </div>
                                 </div>
                             </li>
                             <li class="user-footer">
-                                <div class="pull-left">
-                                    <a :href="urlProfile" class="btn btn-default btn-flat">Profile</a>
+                                <div class="pull-left" v-if='profile.text'>
+                                    <a :href="profile.url" class="btn btn-default btn-flat">{{profile.text}}</a>
                                 </div>
-                                <div class="pull-right">
-                                    <form :action="urlSignout" method="post">
-                                        <button class="btn btn-default btn-flat">Sign out</button>
+                                <div class="pull-right" v-if='signout.text'>
+                                    <form :action="signout.url" method="post">
+                                        <button class="btn btn-default btn-flat">{{signout.text}}</button>
                                     </form>
                                 </div>
                             </li>

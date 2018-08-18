@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div id="app">
     <lte-row>
         <lte-col col="3">
-            <lte-box title="Button" icon="fa fa-edit">
+            <lte-box title="选项" icon="fa fa-edit">
                 <?= "<?= " ?>Html::tag("lte-btn","<i class='glyphicon glyphicon-plus'></i> 添加",[
                     "href"=>Url::to(["create"]),
                     "a"=>true,
@@ -42,12 +42,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     "type"=>"warning"
                 ])?>
             </lte-box>
-            <lte-box title="Search" icon="fa fa-search">
+            <lte-box title="搜索" icon="fa fa-search">
                 <?= "<?= " ?>$this->render('_search', ['model' => $searchModel]); ?>
             </lte-box>
         </lte-col>
         <lte-col col="9">
-            <lte-box title="List" icon="fa fa-list">
+            <lte-box title="列表" icon="fa fa-list">
 
 <?php if ($generator->indexWidgetType === 'grid'): ?>
                 <?= "<?= " ?>GridView::widget([

@@ -39,7 +39,7 @@ vuelte\assets\PluginComponentsAsset::register($this);
     }
 } ?>
     <el-form-item>
-        <?= "<?= " ?>Html::tag("lte-btn","<i class='glyphicon glyphicon-floppy-disk'></i> 保存",["type" => "success", "@click" => "submit"]) ?>
+        <?= "<?= " ?>Html::tag("lte-btn","<i class='glyphicon glyphicon-floppy-disk'></i> 保存",["type" => "info", "@click" => "submit"]) ?>
     </el-form-item>
 
     <?= "<?php " ?>ActiveElementForm::end(); ?>

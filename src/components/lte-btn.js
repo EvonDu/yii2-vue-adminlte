@@ -25,7 +25,7 @@ Vue.component('lte-btn', {
     },
     methods:{
         click:function(e){
-            if(this.href)
+            if(this.href && this.a === false)
                 window.location.href = this.href;
             this.$emit('click');
         }

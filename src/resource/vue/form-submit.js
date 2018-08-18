@@ -32,12 +32,32 @@ function formSubmit(){
         //创建表单元素
         var form = document.createElement("form");
         for(var key in data){
+            //获取name和value
             var value = data[key];
-            var input = document.createElement("input");
-            input.type = "hidden";
-            input.name = formName ? formName+"["+key+"]" : key;
-            input.value = value;
-            form.appendChild(input);
+            var name = formName ? formName+"["+key+"]" : key;
+            //过滤null
+            if(value === null)
+                continue;
+            //特殊处理数组和对象
+            if(typeof value == 'object'){
+                //特殊处理数组和对象
+                var hash = getArrayHash(name,value);
+                for(var i in hash){
+                    var input = document.createElement("input");
+                    input.type = "hidden";
+                    input.name = hash[i].name;
+                    input.value = hash[i].value;
+                    form.appendChild(input);
+                }
+            }
+            //其他普通处理
+            else{
+                var input = document.createElement("input");
+                input.type = "hidden";
+                input.name = name;
+                input.value = value;
+                form.appendChild(input);
+            }
         }
 
         //添加csrfToken
@@ -58,4 +78,33 @@ function formSubmit(){
         document.body.appendChild(form);
         form.submit();
     };
+
+    //辅助方法
+    function getArrayHash(name,array){
+        var hash = [];
+        console.log(typeof array);
+        console.log(array);
+        var isArray = !isNaN(array.length);
+        if(typeof array == 'object'){
+            for(var key in array){
+                var value = array[key];
+                if(typeof value == 'object'){
+                    if(isArray)
+                        hash = getArrayHash(name+"["+key+"]",value);
+                    else
+                        hash = getArrayHash(name+"['"+key+"']",value);
+                }
+                else{
+                    var item = {};
+                    if(isArray)
+                        item.name = name+"[]";
+                    else
+                        item.name = name+"["+key+"]";
+                    item.value = value;
+                    hash.push(item);
+                }
+            }
+        }
+        return hash;
+    }
 }

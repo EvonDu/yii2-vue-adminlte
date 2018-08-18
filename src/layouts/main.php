@@ -42,8 +42,9 @@ if(file_exists($config_path)){
 
 <div class="wrapper">
     <div id="app-header">
-        <lte-header :title="title" :messages="header.messages" :notifications="header.notifications" :tasks="header.tasks" :user="user"
-                    :url-home="urlHome" :url-signout="urlSignOut"></lte-header>
+        <lte-header :title="title" :url-home="urlHome" :signout="signout"
+                    :messages="header.messages" :notifications="header.notifications" :tasks="header.tasks"
+                    :user="user" :user-buttons="userButtons" :signout="signout" :profile="profile"></lte-header>
         <lte-sidebar :nav="nav" :user="user"></lte-sidebar>
     </div>
     <div class="content-wrapper">
@@ -54,7 +55,10 @@ if(file_exists($config_path)){
     </div>
     <div id="app-footer">
         <lte-footer><?= isset($config['footer']) ? $config['footer'] : '<strong>Copyright &copy; 2017-2018 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights reserved.'?></lte-footer>
-        <lte-sidebar-setting></lte-sidebar-setting>
+        <lte-sidebar-setting>
+            <div slot="home"><h4 class="control-sidebar-heading">Home</h4></div>
+            <div slot="setting"><h4 class="control-sidebar-heading">Setting</h4></div>
+        </lte-sidebar-setting>
     </div>
 </div>
 
@@ -70,7 +74,6 @@ if(file_exists($config_path)){
             return {
                 title:"<?= isset($config['productName']) ? $config['productName'] : 'Yii AdminLet'?>",
                 urlHome:"<?=Url::home()?>",
-                urlSignOut:"<?=Url::to(["site/logout"])?>",
                 user:{
                     'name': "<?= isset($config['user']['name']) ? $config['user']['name'] : 'Admin'?>",
                     'image': "<?= isset($config['user']['image']) ? $config['user']['image'] : 'https://adminlte.io/themes/AdminLTE/dist/img/user8-128x128.jpg'?>",
@@ -83,6 +86,9 @@ if(file_exists($config_path)){
                     tasks: <?= isset($config['tasks']) ? json_encode($config['tasks']) : '[]'?>,
                 },
                 nav: <?= isset($config['nav']) ? json_encode($config['nav']) : '[]'?>,
+                profile : <?= isset($config['profile']) ? json_encode($config['profile']) : '{}'?>,
+                signout : <?= isset($config['signout']) ? json_encode($config['signout']) : '{"text":"Sign Out"}'?>,
+                userButtons : <?= isset($config['userButtons']) ? json_encode($config['userButtons']) : '[]'?>,
             }
         }
     });

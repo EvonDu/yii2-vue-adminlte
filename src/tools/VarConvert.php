@@ -1,6 +1,7 @@
 <?php
 namespace vuelte\tools;
 
+use common\models\user\User;
 use Yii;
 use yii\web\View;
 use yii\helpers\ArrayHelper;
