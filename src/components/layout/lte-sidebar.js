@@ -106,7 +106,7 @@ Vue.component('lte-sidebar', {
                 <template v-for="item in nav">
                     <li v-if="item.header" class="header">{{item.title}}</li>
                     <li v-else :class="[item.active?'active':'',item.nodes?'treeview':'']">
-                        <a href="item.nodes?'#':item.url">
+                        <a :href="item.nodes?'#':item.url">
                             <i :class="item.icon"></i> <span>{{item.title}}</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right" v-if="item.nodes"></i>
