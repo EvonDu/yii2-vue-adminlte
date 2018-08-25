@@ -28,6 +28,7 @@ $this->params['breadcrumbs'][] = ['label' => $model-><?= $generator->getNameAttr
 $this->params['breadcrumbs'][] = <?= $generator->generateString('Update') ?>;
 
 vuelte\tools\VarConvert::run($this, $model, "data");
+print $this->render('_form', ['model' => $model]);
 ?>
 <div id="app">
     <lte-row>
@@ -65,9 +66,7 @@ vuelte\tools\VarConvert::run($this, $model, "data");
         <lte-col col="9">
             <lte-box title="编辑" icon="fa fa-edit">
 
-                <?= '<?= ' ?>$this->render('_form', [
-                    'model' => $model,
-                ]) ?>
+                <model-form :data="data"></model-form>
 
             </lte-box>
         </lte-col>
@@ -79,11 +78,6 @@ vuelte\tools\VarConvert::run($this, $model, "data");
         el:'#app',
         data:{
             data:data
-        },
-        methods:{
-            submit:function(event){
-                YiiFormSubmit(this.data,"<?= "<?= " ?>$model->formName()?>");
-            }
         }
     })
 </script>

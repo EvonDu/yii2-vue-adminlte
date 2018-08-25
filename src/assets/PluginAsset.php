@@ -16,11 +16,13 @@ class PluginAsset extends AssetBundle
     //定义资源包的css
     public $css = [
         'bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css',
+        'summernote/summernote.css',
     ];
 
     //定义资源包的js
     public $js = [
         'bootstrap-switch/js/bootstrap-switch.min.js',
+        'summernote/summernote.min.js',
     ];
 
     //定义加载选项

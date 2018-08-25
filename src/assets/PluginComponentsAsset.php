@@ -14,6 +14,7 @@ class PluginComponentsAsset extends AssetBundle
     public $css = [];
     public $js = [
         'bootstrap-switch.js',
+        'summernote.js',
     ];
     public $jsOptions = [
         'position' => \yii\web\View::POS_HEAD
