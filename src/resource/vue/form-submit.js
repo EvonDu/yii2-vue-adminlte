@@ -55,7 +55,7 @@ function formSubmit(){
                 var input = document.createElement("input");
                 input.type = "hidden";
                 input.name = name;
-                input.value = value;
+                input.value = getValue(value);
                 form.appendChild(input);
             }
         }
@@ -100,11 +100,21 @@ function formSubmit(){
                         item.name = name+"[]";
                     else
                         item.name = name+"["+key+"]";
-                    item.value = value;
+                    item.value = getValue(value);;
                     hash.push(item);
                 }
             }
         }
         return hash;
+    }
+
+    //辅助方法 - 取值
+    function getValue(value){
+        if(typeof value == 'boolean'){
+            return value ? 1 : 0;
+        }
+        else {
+            return value;
+        }
     }
 }

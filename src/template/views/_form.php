@@ -49,7 +49,7 @@ use vuelte\widgets\ActiveElementForm;
     Vue.component('model-form', {
         template: `<?= "<?=" ?> $template($model); ?>`,
         props:{
-            'data':{ type: Object, default: function(){ return {}; }}
+            data:{ type: Object, default: function(){ return {}; }}
         },
         methods: {
             submit: function (event) {
