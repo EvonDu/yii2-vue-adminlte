@@ -1,13 +1,12 @@
 <?php
 namespace vuelte\tools;
 
-use common\models\user\User;
 use Yii;
 use yii\web\View;
 use yii\helpers\ArrayHelper;
 
 class VarConvert{
-    static function run($view, $data, $name){
+    static function run(View $view, $data, $name){
         //值转字符串定义
         if(is_object($data)){
             $objectArray = ArrayHelper::toArray($data);
