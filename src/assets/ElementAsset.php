@@ -10,7 +10,7 @@ use yii\web\AssetBundle;
  */
 class ElementAsset extends AssetBundle
 {
-    public $sourcePath = __DIR__.'/../resource/element';
+    public $sourcePath = __DIR__.'/resource/element';
     public $css = [
         'https://unpkg.com/element-ui/lib/theme-chalk/index.css',
         //'element.min.css'

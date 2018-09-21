@@ -13,8 +13,6 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use vuelte\widgets\ActiveElementForm;
 
-vuelte\assets\PluginComponentsAsset::register($this);
-
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->searchModelClass, '\\') ?> */
 /* @var $form yii\widgets\ActiveForm */

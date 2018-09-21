@@ -11,7 +11,7 @@ use yii\web\AssetBundle;
 class AdminLteComponentsAsset extends AssetBundle
 {
     //参数
-    public $sourcePath = __DIR__.'/../components';
+    public $sourcePath = __DIR__.'/components';
     public $css = [];
     public $js = [
         'layout/lte-header.js',

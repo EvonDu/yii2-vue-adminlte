@@ -21,8 +21,8 @@ $this->params['small'] = 'Create';
 $this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
-vuelte\tools\VarConvert::run($this, $model, "data");
-print $this->render('_form', ['model' => $model]);
+vuelte\lib\Import::value($this, $model, "data");
+vuelte\lib\Import::component($this,'_form', ['model' => $model]);
 ?>
 <div id="app">
     <lte-row>

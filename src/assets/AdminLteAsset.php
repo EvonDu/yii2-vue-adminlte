@@ -11,7 +11,7 @@ use yii\web\AssetBundle;
 class AdminLteAsset extends AssetBundle
 {
     //参数
-    public $sourcePath = __DIR__.'/../resource/adminlte';
+    public $sourcePath = __DIR__.'/resource/adminlte';
 
     //定义资源包的css
     public $css = [

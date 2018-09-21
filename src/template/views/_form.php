@@ -23,31 +23,31 @@ use vuelte\widgets\ActiveElementForm;
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-<?= "<?php " ?>$template = function($model){ ?>
-<div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form">
+<component-template>
+    <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form">
 
-    <?= "<?php " ?>ActiveElementForm::begin(["options"=>[
-        "label-width" => "100px",
-        "status-icon" => true,
-    ]]); ?>
+        <?= "<?php " ?>ActiveElementForm::begin(["options"=>[
+            "label-width" => "100px",
+            "status-icon" => true,
+        ]]); ?>
 
 <?php foreach ($generator->getColumnNames() as $attribute) {
     if (in_array($attribute, $safeAttributes)) {
         echo "    " . generateVueActiveField($attribute, $generator) . " \n\n";
     }
 } ?>
-    <el-form-item>
-        <lte-btn type="info" @click="submit"><i class='glyphicon glyphicon-floppy-disk'></i> 保存</lte-btn>
-    </el-form-item>
+        <el-form-item>
+            <lte-btn type="info" @click="submit"><i class="glyphicon glyphicon-floppy-disk"></i> 保存</lte-btn>
+        </el-form-item>
 
-    <?= "<?php " ?>ActiveElementForm::end(); ?>
+        <?= "<?php " ?>ActiveElementForm::end(); ?>
 
-</div>
-<?= "<?php " ?> }?>
+    </div>
+</component-template>
 
 <script>
     Vue.component('model-form', {
-        template: `<?= "<?=" ?> $template($model); ?>`,
+        template: '{{component-template}}',
         props:{
             data:{ type: Object, default: function(){ return {}; }}
         },
@@ -65,37 +65,37 @@ use vuelte\widgets\ActiveElementForm;
         $tableSchema = $generator->getTableSchema();
         $column = $tableSchema->columns[$attribute];
         if ($column->phpType === 'boolean') {
-            $html[] = '<el-form-item prop="'.$attribute.'"';
-            $html[] = '                  label="<?= ActiveElementForm::getFieldLabel($model,"'.$attribute.'")?>"';
-            $html[] = '                  error="<?= ActiveElementForm::getFieldError($model,"'.$attribute.'")?>">';
-            $html[] = '        <el-input v-model="data.'.$attribute.'" type="password"></el-input>';
-            $html[] = '    </el-form-item>';
+            $html[] = '    <el-form-item prop="'.$attribute.'"';
+            $html[] = '                      label="<?= ActiveElementForm::getFieldLabel($model,"'.$attribute.'")?>"';
+            $html[] = '                      error="<?= ActiveElementForm::getFieldError($model,"'.$attribute.'")?>">';
+            $html[] = '            <el-input v-model="data.'.$attribute.'" type="password"></el-input>';
+            $html[] = '        </el-form-item>';
             return implode("\n",$html);
         }
 
         if ($column->type === 'text') {
-            $html[] = '<el-form-item prop="'.$attribute.'"';
-            $html[] = '                  label="<?= ActiveElementForm::getFieldLabel($model,"'.$attribute.'")?>"';
-            $html[] = '                  error="<?= ActiveElementForm::getFieldError($model,"'.$attribute.'")?>">';
-            $html[] = '        <el-input v-model="data.'.$attribute.'" type="textarea" rows="6"></el-input>';
-            $html[] = '    </el-form-item>';
+            $html[] = '    <el-form-item prop="'.$attribute.'"';
+            $html[] = '                      label="<?= ActiveElementForm::getFieldLabel($model,"'.$attribute.'")?>"';
+            $html[] = '                      error="<?= ActiveElementForm::getFieldError($model,"'.$attribute.'")?>">';
+            $html[] = '            <el-input v-model="data.'.$attribute.'" type="textarea" rows="6"></el-input>';
+            $html[] = '        </el-form-item>';
             return implode("\n",$html);
         }
 
         if (preg_match('/^(password|pass|passwd|passcode)$/i', $column->name)) {
-            $html[] = '<el-form-item prop="'.$attribute.'"';
-            $html[] = '                  label="<?= ActiveElementForm::getFieldLabel($model,"'.$attribute.'")?>"';
-            $html[] = '                  error="<?= ActiveElementForm::getFieldError($model,"'.$attribute.'")?>">';
-            $html[] = '        <el-input v-model="data.'.$attribute.'" type="password"></el-input>';
-            $html[] = '    </el-form-item>';
+            $html[] = '    <el-form-item prop="'.$attribute.'"';
+            $html[] = '                      label="<?= ActiveElementForm::getFieldLabel($model,"'.$attribute.'")?>"';
+            $html[] = '                      error="<?= ActiveElementForm::getFieldError($model,"'.$attribute.'")?>">';
+            $html[] = '            <el-input v-model="data.'.$attribute.'" type="password"></el-input>';
+            $html[] = '        </el-form-item>';
             return implode("\n",$html);
         }
 
-        $html[] = '<el-form-item prop="'.$attribute.'"';
-        $html[] = '                  label="<?= ActiveElementForm::getFieldLabel($model,"'.$attribute.'")?>"';
-        $html[] = '                  error="<?= ActiveElementForm::getFieldError($model,"'.$attribute.'")?>">';
-        $html[] = '        <el-input v-model="data.'.$attribute.'"></el-input>';
-        $html[] = '    </el-form-item>';
+        $html[] = '    <el-form-item prop="'.$attribute.'"';
+        $html[] = '                      label="<?= ActiveElementForm::getFieldLabel($model,"'.$attribute.'")?>"';
+        $html[] = '                      error="<?= ActiveElementForm::getFieldError($model,"'.$attribute.'")?>">';
+        $html[] = '            <el-input v-model="data.'.$attribute.'"></el-input>';
+        $html[] = '        </el-form-item>';
         return implode("\n",$html);
     }
 ?>
