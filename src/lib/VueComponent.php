@@ -24,11 +24,11 @@ class VueComponent{
         ob_end_clean();
 
         //提取template元素
-        $template = $this->_getElement('template',$content);
+        $template = $this->_getElement('component-template',$content);
 
         //提取script元素
         $script = $this->_getElement('script',$content);
-        $script = str_replace("{{template}}",$template,$script);
+        $script = str_replace("{{component-template}}",$template,$script);
         $this->view->registerJs($script, View::POS_HEAD);
 
         //提取style元素
