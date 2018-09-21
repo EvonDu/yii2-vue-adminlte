@@ -97,7 +97,7 @@ if(file_exists($config_path)){
         store:store,
         data:{
             small:"<?= isset($this->params['small']) ? $this->params['small'] : "";?>",
-            breadcrumbs:<?= json_encode(vuelte\tools\Breadcrumbs::getBreadcrumbs($this)) ?>
+            breadcrumbs:<?= json_encode(vuelte\lib\Breadcrumbs::getBreadcrumbs($this)) ?>
         }
     });
     new Vue({el: '#app-footer'});

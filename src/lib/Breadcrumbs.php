@@ -1,8 +1,6 @@
 <?php
-namespace vuelte\tools;
+namespace vuelte\lib;
 
-use Yii;
-use yii\helpers\Html;
 use yii\helpers\Url;
 
 class Breadcrumbs{

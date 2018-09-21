@@ -1,12 +1,17 @@
 <?php
-namespace vuelte\tools;
+namespace vuelte\lib;
 
-use Yii;
 use yii\web\View;
 use yii\helpers\ArrayHelper;
 
-class VarConvert{
-    static function run(View $view, $data, $name){
+class Import{
+    /**
+     * 导入Js变量（从php中）
+     * @param View $view    视图
+     * @param String $data  数据
+     * @param String $name  变量名
+     */
+    static function value(View $view, $data, $name){
         //值转字符串定义
         if(is_object($data)){
             $objectArray = ArrayHelper::toArray($data);
@@ -26,5 +31,18 @@ class VarConvert{
         }
         //输出到Http头部JS
         $view->registerJs("var $name = $dataStr;", View::POS_HEAD);
+    }
+
+    /**
+     * 导入Vue组件
+     * @param View $view        视图
+     * @param String $paths     组件路径
+     * @param array $params     PHP参数
+     */
+    static function component(View $view, $paths, array $params = []){
+        $component = new VueComponent($view);
+        $component->begin();
+        print $view->render($paths, $params);
+        $component->end();
     }
 }
