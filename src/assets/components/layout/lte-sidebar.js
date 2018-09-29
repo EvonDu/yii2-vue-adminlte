@@ -45,12 +45,14 @@ Vue.component('lte-sidebar', {
         return {};
     },
     created:function(){
-        set_active(this.nav);
-        function set_active(nodes){
+        var url = window.location.href.replace(/%2F/g,"/");
+        set_active(this.nav,url) || set_active_dir(this.nav,url);
+        function set_active(nodes,url){
             for(var key in nodes){
                 var node = nodes[key];
                 if(node.nodes){
-                    if(set_active(node.nodes)) {
+                    //递归结果
+                    if(set_active(node.nodes,url)){
                         node["active"] = true;
                         return true;
                     }
@@ -58,28 +60,59 @@ Vue.component('lte-sidebar', {
                 else{
                     if(node.url){
                         //处理url
-                        var target = window.location.href.replace(/%2F/g,"/");
-                        var url = node.url;
-                        url = url.replace(/\?/g,"\\?");
-                        url = url.replace(/\./g,"\\.");
-                        url = url.replace(/%2F/g,"/");
+                        var exp = node.url
+                            .replace(/%2F/g,"/")
+                            .replace(/-/g,"\-")
+                            .replace(/\./g,"\\.")
+                            .replace(/\*/g,"\\*")
+                            .replace(/\^/g,"\\^")
+                            .replace(/\?/g,"\\?")
+                            .replace(/\$/g,"\\$");
 
                         //建立正则表达式并判断
-                        var reg = RegExp(url);
-                        if(reg.test(target)){
-                            node["active"]=true;
-                            return true;
-                        }
-
-                        //判断上级目录
-                        var root = url.slice(0,url.lastIndexOf("/"));
-                        var reg = RegExp(root);
-                        if(reg.test(target)){
+                        if(url.match(exp)){
+                            node["active"] = true;
                             return true;
                         }
                     }
                 }
             }
+            return false;
+        };
+        function set_active_dir(nodes,url){
+            for(var key in nodes){
+                var node = nodes[key];
+                if(node.nodes){
+                    //递归结果
+                    if(set_active_dir(node.nodes,url)){
+                        node["active"] = true;
+                        return true;
+                    }
+                }
+                else{
+                    if(node.url){
+                        //处理url
+                        var exp = node.url
+                            .replace(/%2F/g,"/")
+                            .replace(/-/g,"\-")
+                            .replace(/\./g,"\\.")
+                            .replace(/\*/g,"\\*")
+                            .replace(/\^/g,"\\^")
+                            .replace(/\?/g,"\\?")
+                            .replace(/\$/g,"\\$");
+
+                        //处理成父级
+                        exp = exp.slice(0,exp.lastIndexOf("/"));
+
+                        //建立正则表达式并判断
+                        if(url.match(exp+"/")){
+                            node["active"] = true;
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         };
     },
     template: `<aside class="main-sidebar">
