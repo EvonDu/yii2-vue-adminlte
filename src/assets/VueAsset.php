@@ -16,7 +16,6 @@ class VueAsset extends AssetBundle
     public $js = [
         //'https://unpkg.com/vue/dist/vue.js',
         //'https://unpkg.com/vuex@3.0.1/dist/vuex.js',
-        'form-submit.js',
         'vue.js',
         'vuex.js',
     ];

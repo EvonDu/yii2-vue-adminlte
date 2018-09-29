@@ -4,11 +4,18 @@ namespace vuelte\lib;
 use yii\web\View;
 
 class VueComponent{
-    private $view;
+    private $content;
 
     //构造函数
-    public function __construct(View $view){
-        $this->view = $view;
+    public function __construct($content){
+        $this->content = $content;
+    }
+
+    //引入视图
+    public function export(View $view){
+        $this->begin();
+        print $this->content;
+        $this->end($view);
     }
 
     //组件开始
@@ -18,7 +25,7 @@ class VueComponent{
     }
 
     //组件结束
-    public function end(){
+    public function end($view){
         //读取并关闭缓冲区
         $content = ob_get_contents();
         ob_end_clean();
@@ -29,11 +36,11 @@ class VueComponent{
         //提取script元素
         $script = $this->_getElement('script',$content);
         $script = str_replace("{{component-template}}",$template,$script);
-        $this->view->registerJs($script, View::POS_HEAD);
+        $view->registerJs($script, View::POS_HEAD);
 
         //提取style元素
         $style = $this->_getElement('style',$content);
-        $this->view->registerCss($style);
+        $view->registerCss($style);
     }
 
     //提取元素（使用正则表达式）

@@ -37,5 +37,6 @@ class AdminLteComponentsAsset extends AssetBundle
     public $depends = [
         'vuelte\assets\VueAsset',
         'vuelte\assets\AdminLteAsset',
+        'vuelte\assets\AdaptationAsset',
     ];
 }
