@@ -54,7 +54,10 @@ class VueComponent{
         else{
             $content = '';
         }
-        return $this->_htmlCompress($content);
+        if($tag == "script")
+            return $this->_jsCompress($content);
+        else
+            return $this->_htmlCompress($content);
     }
 
     //HTML压缩
@@ -79,5 +82,10 @@ class VueComponent{
             ""
         );
         return preg_replace($pattern, $replace, $string);
+    }
+
+    //JS压缩
+    private function _jsCompress($string){
+        return JSMin::minify($string);;
     }
 }
