@@ -120,6 +120,60 @@ return [
     * 配置actionLogin方法，修改return调用的视图就可以
     * `return $this->render(\vuelte\Assets::view('login'), [ 'model' => $model ]);`
 
+#### 编写Vue组件（PHP混编组件）
+###### 实现概述
+* 组件的实现，扩展自YII的`$view->render($path, $params)`,故支持PHP参数传递和混编
+* 组件模板部分使用`component-template`标签，javascript和style部分照旧用`script`和`style`标签
+* 在视图中用`vuelte\lib\Import::component();`引入
+    * 示例：`vuelte\lib\Import::component($this,'@app/views/components/avatar',[]);`
+    * 第一个参数为`yii\web\View`对象，即视图的`$this`
+    * 第二个参数为编写的组件
+    * 第三个参数为PHP参数的key-value数组
+* 在组件模板部分（`component-template`标签内）暂不支持单引号
+* 在Vue组件中`template`的值必须为：`template: '{{component-template}}'`（注意这里用单引号）
+* 可以配置好GII后用模板生成CRUD，然后对照其中的_form文件查看（此为一个完整混编Vue组件）
+
+###### 组件例子
+* 示例组件（路径：backend/views/components/test.php）：
+```
+<!-- 组件样式 -->
+<style>
+    .test{  color: red; }
+</style>
+<!-- 组件模板 -->
+<component-template>
+    <div class="test">
+        {{value}} <?="支持PHP混编"?>
+    </div>
+</component-template>
+<!-- 组件代码 -->
+<script>
+    Vue.component('test', {
+        template: '{{component-template}}',
+        model: { prop: 'value', event: 'change'},
+        props:{
+            'value':{ type: String, default: "Demo Component"}
+        }
+    });
+</script>
+```
+* 使用方法（在Yii的视图层使用）：
+ ```
+ <?php
+ vuelte\lib\Import::component($this,'@backend/views/components/test');
+ ?>
+ <div id="app">
+     <test></test>
+ </div>
+ 
+ <script>
+     new Vue({
+         el:'#app',
+         data:{}
+     })
+ </script>
+ ```
+
 ## 项目架构
 ```
 src
