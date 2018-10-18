@@ -120,20 +120,37 @@ return [
     * 配置actionLogin方法，修改return调用的视图就可以
     * `return $this->render(\vuelte\Assets::view('login'), [ 'model' => $model ]);`
 
-#### 编写Vue组件（PHP混编组件）
-###### 实现概述
-* 组件的实现，扩展自YII的`$view->render($path, $params)`,故支持PHP参数传递和混编
+## Yii与Vue结合使用
+#### 变量转化
+* 本库中提供将PHP变量转化成JavaScript变量的辅助函数，变量转化后可以便于Vue对其进行操作
+* 实现方式为使用`yii\web\View`中的`registerJs`函数，把变量定义到JavaScript中
+* 变量转换使用`vuelte\lib\Import::value()`（在视图层中使用）
+    * 示例：`vuelte\lib\Import::value($this, $model, "data");`
+    * 第一个参数为`yii\web\View`对象，即视图层的`$this`
+    * 第二个参数是要转换PHP变量
+    * 第三个参数为转换成JavaScript后变量的名称
+#### 表单提交
+* Yii的默认表单提交方式为"同步跳转式提交"
+* 本库提供把JavaScript对象以表单形式提交的辅助函数`YiiFormSubmit()`
+    * 示例：`YiiFormSubmit({'name':'test'}, "Demo");`
+    * 第一个参数为提交的JavaScript对象
+    * 第二个参数为Yii中的模型名（用于迎合Yii的表单提交方式）
+    * 示例执行后POST的数据为：`Demo[name]=test`
+
+## 编写Vue组件（PHP混编组件）
+#### 实现概述
+* 组件的实现，扩展自Yii的`$view->render($path, $params)`,故支持PHP参数传递和混编
 * 组件模板部分使用`component-template`标签，javascript和style部分照旧用`script`和`style`标签
-* 在视图中用`vuelte\lib\Import::component();`引入
+* 组件导入使用`vuelte\lib\Import::component()`（在视图层中使用）
     * 示例：`vuelte\lib\Import::component($this,'@app/views/components/avatar',[]);`
-    * 第一个参数为`yii\web\View`对象，即视图的`$this`
+    * 第一个参数为`yii\web\View`对象，即视图层的`$this`
     * 第二个参数为编写的组件
     * 第三个参数为PHP参数的key-value数组
 * 在组件模板部分（`component-template`标签内）暂不支持单引号
 * 在Vue组件中`template`的值必须为：`template: '{{component-template}}'`（注意这里用单引号）
 * 可以配置好GII后用模板生成CRUD，然后对照其中的_form文件查看（此为一个完整混编Vue组件）
 
-###### 组件例子
+#### 组件例子
 * 示例组件（路径：backend/views/components/test.php）：
 ```
 <!-- 组件样式 -->
