@@ -41,10 +41,9 @@ class Import{
      * @param array $params     PHP参数
      */
     static public function component(View $view, $paths, array $params = []){
-        $component = new VueComponent($view);
-        $component->begin();
-        print $view->render($paths, $params);
-        $component->end();
+        $content = $view->render($paths, $params);
+        $component = new VueComponent($content);
+        $component->export($view);
     }
 
     /**
