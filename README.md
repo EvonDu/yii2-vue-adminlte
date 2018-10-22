@@ -123,6 +123,7 @@ return [
 ## Yii与Vue结合使用
 #### 变量转化
 * 本库中提供将PHP变量转化成JavaScript变量的辅助函数，变量转化后可以便于Vue对其进行操作
+* 布尔型会被处理成字符串的1和0，目的是适配Yii的表单传值和处理
 * 实现方式为使用`yii\web\View`中的`registerJs`函数，把变量定义到JavaScript中
 * 变量转换使用`vuelte\lib\Import::value()`（在视图层中使用）
     * 示例：`vuelte\lib\Import::value($this, $model, "data");`

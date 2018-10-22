@@ -6,26 +6,27 @@ use yii\helpers\ArrayHelper;
 
 class Import{
     /**
-     * 导入Js变量（从php中）
-     * @param View $view    视图
-     * @param String $data  数据
-     * @param String $name  变量名
+     * 导入JavaScript变量（从PHP变量中）
+     * 布尔型会被处理成字符串的1和0
+     * @param View $view
+     * @param $data
+     * @param $name
+     * @return string
      */
-    static function value(View $view, $data, $name){
-        //值转字符串定义
+    static public function value(View $view, $data, $name){
+        //对象与数组值转换
         if(is_object($data)){
-            $objectArray = ArrayHelper::toArray($data);
-            $dataStr = empty($objectArray) ? "{}" : json_encode($objectArray);
+            $objectArray = ArrayHelper::toArray(self::valueAdjust($data));
+            $dataStr = json_encode($objectArray);
         }
         else if(is_array($data)){
-            $dataStr = json_encode($data);
+            return json_encode(self::valueAdjust($data));
         }
+        //布尔值转换
         else if(is_bool($data)){
-            $dataStr = $data ? "true" : "false";
+            $dataStr = $data ? "1" : "0";
         }
-        else if(is_int($data) || is_double($data)){
-            $dataStr = $data;
-        }
+        //默认类型转换
         else{
             $dataStr = "'$data'";
         }
@@ -39,9 +40,41 @@ class Import{
      * @param String $paths     组件路径
      * @param array $params     PHP参数
      */
-    static function component(View $view, $paths, array $params = []){
-        $content = $view->render($paths, $params);
-        $component = new VueComponent($content);
-        $component->export($view);
+    static public function component(View $view, $paths, array $params = []){
+        $component = new VueComponent($view);
+        $component->begin();
+        print $view->render($paths, $params);
+        $component->end();
+    }
+
+    /**
+     * 导入JavaScript时，对变量进行处理
+     * 布尔型会被处理成字符串的1和0
+     * @param $data
+     * @return array|int
+     */
+    static private function valueAdjust($data){
+        //对象处理
+        if(is_object($data)){
+            foreach ($data as $key=>$value){
+                $data->$key = self::valueAdjust($data->$key);
+            }
+            return $data;
+        }
+        //数组处理
+        else if(is_array($data)){
+            foreach ($data as $key=>$value){
+                $data[$key] = self::valueAdjust($data[$key]);
+            }
+            return $data;
+        }
+        //布尔型处理
+        else if(is_bool($data)){
+            return $data ? "1" : "0";
+        }
+        //其他
+        else{
+            return $data;
+        }
     }
 }
