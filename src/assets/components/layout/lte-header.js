@@ -71,6 +71,8 @@ Vue.component('lte-header', {
             <!-- 菜单 -->
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
+                    <!-- 菜单插槽(前面) -->
+                    <slot name="first-menu"></slot>
                     <!-- 信息 -->
                     <li class="dropdown messages-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -148,6 +150,8 @@ Vue.component('lte-header', {
                             </li>
                         </ul>
                     </li>
+                    <!-- 菜单插槽(中间) -->
+                    <slot name="middle-menu"></slot>
                     <!-- 用户信息 -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -181,6 +185,8 @@ Vue.component('lte-header', {
                             </li>
                         </ul>
                     </li>
+                    <!-- 菜单插槽(最后) -->
+                    <slot name="last-menu"></slot>
                     <li>
                         <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                     </li>
