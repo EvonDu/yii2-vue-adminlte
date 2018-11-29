@@ -17,6 +17,12 @@ Vue.component('lte-box', {
             boxClass['box-'+ this.type] = this.type ? true : false;
             return boxClass;
         },
+        existHeader: function() {
+            if(this.title != "" || this.icon != "")
+                return true;
+            else
+                return false;
+        },
         existFooter: function () {
             if(this.$slots.footer)
                 return true;
@@ -25,7 +31,7 @@ Vue.component('lte-box', {
         },
     },
     template: `<div :class="boxClass">
-        <div class="box-header with-border">
+        <div class="box-header with-border" v-if="existHeader">
             <h3 class="box-title"><i :class="icon" v-if="icon"></i> {{title}}</h3>
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="tooltip" v-if="tooltip"><i class="fa fa-circle-o"></i></button>
