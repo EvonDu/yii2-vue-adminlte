@@ -20,7 +20,8 @@ class Import{
             $dataStr = json_encode($objectArray);
         }
         else if(is_array($data)){
-            return json_encode(self::valueAdjust($data));
+            $objectArray = ArrayHelper::toArray(self::valueAdjust($data));
+            $dataStr = json_encode($objectArray);
         }
         //布尔值转换
         else if(is_bool($data)){
