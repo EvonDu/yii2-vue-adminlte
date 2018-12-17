@@ -21,9 +21,6 @@ function formSubmit(){
     this.setCsrfParam = function(value){
         csrfParam = value;
     };
-    this.setCsrfParam = function(value){
-        csrfParam = value;
-    };
     this.setCsrfToken = function(value){
         csrfToken = value;
     };
