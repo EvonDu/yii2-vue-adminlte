@@ -147,7 +147,6 @@ return [
     * 第一个参数为`yii\web\View`对象，即视图层的`$this`
     * 第二个参数为编写的组件
     * 第三个参数为PHP参数的key-value数组
-* 在组件模板部分（`component-template`标签内）暂不支持单引号
 * 在Vue组件中`template`的值必须为：`template: '{{component-template}}'`（注意这里用单引号）
 * 可以配置好GII后用模板生成CRUD，然后对照其中的_form文件查看（此为一个完整混编Vue组件）
 

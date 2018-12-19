@@ -32,6 +32,7 @@ class VueComponent{
 
         //提取template元素
         $template = $this->_getElement('component-template',$content);
+        $template = preg_replace("/'/",'\\\'',$template);//转义'
 
         //提取script元素
         $script = $this->_getElement('script',$content);
