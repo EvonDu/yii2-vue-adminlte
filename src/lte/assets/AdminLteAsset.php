@@ -1,6 +1,6 @@
 <?php
 
-namespace vuelte\assets;
+namespace vuelte\lte\assets;
 
 use yii\helpers\ArrayHelper;
 use yii\web\AssetBundle;
@@ -11,7 +11,7 @@ use yii\web\AssetBundle;
 class AdminLteAsset extends AssetBundle
 {
     //参数
-    public $sourcePath = __DIR__.'/resource/adminlte';
+    public $sourcePath = __DIR__.'/../static/adminlte';
 
     //定义资源包的css
     public $css = [

@@ -1,5 +1,5 @@
 <?php
-namespace vuelte\lib;
+namespace vuelte\vue\lib;
 
 use yii\web\View;
 

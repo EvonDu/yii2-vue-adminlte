@@ -1,5 +1,5 @@
 <?php
-namespace vuelte\widgets;
+namespace vuelte\lte\widgets;
 
 use yii\helpers\Html;
 

@@ -14,7 +14,7 @@ echo "<?php\n";
 
 use yii\helpers\Url;
 use yii\helpers\Html;
-use <?= $generator->indexWidgetType === 'grid' ? "vuelte\\widgets\\GridView" : "yii\\widgets\\ListView" ?>;
+use <?= $generator->indexWidgetType === 'grid' ? "vuelte\\lte\\widgets\\GridView" : "yii\\widgets\\ListView" ?>;
 <?= $generator->enablePjax ? 'use yii\widgets\Pjax;' : '' ?>
 
 /* @var $this yii\web\View */
@@ -77,7 +77,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
 }
 ?>
 
-                        ['class' => 'vuelte\widgets\ActionColumn'],
+                        ['class' => 'vuelte\lte\widgets\ActionColumn'],
                     ],
                 ]); ?>
 <?php else: ?>

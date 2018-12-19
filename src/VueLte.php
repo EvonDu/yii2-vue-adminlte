@@ -4,7 +4,7 @@ namespace vuelte;
 
 use Yii;
 
-class Assets
+class VueLte
 {
     static protected function init(){
         Yii::setAlias('@vuelte',__DIR__);
@@ -12,16 +12,16 @@ class Assets
 
     static public function layout($name){
         self::init();
-        return "@vuelte/layouts/$name.php";
+        return "@vuelte/lte/layouts/$name.php";
     }
 
     static public function view($name){
         self::init();
-        return "@vuelte/views/$name";
+        return "@vuelte/lte/views/$name";
     }
 
-    static public function template(){
+    static public function template($name="default"){
         self::init();
-        return "@vuelte/template";
+        return "@vuelte/lte/template/$name";
     }
 }

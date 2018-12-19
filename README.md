@@ -9,7 +9,7 @@
 ## 配置方法
 #### 配置布局
 * 配置文件：backend/config/main.php
-* `'layout' => vuelte\Assets::layout('main')`
+* `'layout' => vuelte\VueLte::layout('main')`
 
 #### 配置布局信息
 * 新建配置文件：backend/config/adminlte.php
@@ -98,7 +98,7 @@ return [
                 'crud' => [
                     'class' => 'yii\gii\generators\crud\Generator',
                     'templates' => [
-                        'vuelte' => vuelte\Assets::template(),
+                        'vuelte' => vuelte\VueLte::template(),
                     ]
                 ]
             ],
@@ -113,12 +113,12 @@ return [
 * 主页：
     * 配置文件：backend/controllers/SiteController.php
     * 配置actionIndex方法，修改return调用的视图就可以
-    * `return $this->render(\vuelte\Assets::view('home'));`
+    * `return $this->render(\vuelte\VueLte::view('home'));`
 * 登录页：
     * 配置文件：backend/controllers/SiteController.php
     * 配置控制器关闭CSRF认证：`public $enableCsrfValidation = false;`
     * 配置actionLogin方法，修改return调用的视图就可以
-    * `return $this->render(\vuelte\Assets::view('login'), [ 'model' => $model ]);`
+    * `return $this->render(\vuelte\VueLte::view('login'), [ 'model' => $model ]);`
 
 ## Yii与Vue结合使用
 #### 变量转化
@@ -195,14 +195,20 @@ return [
 ## 项目架构
 ```
 src
-    assets/                 Yii的Asset类
-    components/             AdminLte的Vue组件
-    layouts/                Yii的布局文件
-    resource/               前端资源集合
-    template/               Gii的Crud模板
-    tools/                  辅助类
-    views/                  视图模板
-    widgets/                Yii的Widget扩展
+    lte/                        LTE相关资源
+        assets/                 Yii的Asset类
+        layouts/                Yii的布局文件
+        lib/                    辅助类库
+        static/                 静态资源
+            adminlte/           AdminLet的静态资源
+            components/         AdminLte的Vue组件
+        template/               Gii的Crud模板
+        views/                  视图模板
+        widgets/                Yii的Widget扩展
+    vue/                        Vue相关资源
+        assets/                 Yii的Asset类
+        lib/                    辅助类库
+        static/                 静态资源
 ```
 
 ## 参与贡献

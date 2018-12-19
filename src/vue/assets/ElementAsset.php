@@ -1,6 +1,6 @@
 <?php
 
-namespace vuelte\assets;
+namespace vuelte\vue\assets;
 
 use yii\helpers\ArrayHelper;
 use yii\web\AssetBundle;
@@ -10,7 +10,7 @@ use yii\web\AssetBundle;
  */
 class ElementAsset extends AssetBundle
 {
-    public $sourcePath = __DIR__.'/resource/element';
+    public $sourcePath = __DIR__.'/../static/element';
     public $css = [
         'https://unpkg.com/element-ui/lib/theme-chalk/index.css',
         //'element.min.css'
@@ -26,6 +26,6 @@ class ElementAsset extends AssetBundle
         'position' => \yii\web\View::POS_HEAD
     ];
     public $depends = [
-        'vuelte\assets\VueAsset'
+        'vuelte\vue\assets\VueAsset'
     ];
 }

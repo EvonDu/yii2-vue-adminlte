@@ -1,5 +1,5 @@
 <?php
-namespace vuelte\lib;
+namespace vuelte\lte\lib;
 
 use yii\helpers\Url;
 

@@ -1,10 +1,10 @@
 <?php
-namespace vuelte\assets;
+namespace vuelte\lte\assets;
 
 use yii\web\AssetBundle;
 
 class AdaptationAsset extends AssetBundle {
-    public $sourcePath = __DIR__.'/resource/adaptation';
+    public $sourcePath = __DIR__.'/../static/adaptation';
     public $css = [];
     public $js = [
         'form-submit.js',

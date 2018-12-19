@@ -1,8 +1,8 @@
 <?php
 use backend\assets\AppAsset;
 use yii\helpers\Html;
-use vuelte\assets\ElementAsset;
-use vuelte\assets\AdminLteComponentsAsset;
+use vuelte\vue\assets\ElementAsset;
+use vuelte\lte\assets\AdminLteComponentsAsset;
 
 //加载资源
 AppAsset::register($this);

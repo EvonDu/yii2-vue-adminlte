@@ -11,8 +11,8 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 use backend\assets\AppAsset;
-use vuelte\assets\ElementAsset;
-use vuelte\assets\AdminLteComponentsAsset;
+use vuelte\vue\assets\ElementAsset;
+use vuelte\lte\assets\AdminLteComponentsAsset;
 
 AppAsset::register($this);
 ElementAsset::register($this);
@@ -97,7 +97,7 @@ if(file_exists($config_path)){
         store:store,
         data:{
             small:"<?= isset($this->params['small']) ? $this->params['small'] : "";?>",
-            breadcrumbs:<?= json_encode(vuelte\lib\Breadcrumbs::getBreadcrumbs($this)) ?>
+            breadcrumbs:<?= json_encode(vuelte\lte\lib\Breadcrumbs::getBreadcrumbs($this)) ?>
         }
     });
     new Vue({el: '#app-footer'});

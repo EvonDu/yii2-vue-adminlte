@@ -13,6 +13,7 @@ echo "<?php\n";
 
 use yii\helpers\Url;
 use yii\helpers\Html;
+use vuelte\vue\lib\Import;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
@@ -27,8 +28,8 @@ $this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Infl
 $this->params['breadcrumbs'][] = ['label' => $model-><?= $generator->getNameAttribute() ?>, 'url' => ['view', <?= $urlParams ?>]];
 $this->params['breadcrumbs'][] = <?= $generator->generateString('Update') ?>;
 
-vuelte\lib\Import::value($this, $model, "data");
-vuelte\lib\Import::component($this,'_form', ['model' => $model]);
+Import::value($this, $model, "data");
+Import::component($this,'_form', ['model' => $model]);
 ?>
 <div id="app">
     <lte-row>

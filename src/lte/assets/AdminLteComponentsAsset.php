@@ -1,6 +1,6 @@
 <?php
 
-namespace vuelte\assets;
+namespace vuelte\lte\assets;
 
 use yii\helpers\ArrayHelper;
 use yii\web\AssetBundle;
@@ -11,7 +11,7 @@ use yii\web\AssetBundle;
 class AdminLteComponentsAsset extends AssetBundle
 {
     //参数
-    public $sourcePath = __DIR__.'/components';
+    public $sourcePath = __DIR__.'/../static/components';
     public $css = [];
     public $js = [
         'layout/lte-header.js',
@@ -35,8 +35,7 @@ class AdminLteComponentsAsset extends AssetBundle
 
     //定义资源包的依赖
     public $depends = [
-        'vuelte\assets\VueAsset',
-        'vuelte\assets\AdminLteAsset',
-        'vuelte\assets\AdaptationAsset',
+        'vuelte\vue\assets\VueAsset',
+        'vuelte\lte\assets\AdminLteAsset',
     ];
 }

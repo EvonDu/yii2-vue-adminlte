@@ -11,6 +11,7 @@ echo "<?php\n";
 
 use yii\helpers\Url;
 use yii\helpers\Html;
+use vuelte\vue\lib\Import;
 
 
 /* @var $this yii\web\View */
@@ -21,8 +22,8 @@ $this->params['small'] = 'Create';
 $this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
-vuelte\lib\Import::value($this, $model, "data");
-vuelte\lib\Import::component($this,'_form', ['model' => $model]);
+Import::value($this, $model, "data");
+Import::component($this,'_form', ['model' => $model]);
 ?>
 <div id="app">
     <lte-row>
