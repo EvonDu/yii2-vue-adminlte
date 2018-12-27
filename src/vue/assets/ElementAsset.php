@@ -12,12 +12,12 @@ class ElementAsset extends AssetBundle
 {
     public $sourcePath = __DIR__.'/../static/element';
     public $css = [
-        'https://unpkg.com/element-ui/lib/theme-chalk/index.css',
-        //'element.min.css'
+        //'https://unpkg.com/element-ui/lib/theme-chalk/index.css',
+        'element.min.css'
     ];
     public $js = [
-        'https://unpkg.com/element-ui/lib/index.js',
-        //'element.min.js'
+        //'https://unpkg.com/element-ui/lib/index.js',
+        'element.min.js'
     ];
     public $jsOptions = [
         'position' => \yii\web\View::POS_HEAD
