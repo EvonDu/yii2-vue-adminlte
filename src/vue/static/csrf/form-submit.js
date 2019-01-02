@@ -36,7 +36,7 @@ function formSubmit(){
             if(value === null)
                 continue;
             //特殊处理数组和对象
-            if(typeof value == 'object'){
+            if(typeof value === 'object'){
                 //特殊处理数组和对象
                 var hash = getArrayHash(name,value);
                 for(var i in hash){
@@ -79,13 +79,11 @@ function formSubmit(){
     //辅助方法
     function getArrayHash(name,array){
         var hash = [];
-        console.log(typeof array);
-        console.log(array);
         var isArray = !isNaN(array.length);
-        if(typeof array == 'object'){
+        if(typeof array === 'object'){
             for(var key in array){
                 var value = array[key];
-                if(typeof value == 'object'){
+                if(typeof value === 'object' && value !== null){
                     if(isArray)
                         hash = getArrayHash(name+"["+key+"]",value);
                     else
@@ -107,7 +105,7 @@ function formSubmit(){
 
     //辅助方法 - 取值
     function getValue(value){
-        if(typeof value == 'boolean'){
+        if(typeof value === 'boolean'){
             return value ? 1 : 0;
         }
         else {

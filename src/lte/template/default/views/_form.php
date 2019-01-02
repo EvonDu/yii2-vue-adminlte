@@ -19,11 +19,11 @@ echo "<?php\n";
 use yii\helpers\Html;
 use vuelte\lte\lib\ModelFields;
 
-$fields = new ModelFields($model);
-
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 /* @var $form yii\widgets\ActiveForm */
+
+$fields = new ModelFields($model);
 ?>
 <component-template>
     <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form">
@@ -44,11 +44,11 @@ $fields = new ModelFields($model);
     Vue.component('model-form', {
         template: '{{component-template}}',
         props:{
-            data:{ type: Object, default: function(){ return {}; }}
+            model:{ type: Object, default: function(){ return {}; }}
         },
         methods: {
             submit: function (event) {
-                YiiFormSubmit(this.data, "<?= $model->formName()?>");
+                YiiFormSubmit(this.model, "<?= $model->formName()?>");
             }
         }
     });
@@ -61,27 +61,27 @@ $fields = new ModelFields($model);
         $column = $tableSchema->columns[$attribute];
         if ($column->phpType === 'boolean') {
             $html[] = '    <el-form-item prop="'.$attribute.'" label="<?= $fields->getLabel("'.$attribute.'")?>" error="<?= $fields->getError("'.$attribute.'")?>">';
-            $html[] = '                <el-input v-model="data.'.$attribute.'" type="password"></el-input>';
+            $html[] = '                <el-input v-model="model.'.$attribute.'" type="password"></el-input>';
             $html[] = '            </el-form-item>';
             return implode("\n",$html);
         }
 
         if ($column->type === 'text') {
             $html[] = '    <el-form-item prop="'.$attribute.'" label="<?= $fields->getLabel("'.$attribute.'")?>" error="<?= $fields->getError("'.$attribute.'")?>">';
-            $html[] = '                <el-input v-model="data.'.$attribute.'" type="textarea" rows="6"></el-input>';
+            $html[] = '                <el-input v-model="model.'.$attribute.'" type="textarea" rows="6"></el-input>';
             $html[] = '            </el-form-item>';
             return implode("\n",$html);
         }
 
         if (preg_match('/^(password|pass|passwd|passcode)$/i', $column->name)) {
             $html[] = '    <el-form-item prop="'.$attribute.'" label="<?= $fields->getLabel("'.$attribute.'")?>" error="<?= $fields->getError("'.$attribute.'")?>">';
-            $html[] = '                <el-input v-model="data.'.$attribute.'" type="password"></el-input>';
+            $html[] = '                <el-input v-model="model.'.$attribute.'" type="password"></el-input>';
             $html[] = '            </el-form-item>';
             return implode("\n",$html);
         }
 
         $html[] = '    <el-form-item prop="'.$attribute.'" label="<?= $fields->getLabel("'.$attribute.'")?>" error="<?= $fields->getError("'.$attribute.'")?>">';
-        $html[] = '                <el-input v-model="data.'.$attribute.'"></el-input>';
+        $html[] = '                <el-input v-model="model.'.$attribute.'"></el-input>';
         $html[] = '            </el-form-item>';
         return implode("\n",$html);
     }

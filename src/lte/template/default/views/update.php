@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Infl
 $this->params['breadcrumbs'][] = ['label' => $model-><?= $generator->getNameAttribute() ?>, 'url' => ['view', <?= $urlParams ?>]];
 $this->params['breadcrumbs'][] = <?= $generator->generateString('Update') ?>;
 
-Import::value($this, $model, "data");
+Import::value($this, $model, "model");
 Import::component($this,'_form', ['model' => $model]);
 ?>
 <div id="app">
@@ -67,7 +67,7 @@ Import::component($this,'_form', ['model' => $model]);
         <lte-col col="9">
             <lte-box title="编辑" icon="fa fa-edit">
 
-                <model-form :data="data"></model-form>
+                <model-form :model="model"></model-form>
 
             </lte-box>
         </lte-col>
@@ -78,7 +78,7 @@ Import::component($this,'_form', ['model' => $model]);
     new Vue({
         el:'#app',
         data:{
-            data:data
+            model:model
         }
     })
 </script>

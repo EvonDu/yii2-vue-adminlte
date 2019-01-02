@@ -22,7 +22,7 @@ $this->params['small'] = 'Create';
 $this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
-Import::value($this, $model, "data");
+Import::value($this, $model, "model");
 Import::component($this,'_form', ['model' => $model]);
 ?>
 <div id="app">
@@ -30,22 +30,22 @@ Import::component($this,'_form', ['model' => $model]);
         <lte-col col="3">
             <lte-box title="选项" icon="fa fa-edit">
                 <?= "<?= " ?>Html::tag("lte-btn","<i class='glyphicon glyphicon-list'></i> 列表",[
-                "href"=>Url::to(["index"]),
-                "a"=>true,
-                "block"=>true,
+                    "href"=>Url::to(["index"]),
+                    "a"=>true,
+                    "block"=>true,
                 ])?>
                 <?= "<?= " ?>Html::tag("lte-btn","<i class='glyphicon glyphicon-share-alt'></i> 返回",[
-                "href"=>"javascript:history.go(-1)",
-                "a"=>true,
-                "block"=>true,
-                "type"=>"warning"
+                    "href"=>"javascript:history.go(-1)",
+                    "a"=>true,
+                    "block"=>true,
+                    "type"=>"warning"
                 ])?>
             </lte-box>
         </lte-col>
         <lte-col col="9">
             <lte-box title="新增" icon="fa fa-plus">
 
-                <model-form :data="data"></model-form>
+                <model-form :model="model"></model-form>
 
             </lte-box>
         </lte-col>
@@ -56,7 +56,7 @@ Import::component($this,'_form', ['model' => $model]);
     new Vue({
         el:'#app',
         data:{
-            data:data
+            model:model
         }
     })
 </script>
