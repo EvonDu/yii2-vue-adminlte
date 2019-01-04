@@ -11,7 +11,6 @@ echo "<?php\n";
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use vuelte\vue\widgets\ActiveElementForm;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->searchModelClass, '\\') ?> */

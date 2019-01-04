@@ -50,9 +50,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     "block"=>true,
                     "type"=>"danger",
                     'data' => [
-                    'confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
-                    'method' => 'post',
-                ]
+                        'confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                        'method' => 'post',
+                    ]
                 ])?>
                 <?= "<?= " ?>Html::tag("lte-btn","<i class='glyphicon glyphicon-share-alt'></i> 返回",[
                     "href"=>"javascript:history.go(-1)",

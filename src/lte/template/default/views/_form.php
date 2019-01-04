@@ -16,7 +16,6 @@ if (empty($safeAttributes)) {
 echo "<?php\n";
 ?>
 
-use yii\helpers\Html;
 use vuelte\lte\lib\ModelFields;
 
 /* @var $this yii\web\View */
@@ -48,7 +47,7 @@ $fields = new ModelFields($model);
         },
         methods: {
             submit: function (event) {
-                YiiFormSubmit(this.model, "<?= $model->formName()?>");
+                YiiFormSubmit(this.model, "<?= "<?php " ?>$model->formName()?>");
             }
         }
     });
