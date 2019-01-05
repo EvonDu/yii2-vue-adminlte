@@ -12,8 +12,7 @@ $nameAttribute = $generator->getNameAttribute();
 echo "<?php\n";
 ?>
 
-use yii\helpers\Url;
-use yii\helpers\Html;
+use vuelte\vue\lib\Import;
 use <?= $generator->indexWidgetType === 'grid' ? "vuelte\\lte\\widgets\\GridView" : "yii\\widgets\\ListView" ?>;
 <?= $generator->enablePjax ? 'use yii\widgets\Pjax;' : '' ?>
 
@@ -24,23 +23,14 @@ use <?= $generator->indexWidgetType === 'grid' ? "vuelte\\lte\\widgets\\GridView
 $this->title = <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>;
 $this->params['small'] = 'List';
 $this->params['breadcrumbs'][] = $this->title;
+
+Import::component($this, '_options');
 ?>
 <div id="app">
     <lte-row>
         <lte-col col="3">
             <lte-box title="选项" icon="fa fa-edit">
-                <?= "<?= " ?>Html::tag("lte-btn","<i class='glyphicon glyphicon-plus'></i> 添加",[
-                    "href"=>Url::to(["create"]),
-                    "a"=>true,
-                    "block"=>true,
-                    "type"=>"info"
-                ])?>
-                <?= "<?= " ?>Html::tag("lte-btn","<i class='glyphicon glyphicon-share-alt'></i> 返回",[
-                    "href"=>"javascript:history.go(-1)",
-                    "a"=>true,
-                    "block"=>true,
-                    "type"=>"warning"
-                ])?>
+                <model-options></model-options>
             </lte-box>
             <lte-box title="搜索" icon="fa fa-search">
                 <?= "<?= " ?>$this->render('_search', ['model' => $searchModel]); ?>
