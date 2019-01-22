@@ -1,6 +1,4 @@
 <?php
-use yii\helpers\Url;
-
 class Calendar{
     function getList($year, $month){
         //获取当月共有多少日
@@ -200,50 +198,30 @@ $this->params['small'] = 'Dashboard';
     }
 </style>
 <div id="app">
-    <lte-row>
-        <lte-col col="12">
-            <lte-box title="系统：<?= PHP_OS ?>">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="system-item">
-                            <div class="title">用户</div>
-                            <div class="data">
-                                <div class="count">2 个</div>
-                                <div class="action">
-                                    <a href="<?=Url::to(["user/user/index"])?>">管理</a> |
-                                    <a href="<?=Url::to(["user/user/signup"])?>">添加</a>
+    <?php if(isset($box) && is_array($box)):?>
+        <lte-row>
+            <lte-col col="12">
+                <lte-box title="系统：<?= PHP_OS ?>">
+                    <div class="row">
+                        <?php foreach ($box as $item):?>
+                            <div class="col-md-3">
+                                <div class="system-item">
+                                    <div class="title"><?=isset($item["title"])?$item["title"]:null?></div>
+                                    <div class="data">
+                                        <div class="count"><?=isset($item["text"])?$item["text"]:null?></div>
+                                        <div class="action">
+                                            <a href="<?=isset($item["btn1_url"])?$item["btn1_url"]:"#"?>"><?=isset($item["btn1_text"])?$item["btn1_text"]:null?></a> |
+                                            <a href="<?=isset($item["btn2_url"])?$item["btn2_url"]:"#"?>"><?=isset($item["btn2_text"])?$item["btn2_text"]:null?></a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        <?php endforeach;?>
                     </div>
-                    <div class="col-md-3">
-                        <div class="system-item">
-                            <div class="title">角色</div>
-                            <div class="data">
-                                <div class="count">6 个</div>
-                                <div class="action">
-                                    <a href="<?=Url::to(["user/role/index"])?>">管理</a> |
-                                    <a href="<?=Url::to(["user/role/create"])?>">添加</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="system-item">
-                            <div class="title">GII</div>
-                            <div class="data">
-                                <div class="count">2 个</div>
-                                <div class="action">
-                                    <a href="<?=Url::to(["gii/default/view","id"=>"model"])?>" target="_blank">MODEL</a> |
-                                    <a href="<?=Url::to(["gii/default/view","id"=>"crud"])?>" target="_blank">CURD</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </lte-box>
-        </lte-col>
-    </lte-row>
+                </lte-box>
+            </lte-col>
+        </lte-row>
+    <?php endif;?>
     <lte-row>
         <lte-col col="12">
             <lte-box title="服务器状态">

@@ -23,7 +23,7 @@ return [
     'productName' => 'Yii AdminLet',
     //配置用户
     'user' => [
-        'name'=> Yii::$app->user->identity->username,
+        'name'=> isset(Yii::$app->user->identity->username) ? Yii::$app->user->identity->username : null,
         'image'=> "https://adminlte.io/themes/AdminLTE/dist/img/user8-128x128.jpg",
         'job'=> "Developer",
         'abstract'=> 'Member since Nov. 2012',
@@ -113,12 +113,27 @@ return [
 * 主页：
     * 配置文件：backend/controllers/SiteController.php
     * 配置actionIndex方法，修改return调用的视图就可以
-    * `return $this->render(\vuelte\VueLte::view('home'));`
+```
+return $this->render(\vuelte\VueLte::view('home'), [
+    'box' => [
+        [
+            "title" => "用户",
+            "text" => "2 个",
+            "btn1_text" => "管理",
+            "btn1_url" => Url::to(["user/user/index"]),
+            "btn2_text" => "添加",
+            "btn2_url" => Url::to(["user/user/signup"]),
+        ],
+        //……
+    ]);
+```
 * 登录页：
     * 配置文件：backend/controllers/SiteController.php
     * 配置控制器关闭CSRF认证：`public $enableCsrfValidation = false;`
     * 配置actionLogin方法，修改return调用的视图就可以
-    * `return $this->render(\vuelte\VueLte::view('login'), [ 'model' => $model ]);`
+```
+return $this->render(\vuelte\VueLte::view('login'), [ 'model' => $model ]);
+```
 
 ## Yii与Vue结合使用
 #### 变量转化
