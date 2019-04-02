@@ -18,7 +18,6 @@ class ModelFields{
     }
 
     /**
-     * @param $model
      * @param $attribute
      * @return string
      */
@@ -27,7 +26,6 @@ class ModelFields{
     }
 
     /**
-     * @param $model
      * @param $attribute
      * @return string
      */
@@ -36,11 +34,12 @@ class ModelFields{
     }
 
     /**
-     * @param $model
      * @param $attribute
      * @return mixed
      */
     public function getError($attribute){
-        return $this->model->getFirstError($attribute);
+        $error = $this->model->getFirstError($attribute);
+        $error = preg_replace("/('|\"){1}/", "`", $error);
+        return $error;
     }
 }
