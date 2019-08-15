@@ -3,8 +3,8 @@
 /* @var $content string */
 
 use yii\helpers\Html;
-use vuelte\vue\assets\ElementAsset;
 use vuelte\lte\assets\AppAsset;
+use vuelte\lte\assets\ElementAsset;
 use vuelte\lte\assets\AdminLteComponentsAsset;
 
 //加载资源
