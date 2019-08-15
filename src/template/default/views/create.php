@@ -9,7 +9,7 @@ use yii\helpers\StringHelper;
 echo "<?php\n";
 ?>
 
-use vuelte\vue\Import;
+use yiivue\Import;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */

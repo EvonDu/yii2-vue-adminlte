@@ -3,9 +3,9 @@
 /* @var $content string */
 
 use yii\helpers\Html;
-use vuelte\lte\assets\AppAsset;
-use vuelte\lte\assets\ElementAsset;
-use vuelte\lte\assets\AdminLteComponentsAsset;
+use vuelte\assets\AppAsset;
+use vuelte\assets\ElementAsset;
+use vuelte\assets\AdminLteComponentsAsset;
 
 //加载资源
 AppAsset::register($this);

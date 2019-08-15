@@ -12,8 +12,8 @@ $nameAttribute = $generator->getNameAttribute();
 echo "<?php\n";
 ?>
 
-use vuelte\vue\Import;
-use <?= $generator->indexWidgetType === 'grid' ? "vuelte\\lte\\widgets\\GridView" : "yii\\widgets\\ListView" ?>;
+use yiivue\Import;
+use <?= $generator->indexWidgetType === 'grid' ? "vuelte\\widgets\\GridView" : "yii\\widgets\\ListView" ?>;
 <?= $generator->enablePjax ? 'use yii\widgets\Pjax;' : '' ?>
 
 /* @var $this yii\web\View */
@@ -67,7 +67,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
 }
 ?>
 
-                        ['class' => 'vuelte\lte\widgets\ActionColumn'],
+                        ['class' => 'vuelte\widgets\ActionColumn'],
                     ],
                 ]); ?>
 <?php else: ?>

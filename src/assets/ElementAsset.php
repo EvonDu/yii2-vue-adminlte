@@ -1,8 +1,7 @@
 <?php
 
-namespace vuelte\lte\assets;
+namespace vuelte\assets;
 
-use yii\helpers\ArrayHelper;
 use yii\web\AssetBundle;
 
 /**
@@ -26,6 +25,6 @@ class ElementAsset extends AssetBundle
         'position' => \yii\web\View::POS_HEAD
     ];
     public $depends = [
-        'vuelte\vue\assets\VueAsset'
+        'yiivue\assets\VueAsset'
     ];
 }

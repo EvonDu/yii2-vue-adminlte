@@ -11,8 +11,8 @@ $urlParams = $generator->generateUrlParams();
 echo "<?php\n";
 ?>
 
-use vuelte\vue\Import;
-use vuelte\lte\widgets\DetailView;
+use yiivue\Import;
+use vuelte\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */

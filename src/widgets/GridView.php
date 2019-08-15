@@ -1,7 +1,5 @@
 <?php
-namespace vuelte\lte\widgets;
-
-use yii\helpers\Html;
+namespace vuelte\widgets;
 
 /*
 use metronic\widgets\GridView

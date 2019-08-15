@@ -1,8 +1,7 @@
 <?php
 
-namespace vuelte\lte\assets;
+namespace vuelte\assets;
 
-use yii\helpers\ArrayHelper;
 use yii\web\AssetBundle;
 
 /**

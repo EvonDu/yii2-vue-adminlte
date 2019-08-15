@@ -16,7 +16,7 @@ if (empty($safeAttributes)) {
 echo "<?php\n";
 ?>
 
-use vuelte\lte\lib\ModelFields;
+use vuelte\lib\ModelFields;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */

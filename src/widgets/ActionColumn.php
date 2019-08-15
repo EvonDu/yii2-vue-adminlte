@@ -1,9 +1,8 @@
 <?php
-namespace vuelte\lte\widgets;
+namespace vuelte\widgets;
 
 use Yii;
 use yii\helpers\Html;
-use yii\helpers\Url;
 
 class ActionColumn extends \yii\grid\ActionColumn {
     public $template = '{view}&nbsp{update}&nbsp{delete}';

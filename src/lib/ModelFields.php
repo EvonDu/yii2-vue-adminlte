@@ -1,5 +1,5 @@
 <?php
-namespace vuelte\lte\lib;
+namespace vuelte\lib;
 
 use yii\helpers\Html;
 

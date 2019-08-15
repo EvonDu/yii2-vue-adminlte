@@ -1,5 +1,5 @@
 <?php
-namespace vuelte\lte\assets;
+namespace vuelte\assets;
 
 use yii\web\AssetBundle;
 use yii\web\View;

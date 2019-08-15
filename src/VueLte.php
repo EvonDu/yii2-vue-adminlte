@@ -12,16 +12,16 @@ class VueLte
 
     static public function layout($name){
         self::init();
-        return "@vuelte/lte/layouts/$name.php";
+        return "@vuelte/layouts/$name.php";
     }
 
     static public function view($name){
         self::init();
-        return "@vuelte/lte/views/$name";
+        return "@vuelte/views/$name";
     }
 
     static public function template($name="default"){
         self::init();
-        return "@vuelte/lte/template/$name";
+        return "@vuelte/template/$name";
     }
 }
