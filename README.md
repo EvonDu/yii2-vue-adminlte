@@ -152,7 +152,7 @@ return $this->render(\vuelte\VueLte::view('login'), [ 'model' => $model ]);
     * 第一个参数为提交的JavaScript对象
     * 第二个参数为Yii中的模型名（用于迎合Yii的表单提交方式）
     * 示例执行后POST的数据为：`Demo[name]=test`
-    * 并且此种提交方式也已经实现了Yii的CSRF认证
+    * 并且此种提交方式也支持Yii的CSRF认证
 
 ## 编写Vue组件（PHP混编组件）
 #### 实现概述
