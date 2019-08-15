@@ -11,8 +11,8 @@ $urlParams = $generator->generateUrlParams();
 echo "<?php\n";
 ?>
 
-use yii\widgets\DetailView;
-use vuelte\vue\lib\Import;
+use vuelte\vue\Import;
+use vuelte\lte\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 Import::component($this, '_options', ['model' => $model]);
 ?>
-<div id="app">
+<component-template>
     <lte-row>
         <lte-col col="3">
             <lte-box title="选项" icon="fa fa-edit">
@@ -55,11 +55,10 @@ Import::component($this, '_options', ['model' => $model]);
             </lte-box>
         </lte-col>
     </lte-row>
-</div>
+</component-template>
 
 <script>
-    new Vue({
-        el:'#app',
-        data:{}
+    Vue.component('let-content', {
+        template: '{{component-template}}'
     })
 </script>

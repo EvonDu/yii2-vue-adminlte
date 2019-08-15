@@ -3,7 +3,14 @@ namespace vuelte\vue;
 
 use yii\web\View;
 use yii\helpers\ArrayHelper;
+use vuelte\vue\core\VueComponent;
 
+/**
+ * 导入组件类(核心)
+ * 用来导入PHP编写的Vue组件/变量到JavaScript环境中
+ * Class Import
+ * @package vuelte\vue
+ */
 class Import{
     /**
      * 导入JavaScript变量（从PHP变量中）

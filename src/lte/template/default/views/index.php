@@ -12,7 +12,7 @@ $nameAttribute = $generator->getNameAttribute();
 echo "<?php\n";
 ?>
 
-use vuelte\vue\lib\Import;
+use vuelte\vue\Import;
 use <?= $generator->indexWidgetType === 'grid' ? "vuelte\\lte\\widgets\\GridView" : "yii\\widgets\\ListView" ?>;
 <?= $generator->enablePjax ? 'use yii\widgets\Pjax;' : '' ?>
 
@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 Import::component($this, '_options');
 ?>
-<div id="app">
+<component-template>
     <lte-row>
         <lte-col col="3">
             <lte-box title="选项" icon="fa fa-edit">
@@ -84,11 +84,10 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
             </lte-box>
         </lte-col>
     </lte-row>
-</div>
+</component-template>
 
 <script>
-    new Vue({
-        el:'#app',
-        data:{}
+    Vue.component('let-content', {
+        template: '{{component-template}}'
     })
 </script>

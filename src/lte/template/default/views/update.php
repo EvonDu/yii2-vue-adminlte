@@ -11,7 +11,7 @@ $urlParams = $generator->generateUrlParams();
 echo "<?php\n";
 ?>
 
-use vuelte\vue\lib\Import;
+use vuelte\vue\Import;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
@@ -30,7 +30,7 @@ Import::value($this, $model, "model");
 Import::component($this, '_options', ['model' => $model]);
 Import::component($this,'_form', ['model' => $model]);
 ?>
-<div id="app">
+<component-template>
     <lte-row>
         <lte-col col="3">
             <lte-box title="选项" icon="fa fa-edit">
@@ -43,13 +43,15 @@ Import::component($this,'_form', ['model' => $model]);
             </lte-box>
         </lte-col>
     </lte-row>
-</div>
+</component-template>
 
 <script>
-    new Vue({
-        el:'#app',
-        data:{
-            model:model
+    Vue.component('let-content', {
+        template: '{{component-template}}',
+        data: function(){
+            return {
+                "model": model
+            }
         }
     })
 </script>

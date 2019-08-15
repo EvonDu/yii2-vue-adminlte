@@ -1,22 +1,21 @@
 <?php
-
 /* @var $this \yii\web\View */
 /* @var $content string */
 
 use yii\helpers\Url;
 use yii\helpers\Html;
-use yii\helpers\ArrayHelper;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
-use common\widgets\Alert;
-use backend\assets\AppAsset;
+use vuelte\vue\Import;
 use vuelte\vue\assets\ElementAsset;
+use vuelte\lte\assets\AppAsset;
 use vuelte\lte\assets\AdminLteComponentsAsset;
 
+//加载资源
 AppAsset::register($this);
 ElementAsset::register($this);
 AdminLteComponentsAsset::register($this);
+
+//加载内容(组件形式)
+Import::componentByContent($this, $content);
 
 //读取配置信息
 $config = [];
@@ -40,26 +39,22 @@ if(file_exists($config_path)){
 <body class="hold-transition skin-blue fixed sidebar-mini">
 <?php $this->beginBody() ?>
 
-<div class="wrapper">
-    <div id="app-header">
-        <lte-header :title="title" :url-home="urlHome" :signout="signout"
-                    :messages="header.messages" :notifications="header.notifications" :tasks="header.tasks"
-                    :user="user" :user-buttons="userButtons" :signout="signout" :profile="profile"></lte-header>
-        <lte-sidebar :nav="nav" :user="user"></lte-sidebar>
-    </div>
+<div id="app" class="wrapper">
+    <lte-header :title="title" :url-home="urlHome" :signout="signout"
+                :messages="header.messages" :notifications="header.notifications" :tasks="header.tasks"
+                :user="user" :user-buttons="userButtons" :signout="signout" :profile="profile"></lte-header>
+    <lte-sidebar :nav="nav" :user="user"></lte-sidebar>
     <div class="content-wrapper">
-        <div id="content-header">
-            <lte-content-header :small="small" :breadcrumbs="breadcrumbs"><?=$this->title?></lte-content-header>
+        <lte-content-header :small="small" :breadcrumbs="breadcrumbs"><?=$this->title?></lte-content-header>
+        <div class="content">
+            <let-content></let-content>
         </div>
-        <div class="content"><?= $content ?></div>
     </div>
-    <div id="app-footer">
-        <lte-footer><?= isset($config['footer']) ? $config['footer'] : '<strong>Copyright &copy; 2017-2018 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights reserved.'?></lte-footer>
-        <lte-sidebar-setting>
-            <div slot="home"><h4 class="control-sidebar-heading">Home</h4></div>
-            <div slot="setting"><h4 class="control-sidebar-heading">Setting</h4></div>
-        </lte-sidebar-setting>
-    </div>
+    <lte-footer><?= isset($config['footer']) ? $config['footer'] : '<strong>Copyright &copy; 2017-2018 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights reserved.'?></lte-footer>
+    <lte-sidebar-setting>
+        <div slot="home"><h4 class="control-sidebar-heading">Home</h4></div>
+        <div slot="setting"><h4 class="control-sidebar-heading">Setting</h4></div>
+    </lte-sidebar-setting>
 </div>
 
 <script>
@@ -67,8 +62,8 @@ if(file_exists($config_path)){
         state: {},
         mutations: {}
     });
-    new Vue({
-        el: '#app-header',
+    const vue = new Vue({
+        el: '#app',
         store:store,
         data: function() {
             return {
@@ -89,18 +84,11 @@ if(file_exists($config_path)){
                 profile : <?= isset($config['profile']) ? json_encode($config['profile']) : '{}'?>,
                 signout : <?= isset($config['signout']) ? json_encode($config['signout']) : '{"text":"Sign Out"}'?>,
                 userButtons : <?= isset($config['userButtons']) ? json_encode($config['userButtons']) : '[]'?>,
+                small:"<?= isset($this->params['small']) ? $this->params['small'] : "";?>",
+                breadcrumbs:<?= json_encode(vuelte\lte\lib\Breadcrumbs::getBreadcrumbs($this)) ?>
             }
         }
     });
-    new Vue({
-        el: '#content-header',
-        store:store,
-        data:{
-            small:"<?= isset($this->params['small']) ? $this->params['small'] : "";?>",
-            breadcrumbs:<?= json_encode(vuelte\lte\lib\Breadcrumbs::getBreadcrumbs($this)) ?>
-        }
-    });
-    new Vue({el: '#app-footer'});
 </script>
 
 <?php $this->endBody() ?>
