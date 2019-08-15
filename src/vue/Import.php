@@ -1,5 +1,5 @@
 <?php
-namespace vuelte\vue\lib;
+namespace vuelte\vue;
 
 use yii\web\View;
 use yii\helpers\ArrayHelper;
@@ -43,6 +43,16 @@ class Import{
      */
     static public function component(View $view, $paths, array $params = []){
         $content = $view->render($paths, $params);
+        $component = new VueComponent($content);
+        $component->export($view);
+    }
+
+    /**
+     * 导入Vue组件(直接以内容形式)
+     * @param View $view        视图
+     * @param String $content   组件内容
+     */
+    static public function componentByContent(View $view, $content){
         $component = new VueComponent($content);
         $component->export($view);
     }

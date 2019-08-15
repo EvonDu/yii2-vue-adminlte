@@ -1,5 +1,5 @@
 <?php
-namespace vuelte\vue\lib;
+namespace vuelte\vue\core;
 
 use yii\db\Exception;
 
