@@ -5,7 +5,12 @@ use Yii;
 use \yii\web\View;
 use yii\web\AssetBundle;
 
-class CsrfAsset extends AssetBundle {
+/**
+ * Vue原型(prototype)注入Yii相关操作方法属性
+ * Class YiiPrototypeAsset
+ * @package vuelte\vue\assets
+ */
+class VueYiiAsset extends AssetBundle {
     /**
      * 参数配置
      */
@@ -30,10 +35,13 @@ class CsrfAsset extends AssetBundle {
      * @param $view
      */
     public function registerCsrfAuthentication($view){
-        //submit form js
+        //get request
         $request = Yii::$app->getRequest();
-        $js[] = "function YiiFormSubmit(data,formName){";
-        $js[] = "var form = new formSubmit();";
+
+        //submit form js
+        $js[] = "\n";
+        $js[] = 'Vue.prototype.$yii = Vue.prototype.$yii || {};';
+        $js[] = 'Vue.prototype.$yii.submit=function(data,formName){';$js[] = "var form = new formSubmit();";
         $js[] = "form.setFormName(formName);";
         $js[] = "form.setCsrfEnable(".($request->enableCsrfValidation?"true":"false").");";
         $js[] = "form.setCsrfParam('".$request->csrfParam."');";

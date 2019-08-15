@@ -47,7 +47,7 @@ $fields = new ModelFields($model);
         },
         methods: {
             submit: function (event) {
-                YiiFormSubmit(this.model, "<?= "<?= " ?>$model->formName()?>");
+                this.$yii.submit(this.model, "<?= "<?= " ?>$model->formName()?>");
             }
         }
     });
