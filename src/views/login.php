@@ -7,7 +7,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->context->layout = '@vuelte/lte/layouts/login.php';
+$this->context->layout = '@vuelte/layouts/login.php';
 $this->title = '用户登录';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
