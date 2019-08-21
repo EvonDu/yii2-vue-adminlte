@@ -9,7 +9,7 @@
     ],
     "require": {
 		"yiisoft/yii2": "*",
-		"evondu/yii2-vue": "1.0.0"
+		"evondu/yii2-vue": "1.0.1"
 	},
 	"autoload": {
 		"psr-4": {
