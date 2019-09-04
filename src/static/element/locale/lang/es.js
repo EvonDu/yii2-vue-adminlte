@@ -70,7 +70,8 @@ exports.default = {
     cascader: {
       noMatch: 'No hay datos que coincidan',
       loading: 'Cargando',
-      placeholder: 'Seleccionar'
+      placeholder: 'Seleccionar',
+      noData: 'Sin datos'
     },
     pagination: {
       goto: 'Ir a',
@@ -106,6 +107,12 @@ exports.default = {
       filterPlaceholder: 'Ingresar palabra clave',
       noCheckedFormat: '{total} artículos',
       hasCheckedFormat: '{checked}/{total} revisados'
+    },
+    image: {
+      error: 'FAILED' // to be translated
+    },
+    pageHeader: {
+      title: 'Back' // to be translated
     }
   }
 };

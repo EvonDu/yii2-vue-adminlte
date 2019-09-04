@@ -37,12 +37,32 @@ module.exports =
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -60,48 +80,43 @@ module.exports =
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
+/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 352);
+/******/ 	return __webpack_require__(__webpack_require__.s = 112);
 /******/ })
 /************************************************************************/
 /******/ ({
 
 /***/ 0:
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return normalizeComponent; });
 /* globals __VUE_SSR_CONTEXT__ */
 
-// IMPORTANT: Do NOT use ES2015 features in this file.
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
 // This module is a runtime utility for cleaner component module output and will
 // be included in the final webpack user bundle.
 
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
   functionalTemplate,
   injectStyles,
   scopeId,
-  moduleIdentifier /* server only */
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
 ) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
   // Vue.extend constructor export interop
   var options = typeof scriptExports === 'function'
     ? scriptExports.options
     : scriptExports
 
   // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
     options._compiled = true
   }
 
@@ -112,7 +127,7 @@ module.exports = function normalizeComponent (
 
   // scopedId
   if (scopeId) {
-    options._scopeId = scopeId
+    options._scopeId = 'data-v-' + scopeId
   }
 
   var hook
@@ -140,34 +155,32 @@ module.exports = function normalizeComponent (
     // never gets called
     options._ssrRegister = hook
   } else if (injectStyles) {
-    hook = injectStyles
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
   }
 
   if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
+    if (options.functional) {
       // for template-only hot-reload because in that case the render fn doesn't
       // go through the normalizer
       options._injectStyles = hook
       // register for functioal component in vue file
+      var originalRender = options.render
       options.render = function renderWithStyleInjection (h, context) {
         hook.call(context)
-        return existing(h, context)
+        return originalRender(h, context)
       }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
     }
   }
 
   return {
-    esModule: esModule,
     exports: scriptExports,
     options: options
   }
@@ -176,246 +189,573 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ 1:
-/***/ (function(module, exports) {
-
-module.exports = require("element-ui/lib/mixins/emitter");
-
-/***/ }),
-
 /***/ 10:
 /***/ (function(module, exports) {
 
-module.exports = require("element-ui/lib/utils/clickoutside");
+module.exports = require("element-ui/lib/mixins/migrating");
 
 /***/ }),
 
-/***/ 12:
+/***/ 11:
 /***/ (function(module, exports) {
 
-module.exports = require("element-ui/lib/locale");
+module.exports = require("element-ui/lib/input");
 
 /***/ }),
 
-/***/ 14:
-/***/ (function(module, exports) {
-
-module.exports = require("throttle-debounce/debounce");
-
-/***/ }),
-
-/***/ 2:
-/***/ (function(module, exports) {
-
-module.exports = require("element-ui/lib/utils/util");
-
-/***/ }),
-
-/***/ 23:
-/***/ (function(module, exports) {
-
-module.exports = require("element-ui/lib/utils/shared");
-
-/***/ }),
-
-/***/ 26:
-/***/ (function(module, exports) {
-
-module.exports = require("element-ui/lib/utils/scroll-into-view");
-
-/***/ }),
-
-/***/ 352:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _main = __webpack_require__(353);
-
-var _main2 = _interopRequireDefault(_main);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/* istanbul ignore next */
-_main2.default.install = function (Vue) {
-  Vue.component(_main2.default.name, _main2.default);
-};
-
-exports.default = _main2.default;
-
-/***/ }),
-
-/***/ 353:
+/***/ 112:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_main_vue__ = __webpack_require__(354);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_main_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_main_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_02ff6464_hasScoped_false_preserveWhitespace_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_main_vue__ = __webpack_require__(357);
-var normalizeComponent = __webpack_require__(0)
-/* script */
+__webpack_require__.r(__webpack_exports__);
 
-/* template */
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./packages/cascader/src/cascader.vue?vue&type=template&id=032537a6&
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      directives: [
+        {
+          name: "clickoutside",
+          rawName: "v-clickoutside",
+          value: function() {
+            return _vm.toggleDropDownVisible(false)
+          },
+          expression: "() => toggleDropDownVisible(false)"
+        }
+      ],
+      ref: "reference",
+      class: [
+        "el-cascader",
+        _vm.realSize && "el-cascader--" + _vm.realSize,
+        { "is-disabled": _vm.isDisabled }
+      ],
+      on: {
+        mouseenter: function($event) {
+          _vm.inputHover = true
+        },
+        mouseleave: function($event) {
+          _vm.inputHover = false
+        },
+        click: function() {
+          return _vm.toggleDropDownVisible(_vm.readonly ? undefined : true)
+        },
+        keydown: _vm.handleKeyDown
+      }
+    },
+    [
+      _c(
+        "el-input",
+        {
+          ref: "input",
+          class: { "is-focus": _vm.dropDownVisible },
+          attrs: {
+            size: _vm.realSize,
+            placeholder: _vm.placeholder,
+            readonly: _vm.readonly,
+            disabled: _vm.isDisabled,
+            "validate-event": false
+          },
+          on: {
+            focus: _vm.handleFocus,
+            blur: _vm.handleBlur,
+            input: _vm.handleInput
+          },
+          model: {
+            value: _vm.multiple ? _vm.presentText : _vm.inputValue,
+            callback: function($$v) {
+              _vm.multiple ? _vm.presentText : (_vm.inputValue = $$v)
+            },
+            expression: "multiple ? presentText : inputValue"
+          }
+        },
+        [
+          _c("template", { slot: "suffix" }, [
+            _vm.clearBtnVisible
+              ? _c("i", {
+                  key: "clear",
+                  staticClass: "el-input__icon el-icon-circle-close",
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.handleClear($event)
+                    }
+                  }
+                })
+              : _c("i", {
+                  key: "arrow-down",
+                  class: [
+                    "el-input__icon",
+                    "el-icon-arrow-down",
+                    _vm.dropDownVisible && "is-reverse"
+                  ],
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      _vm.toggleDropDownVisible()
+                    }
+                  }
+                })
+          ])
+        ],
+        2
+      ),
+      _vm.multiple
+        ? _c(
+            "div",
+            { staticClass: "el-cascader__tags" },
+            [
+              _vm._l(_vm.presentTags, function(tag, index) {
+                return _c(
+                  "el-tag",
+                  {
+                    key: tag.key,
+                    attrs: {
+                      type: "info",
+                      size: _vm.tagSize,
+                      hit: tag.hitState,
+                      closable: tag.closable,
+                      "disable-transitions": ""
+                    },
+                    on: {
+                      close: function($event) {
+                        _vm.deleteTag(index)
+                      }
+                    }
+                  },
+                  [_c("span", [_vm._v(_vm._s(tag.text))])]
+                )
+              }),
+              _vm.filterable && !_vm.isDisabled
+                ? _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model.trim",
+                        value: _vm.inputValue,
+                        expression: "inputValue",
+                        modifiers: { trim: true }
+                      }
+                    ],
+                    staticClass: "el-cascader__search-input",
+                    attrs: {
+                      type: "text",
+                      placeholder: _vm.presentTags.length ? "" : _vm.placeholder
+                    },
+                    domProps: { value: _vm.inputValue },
+                    on: {
+                      input: [
+                        function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.inputValue = $event.target.value.trim()
+                        },
+                        function(e) {
+                          return _vm.handleInput(_vm.inputValue, e)
+                        }
+                      ],
+                      click: function($event) {
+                        $event.stopPropagation()
+                        _vm.toggleDropDownVisible(true)
+                      },
+                      keydown: function($event) {
+                        if (
+                          !("button" in $event) &&
+                          _vm._k(
+                            $event.keyCode,
+                            "delete",
+                            [8, 46],
+                            $event.key,
+                            ["Backspace", "Delete", "Del"]
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.handleDelete($event)
+                      },
+                      blur: function($event) {
+                        _vm.$forceUpdate()
+                      }
+                    }
+                  })
+                : _vm._e()
+            ],
+            2
+          )
+        : _vm._e(),
+      _c(
+        "transition",
+        {
+          attrs: { name: "el-zoom-in-top" },
+          on: { "after-leave": _vm.handleDropdownLeave }
+        },
+        [
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.dropDownVisible,
+                  expression: "dropDownVisible"
+                }
+              ],
+              ref: "popper",
+              class: ["el-popper", "el-cascader__dropdown", _vm.popperClass]
+            },
+            [
+              _c("el-cascader-panel", {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: !_vm.filtering,
+                    expression: "!filtering"
+                  }
+                ],
+                ref: "panel",
+                attrs: {
+                  options: _vm.options,
+                  props: _vm.config,
+                  border: false,
+                  "render-label": _vm.$scopedSlots.default
+                },
+                on: {
+                  "expand-change": _vm.handleExpandChange,
+                  close: function($event) {
+                    _vm.toggleDropDownVisible(false)
+                  }
+                },
+                model: {
+                  value: _vm.checkedValue,
+                  callback: function($$v) {
+                    _vm.checkedValue = $$v
+                  },
+                  expression: "checkedValue"
+                }
+              }),
+              _vm.filterable
+                ? _c(
+                    "el-scrollbar",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.filtering,
+                          expression: "filtering"
+                        }
+                      ],
+                      ref: "suggestionPanel",
+                      staticClass: "el-cascader__suggestion-panel",
+                      attrs: {
+                        tag: "ul",
+                        "view-class": "el-cascader__suggestion-list"
+                      },
+                      nativeOn: {
+                        keydown: function($event) {
+                          return _vm.handleSuggestionKeyDown($event)
+                        }
+                      }
+                    },
+                    [
+                      _vm.suggestions.length
+                        ? _vm._l(_vm.suggestions, function(item, index) {
+                            return _c(
+                              "li",
+                              {
+                                key: item.uid,
+                                class: [
+                                  "el-cascader__suggestion-item",
+                                  item.checked && "is-checked"
+                                ],
+                                attrs: { tabindex: -1 },
+                                on: {
+                                  click: function($event) {
+                                    _vm.handleSuggestionClick(index)
+                                  }
+                                }
+                              },
+                              [
+                                _c("span", [_vm._v(_vm._s(item.text))]),
+                                item.checked
+                                  ? _c("i", { staticClass: "el-icon-check" })
+                                  : _vm._e()
+                              ]
+                            )
+                          })
+                        : _vm._t("empty", [
+                            _c(
+                              "li",
+                              { staticClass: "el-cascader__empty-text" },
+                              [_vm._v(_vm._s(_vm.t("el.cascader.noMatch")))]
+                            )
+                          ])
+                    ],
+                    2
+                  )
+                : _vm._e()
+            ],
+            1
+          )
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
 
-/* template functional */
-  var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_main_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_02ff6464_hasScoped_false_preserveWhitespace_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_main_vue__["a" /* default */],
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
 
-/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+// CONCATENATED MODULE: ./packages/cascader/src/cascader.vue?vue&type=template&id=032537a6&
+
+// EXTERNAL MODULE: external "element-ui/lib/utils/vue-popper"
+var vue_popper_ = __webpack_require__(5);
+var vue_popper_default = /*#__PURE__*/__webpack_require__.n(vue_popper_);
+
+// EXTERNAL MODULE: external "element-ui/lib/utils/clickoutside"
+var clickoutside_ = __webpack_require__(12);
+var clickoutside_default = /*#__PURE__*/__webpack_require__.n(clickoutside_);
+
+// EXTERNAL MODULE: external "element-ui/lib/mixins/emitter"
+var emitter_ = __webpack_require__(4);
+var emitter_default = /*#__PURE__*/__webpack_require__.n(emitter_);
+
+// EXTERNAL MODULE: external "element-ui/lib/mixins/locale"
+var locale_ = __webpack_require__(6);
+var locale_default = /*#__PURE__*/__webpack_require__.n(locale_);
+
+// EXTERNAL MODULE: external "element-ui/lib/mixins/migrating"
+var migrating_ = __webpack_require__(10);
+var migrating_default = /*#__PURE__*/__webpack_require__.n(migrating_);
+
+// EXTERNAL MODULE: external "element-ui/lib/input"
+var input_ = __webpack_require__(11);
+var input_default = /*#__PURE__*/__webpack_require__.n(input_);
+
+// EXTERNAL MODULE: external "element-ui/lib/tag"
+var tag_ = __webpack_require__(36);
+var tag_default = /*#__PURE__*/__webpack_require__.n(tag_);
+
+// EXTERNAL MODULE: external "element-ui/lib/scrollbar"
+var scrollbar_ = __webpack_require__(13);
+var scrollbar_default = /*#__PURE__*/__webpack_require__.n(scrollbar_);
+
+// EXTERNAL MODULE: external "element-ui/lib/cascader-panel"
+var cascader_panel_ = __webpack_require__(50);
+var cascader_panel_default = /*#__PURE__*/__webpack_require__.n(cascader_panel_);
+
+// EXTERNAL MODULE: external "element-ui/lib/utils/aria-utils"
+var aria_utils_ = __webpack_require__(39);
+var aria_utils_default = /*#__PURE__*/__webpack_require__.n(aria_utils_);
+
+// EXTERNAL MODULE: external "element-ui/lib/locale"
+var lib_locale_ = __webpack_require__(20);
+
+// EXTERNAL MODULE: external "element-ui/lib/utils/util"
+var util_ = __webpack_require__(3);
+
+// EXTERNAL MODULE: external "element-ui/lib/utils/types"
+var types_ = __webpack_require__(19);
+
+// EXTERNAL MODULE: external "element-ui/lib/utils/shared"
+var shared_ = __webpack_require__(21);
+
+// EXTERNAL MODULE: external "element-ui/lib/utils/resize-event"
+var resize_event_ = __webpack_require__(15);
+
+// EXTERNAL MODULE: external "throttle-debounce/debounce"
+var debounce_ = __webpack_require__(16);
+var debounce_default = /*#__PURE__*/__webpack_require__.n(debounce_);
+
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./packages/cascader/src/cascader.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
-/***/ }),
-
-/***/ 354:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 
 
-exports.__esModule = true;
 
-var _vue = __webpack_require__(4);
 
-var _vue2 = _interopRequireDefault(_vue);
 
-var _menu = __webpack_require__(355);
 
-var _menu2 = _interopRequireDefault(_menu);
 
-var _input = __webpack_require__(6);
 
-var _input2 = _interopRequireDefault(_input);
 
-var _vuePopper = __webpack_require__(7);
 
-var _vuePopper2 = _interopRequireDefault(_vuePopper);
 
-var _clickoutside = __webpack_require__(10);
 
-var _clickoutside2 = _interopRequireDefault(_clickoutside);
 
-var _emitter = __webpack_require__(1);
 
-var _emitter2 = _interopRequireDefault(_emitter);
 
-var _locale = __webpack_require__(5);
 
-var _locale2 = _interopRequireDefault(_locale);
+var KeyCode = aria_utils_default.a.keys;
 
-var _locale3 = __webpack_require__(12);
+var MigratingProps = {
+  expandTrigger: {
+    newProp: 'expandTrigger',
+    type: String
+  },
+  changeOnSelect: {
+    newProp: 'checkStrictly',
+    type: Boolean
+  },
+  hoverThreshold: {
+    newProp: 'hoverThreshold',
+    type: Number
+  }
+};
 
-var _debounce = __webpack_require__(14);
-
-var _debounce2 = _interopRequireDefault(_debounce);
-
-var _util = __webpack_require__(2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var popperMixin = {
+var PopperMixin = {
   props: {
     placement: {
       type: String,
       default: 'bottom-start'
     },
-    appendToBody: _vuePopper2.default.props.appendToBody,
-    arrowOffset: _vuePopper2.default.props.arrowOffset,
-    offset: _vuePopper2.default.props.offset,
-    boundariesPadding: _vuePopper2.default.props.boundariesPadding,
-    popperOptions: _vuePopper2.default.props.popperOptions
+    appendToBody: vue_popper_default.a.props.appendToBody,
+    visibleArrow: {
+      type: Boolean,
+      default: true
+    },
+    arrowOffset: vue_popper_default.a.props.arrowOffset,
+    offset: vue_popper_default.a.props.offset,
+    boundariesPadding: vue_popper_default.a.props.boundariesPadding,
+    popperOptions: vue_popper_default.a.props.popperOptions
   },
-  methods: _vuePopper2.default.methods,
-  data: _vuePopper2.default.data,
-  beforeDestroy: _vuePopper2.default.beforeDestroy
+  methods: vue_popper_default.a.methods,
+  data: vue_popper_default.a.data,
+  beforeDestroy: vue_popper_default.a.beforeDestroy
 };
 
-exports.default = {
+var InputSizeMap = {
+  medium: 36,
+  small: 32,
+  mini: 28
+};
+
+/* harmony default export */ var cascadervue_type_script_lang_js_ = ({
   name: 'ElCascader',
 
-  directives: { Clickoutside: _clickoutside2.default },
+  directives: { Clickoutside: clickoutside_default.a },
 
-  mixins: [popperMixin, _emitter2.default, _locale2.default],
+  mixins: [PopperMixin, emitter_default.a, locale_default.a, migrating_default.a],
 
   inject: {
     elForm: {
@@ -427,58 +767,36 @@ exports.default = {
   },
 
   components: {
-    ElInput: _input2.default
+    ElInput: input_default.a,
+    ElTag: tag_default.a,
+    ElScrollbar: scrollbar_default.a,
+    ElCascaderPanel: cascader_panel_default.a
   },
 
   props: {
-    options: {
-      type: Array,
-      required: true
-    },
-    props: {
-      type: Object,
-      default: function _default() {
-        return {
-          children: 'children',
-          label: 'label',
-          value: 'value',
-          disabled: 'disabled'
-        };
-      }
-    },
-    value: {
-      type: Array,
-      default: function _default() {
-        return [];
-      }
-    },
-    separator: {
-      type: String,
-      default: '/'
-    },
+    value: {},
+    options: Array,
+    props: Object,
+    size: String,
     placeholder: {
       type: String,
       default: function _default() {
-        return (0, _locale3.t)('el.cascader.placeholder');
+        return Object(lib_locale_["t"])('el.cascader.placeholder');
       }
     },
     disabled: Boolean,
-    clearable: {
-      type: Boolean,
-      default: false
-    },
-    changeOnSelect: Boolean,
-    popperClass: String,
-    expandTrigger: {
-      type: String,
-      default: 'click'
-    },
+    clearable: Boolean,
     filterable: Boolean,
-    size: String,
+    filterMethod: Function,
+    separator: {
+      type: String,
+      default: ' / '
+    },
     showAllLevels: {
       type: Boolean,
       default: true
     },
+    collapseTags: Boolean,
     debounce: {
       type: Number,
       default: 300
@@ -489,849 +807,614 @@ exports.default = {
         return function () {};
       }
     },
-    hoverThreshold: {
-      type: Number,
-      default: 500
-    }
+    popperClass: String
   },
 
   data: function data() {
     return {
-      currentValue: this.value || [],
-      menu: null,
-      debouncedInputChange: function debouncedInputChange() {},
-
-      menuVisible: false,
+      dropDownVisible: false,
+      checkedValue: this.value || null,
       inputHover: false,
-      inputValue: '',
-      flatOptions: null,
-      id: (0, _util.generateId)(),
-      needFocus: true,
-      isOnComposition: false
+      inputValue: null,
+      presentText: null,
+      presentTags: [],
+      checkedNodes: [],
+      filtering: false,
+      suggestions: [],
+      inputInitialHeight: 0,
+      pressDeleteCount: 0
     };
   },
 
 
   computed: {
-    labelKey: function labelKey() {
-      return this.props.label || 'label';
+    realSize: function realSize() {
+      var _elFormItemSize = (this.elFormItem || {}).elFormItemSize;
+      return this.size || _elFormItemSize || (this.$ELEMENT || {}).size;
     },
-    valueKey: function valueKey() {
-      return this.props.value || 'value';
+    tagSize: function tagSize() {
+      return ['small', 'mini'].indexOf(this.realSize) > -1 ? 'mini' : 'small';
     },
-    childrenKey: function childrenKey() {
-      return this.props.children || 'children';
-    },
-    disabledKey: function disabledKey() {
-      return this.props.disabled || 'disabled';
-    },
-    currentLabels: function currentLabels() {
-      var _this = this;
-
-      var options = this.options;
-      var labels = [];
-      this.currentValue.forEach(function (value) {
-        var targetOption = options && options.filter(function (option) {
-          return option[_this.valueKey] === value;
-        })[0];
-        if (targetOption) {
-          labels.push(targetOption[_this.labelKey]);
-          options = targetOption[_this.childrenKey];
-        }
-      });
-      return labels;
-    },
-    _elFormItemSize: function _elFormItemSize() {
-      return (this.elFormItem || {}).elFormItemSize;
-    },
-    cascaderSize: function cascaderSize() {
-      return this.size || this._elFormItemSize || (this.$ELEMENT || {}).size;
-    },
-    cascaderDisabled: function cascaderDisabled() {
+    isDisabled: function isDisabled() {
       return this.disabled || (this.elForm || {}).disabled;
     },
+    config: function config() {
+      var config = this.props || {};
+      var $attrs = this.$attrs;
+
+
+      Object.keys(MigratingProps).forEach(function (oldProp) {
+        var _MigratingProps$oldPr = MigratingProps[oldProp],
+            newProp = _MigratingProps$oldPr.newProp,
+            type = _MigratingProps$oldPr.type;
+
+        var oldValue = $attrs[oldProp] || $attrs[Object(util_["kebabCase"])(oldProp)];
+        if (Object(shared_["isDef"])(oldProp) && !Object(shared_["isDef"])(config[newProp])) {
+          if (type === Boolean && oldValue === '') {
+            oldValue = true;
+          }
+          config[newProp] = oldValue;
+        }
+      });
+
+      return config;
+    },
+    multiple: function multiple() {
+      return this.config.multiple;
+    },
+    leafOnly: function leafOnly() {
+      return !this.config.checkStrictly;
+    },
     readonly: function readonly() {
-      return !this.filterable || !(0, _util.isIE)() && !(0, _util.isEdge)() && !this.menuVisible;
+      return !this.filterable || this.multiple;
+    },
+    clearBtnVisible: function clearBtnVisible() {
+      if (!this.clearable || this.isDisabled || this.filtering || !this.inputHover) {
+        return false;
+      }
+
+      return this.multiple ? !!this.checkedNodes.filter(function (node) {
+        return !node.isDisabled;
+      }).length : !!this.presentText;
+    },
+    panel: function panel() {
+      return this.$refs.panel;
     }
   },
 
   watch: {
-    menuVisible: function menuVisible(value) {
-      this.$refs.input.$refs.input.setAttribute('aria-expanded', value);
-      value ? this.showMenu() : this.hideMenu();
-      this.$emit('visible-change', value);
+    disabled: function disabled() {
+      this.computePresentContent();
     },
-    value: function value(_value) {
-      this.currentValue = _value;
+    value: function value(val) {
+      if (!Object(util_["isEqual"])(val, this.checkedValue)) {
+        this.checkedValue = val;
+        this.computePresentContent();
+      }
     },
-    currentValue: function currentValue(value) {
-      this.dispatch('ElFormItem', 'el.form.change', [value]);
-    },
-    currentLabels: function currentLabels(value) {
-      var inputLabel = this.showAllLevels ? value.join('/') : value[value.length - 1];
-      this.$refs.input.$refs.input.setAttribute('value', inputLabel);
+    checkedValue: function checkedValue(val) {
+      var value = this.value,
+          dropDownVisible = this.dropDownVisible;
+      var _config = this.config,
+          checkStrictly = _config.checkStrictly,
+          multiple = _config.multiple;
+
+
+      if (!Object(util_["isEqual"])(val, value) || Object(types_["isUndefined"])(value)) {
+        this.computePresentContent();
+        // hide dropdown when single mode
+        if (!multiple && !checkStrictly && dropDownVisible) {
+          this.toggleDropDownVisible(false);
+        }
+
+        this.$emit('input', val);
+        this.$emit('change', val);
+        this.dispatch('ElFormItem', 'el.form.change', [val]);
+      }
     },
 
     options: {
-      deep: true,
-      handler: function handler(value) {
-        if (!this.menu) {
-          this.initMenu();
-        }
-        this.flatOptions = this.flattenOptions(this.options);
-        this.menu.options = value;
+      handler: function handler() {
+        this.$nextTick(this.computePresentContent);
+      },
+      deep: true
+    },
+    presentText: function presentText(val) {
+      this.inputValue = val;
+    },
+    presentTags: function presentTags(val, oldVal) {
+      if (this.multiple && (val.length || oldVal.length)) {
+        this.$nextTick(this.updateStyle);
       }
+    },
+    filtering: function filtering(val) {
+      this.$nextTick(this.updatePopper);
     }
   },
 
+  mounted: function mounted() {
+    var _this = this;
+
+    var input = this.$refs.input;
+
+    if (input && input.$el) {
+      this.inputInitialHeight = input.$el.offsetHeight || InputSizeMap[this.realSize] || 40;
+    }
+
+    if (!Object(util_["isEmpty"])(this.value)) {
+      this.computePresentContent();
+    }
+
+    this.filterHandler = debounce_default()(this.debounce, function () {
+      var inputValue = _this.inputValue;
+
+
+      if (!inputValue) {
+        _this.filtering = false;
+        return;
+      }
+
+      var before = _this.beforeFilter(inputValue);
+      if (before && before.then) {
+        before.then(_this.getSuggestions);
+      } else if (before !== false) {
+        _this.getSuggestions();
+      } else {
+        _this.filtering = false;
+      }
+    });
+
+    Object(resize_event_["addResizeListener"])(this.$el, this.updateStyle);
+  },
+  beforeDestroy: function beforeDestroy() {
+    Object(resize_event_["removeResizeListener"])(this.$el, this.updateStyle);
+  },
+
+
   methods: {
-    initMenu: function initMenu() {
-      this.menu = new _vue2.default(_menu2.default).$mount();
-      this.menu.options = this.options;
-      this.menu.props = this.props;
-      this.menu.expandTrigger = this.expandTrigger;
-      this.menu.changeOnSelect = this.changeOnSelect;
-      this.menu.popperClass = this.popperClass;
-      this.menu.hoverThreshold = this.hoverThreshold;
-      this.popperElm = this.menu.$el;
-      this.menu.$refs.menus[0].setAttribute('id', 'cascader-menu-' + this.id);
-      this.menu.$on('pick', this.handlePick);
-      this.menu.$on('activeItemChange', this.handleActiveItemChange);
-      this.menu.$on('menuLeave', this.doDestroy);
-      this.menu.$on('closeInside', this.handleClickoutside);
+    getMigratingConfig: function getMigratingConfig() {
+      return {
+        props: {
+          'expand-trigger': 'expand-trigger is removed, use `props.expandTrigger` instead.',
+          'change-on-select': 'change-on-select is removed, use `props.checkStrictly` instead.',
+          'hover-threshold': 'hover-threshold is removed, use `props.hoverThreshold` instead'
+        },
+        events: {
+          'active-item-change': 'active-item-change is renamed to expand-change'
+        }
+      };
     },
-    showMenu: function showMenu() {
+    toggleDropDownVisible: function toggleDropDownVisible(visible) {
       var _this2 = this;
 
-      if (!this.menu) {
-        this.initMenu();
-      }
+      if (this.isDisabled) return;
 
-      this.menu.value = this.currentValue.slice(0);
-      this.menu.visible = true;
-      this.menu.options = this.options;
-      this.$nextTick(function (_) {
-        _this2.updatePopper();
-        _this2.menu.inputWidth = _this2.$refs.input.$el.offsetWidth - 2;
-      });
-    },
-    hideMenu: function hideMenu() {
-      this.inputValue = '';
-      this.menu.visible = false;
-      if (this.needFocus) {
-        this.$refs.input.focus();
-      } else {
-        this.needFocus = true;
+      var dropDownVisible = this.dropDownVisible;
+      var input = this.$refs.input;
+
+      visible = Object(shared_["isDef"])(visible) ? visible : !dropDownVisible;
+      if (visible !== dropDownVisible) {
+        this.dropDownVisible = visible;
+        if (visible) {
+          this.$nextTick(function () {
+            _this2.updatePopper();
+            _this2.panel.scrollIntoView();
+          });
+        }
+        input.$refs.input.setAttribute('aria-expanded', visible);
+        this.$emit('visible-change', visible);
       }
     },
-    handleActiveItemChange: function handleActiveItemChange(value) {
+    handleDropdownLeave: function handleDropdownLeave() {
+      this.filtering = false;
+      this.inputValue = this.presentText;
+    },
+    handleKeyDown: function handleKeyDown(event) {
+      switch (event.keyCode) {
+        case KeyCode.enter:
+          this.toggleDropDownVisible();
+          break;
+        case KeyCode.down:
+          this.toggleDropDownVisible(true);
+          this.focusFirstNode();
+          event.preventDefault();
+          break;
+        case KeyCode.esc:
+        case KeyCode.tab:
+          this.toggleDropDownVisible(false);
+          break;
+      }
+    },
+    handleFocus: function handleFocus(e) {
+      this.$emit('focus', e);
+    },
+    handleBlur: function handleBlur(e) {
+      this.$emit('blur', e);
+    },
+    handleInput: function handleInput(val, event) {
+      !this.dropDownVisible && this.toggleDropDownVisible(true);
+
+      if (event && event.isComposing) return;
+      if (val) {
+        this.filterHandler();
+      } else {
+        this.filtering = false;
+      }
+    },
+    handleClear: function handleClear() {
+      this.presentText = '';
+      this.panel.clearCheckedNodes();
+    },
+    handleExpandChange: function handleExpandChange(value) {
+      this.$nextTick(this.updatePopper.bind(this));
+      this.$emit('expand-change', value);
+      this.$emit('active-item-change', value); // Deprecated
+    },
+    focusFirstNode: function focusFirstNode() {
       var _this3 = this;
 
-      this.$nextTick(function (_) {
-        _this3.updatePopper();
+      this.$nextTick(function () {
+        var filtering = _this3.filtering;
+        var _$refs = _this3.$refs,
+            popper = _$refs.popper,
+            suggestionPanel = _$refs.suggestionPanel;
+
+        var firstNode = null;
+
+        if (filtering && suggestionPanel) {
+          firstNode = suggestionPanel.$el.querySelector('.el-cascader__suggestion-item');
+        } else {
+          var firstMenu = popper.querySelector('.el-cascader-menu');
+          firstNode = firstMenu.querySelector('.el-cascader-node[tabindex="-1"]');
+        }
+
+        if (firstNode) {
+          firstNode.focus();
+          !filtering && firstNode.click();
+        }
       });
-      this.$emit('active-item-change', value);
     },
-    handleKeydown: function handleKeydown(e) {
+    computePresentContent: function computePresentContent() {
       var _this4 = this;
 
-      var keyCode = e.keyCode;
-      if (keyCode === 13) {
-        this.handleClick();
-      } else if (keyCode === 40) {
-        // down
-        this.menuVisible = true; // 打开
-        setTimeout(function () {
-          var firstMenu = _this4.popperElm.querySelectorAll('.el-cascader-menu')[0];
-          firstMenu.querySelectorAll("[tabindex='-1']")[0].focus();
-        });
-        e.stopPropagation();
-        e.preventDefault();
-      } else if (keyCode === 27 || keyCode === 9) {
-        // esc  tab
-        this.inputValue = '';
-        if (this.menu) this.menu.visible = false;
-      }
-    },
-    handlePick: function handlePick(value) {
-      var close = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-
-      this.currentValue = value;
-      this.$emit('input', value);
-      this.$emit('change', value);
-
-      if (close) {
-        this.menuVisible = false;
-      } else {
-        this.$nextTick(this.updatePopper);
-      }
-    },
-    handleInputChange: function handleInputChange(value) {
-      var _this5 = this;
-
-      if (!this.menuVisible) return;
-      var flatOptions = this.flatOptions;
-
-      if (!value) {
-        this.menu.options = this.options;
-        this.$nextTick(this.updatePopper);
-        return;
-      }
-
-      var filteredFlatOptions = flatOptions.filter(function (optionsStack) {
-        return optionsStack.some(function (option) {
-          return new RegExp((0, _util.escapeRegexpString)(value), 'i').test(option[_this5.labelKey]);
-        });
-      });
-
-      if (filteredFlatOptions.length > 0) {
-        filteredFlatOptions = filteredFlatOptions.map(function (optionStack) {
-          return {
-            __IS__FLAT__OPTIONS: true,
-            value: optionStack.map(function (item) {
-              return item[_this5.valueKey];
-            }),
-            label: _this5.renderFilteredOptionLabel(value, optionStack),
-            disabled: optionStack.some(function (item) {
-              return item[_this5.disabledKey];
-            })
-          };
-        });
-      } else {
-        filteredFlatOptions = [{
-          __IS__FLAT__OPTIONS: true,
-          label: this.t('el.cascader.noMatch'),
-          value: '',
-          disabled: true
-        }];
-      }
-      this.menu.options = filteredFlatOptions;
-      this.$nextTick(this.updatePopper);
-    },
-    renderFilteredOptionLabel: function renderFilteredOptionLabel(inputValue, optionsStack) {
-      var _this6 = this;
-
-      return optionsStack.map(function (option, index) {
-        var label = option[_this6.labelKey];
-        var keywordIndex = label.toLowerCase().indexOf(inputValue.toLowerCase());
-        var labelPart = label.slice(keywordIndex, inputValue.length + keywordIndex);
-        var node = keywordIndex > -1 ? _this6.highlightKeyword(label, labelPart) : label;
-        return index === 0 ? node : [' ' + _this6.separator + ' ', node];
-      });
-    },
-    highlightKeyword: function highlightKeyword(label, keyword) {
-      var _this7 = this;
-
-      var h = this._c;
-      return label.split(keyword).map(function (node, index) {
-        return index === 0 ? node : [h('span', { class: { 'el-cascader-menu__item__keyword': true } }, [_this7._v(keyword)]), node];
-      });
-    },
-    flattenOptions: function flattenOptions(options) {
-      var _this8 = this;
-
-      var ancestor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-
-      var flatOptions = [];
-      options.forEach(function (option) {
-        var optionsStack = ancestor.concat(option);
-        if (!option[_this8.childrenKey]) {
-          flatOptions.push(optionsStack);
-        } else {
-          if (_this8.changeOnSelect) {
-            flatOptions.push(optionsStack);
-          }
-          flatOptions = flatOptions.concat(_this8.flattenOptions(option[_this8.childrenKey], optionsStack));
-        }
-      });
-      return flatOptions;
-    },
-    clearValue: function clearValue(ev) {
-      ev.stopPropagation();
-      this.handlePick([], true);
-    },
-    handleClickoutside: function handleClickoutside() {
-      var pickFinished = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
-      if (this.menuVisible && !pickFinished) {
-        this.needFocus = false;
-      }
-      this.menuVisible = false;
-    },
-    handleClick: function handleClick() {
-      if (this.cascaderDisabled) return;
-      this.$refs.input.focus();
-      if (this.filterable) {
-        this.menuVisible = true;
-        return;
-      }
-      this.menuVisible = !this.menuVisible;
-    },
-    handleFocus: function handleFocus(event) {
-      this.$emit('focus', event);
-    },
-    handleBlur: function handleBlur(event) {
-      this.$emit('blur', event);
-    },
-    handleComposition: function handleComposition(event) {
-      this.isOnComposition = event.type !== 'compositionend';
-    }
-  },
-
-  created: function created() {
-    var _this9 = this;
-
-    this.debouncedInputChange = (0, _debounce2.default)(this.debounce, function (value) {
-      var before = _this9.beforeFilter(value);
-
-      if (before && before.then) {
-        _this9.menu.options = [{
-          __IS__FLAT__OPTIONS: true,
-          label: _this9.t('el.cascader.loading'),
-          value: '',
-          disabled: true
-        }];
-        before.then(function () {
-          _this9.$nextTick(function () {
-            _this9.handleInputChange(value);
-          });
-        });
-      } else if (before !== false) {
-        _this9.$nextTick(function () {
-          _this9.handleInputChange(value);
-        });
-      }
-    });
-  },
-  mounted: function mounted() {
-    this.flatOptions = this.flattenOptions(this.options);
-  }
-};
-
-/***/ }),
-
-/***/ 355:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_menu_vue__ = __webpack_require__(356);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_menu_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_menu_vue__);
-var normalizeComponent = __webpack_require__(0)
-/* script */
-
-/* template */
-var __vue_template__ = null
-/* template functional */
-  var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_menu_vue___default.a,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-
-/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
-
-
-/***/ }),
-
-/***/ 356:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _babelHelperVueJsxMergeProps = __webpack_require__(45);
-
-var _babelHelperVueJsxMergeProps2 = _interopRequireDefault(_babelHelperVueJsxMergeProps);
-
-var _shared = __webpack_require__(23);
-
-var _scrollIntoView = __webpack_require__(26);
-
-var _scrollIntoView2 = _interopRequireDefault(_scrollIntoView);
-
-var _util = __webpack_require__(2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var copyArray = function copyArray(arr, props) {
-  if (!arr || !Array.isArray(arr) || !props) return arr;
-  var result = [];
-  var configurableProps = ['__IS__FLAT__OPTIONS', 'label', 'value', 'disabled'];
-  var childrenProp = props.children || 'children';
-  arr.forEach(function (item) {
-    var itemCopy = {};
-    configurableProps.forEach(function (prop) {
-      var name = props[prop];
-      var value = item[name];
-      if (value === undefined) {
-        name = prop;
-        value = item[name];
-      }
-      if (value !== undefined) itemCopy[name] = value;
-    });
-    if (Array.isArray(item[childrenProp])) {
-      itemCopy[childrenProp] = copyArray(item[childrenProp], props);
-    }
-    result.push(itemCopy);
-  });
-  return result;
-};
-
-exports.default = {
-  name: 'ElCascaderMenu',
-
-  data: function data() {
-    return {
-      inputWidth: 0,
-      options: [],
-      props: {},
-      visible: false,
-      activeValue: [],
-      value: [],
-      expandTrigger: 'click',
-      changeOnSelect: false,
-      popperClass: '',
-      hoverTimer: 0,
-      clicking: false,
-      id: (0, _util.generateId)()
-    };
-  },
-
-
-  watch: {
-    visible: function visible(value) {
-      if (value) {
-        this.activeValue = this.value;
-      }
-    },
-
-    value: {
-      immediate: true,
-      handler: function handler(value) {
-        this.activeValue = value;
-      }
-    }
-  },
-
-  computed: {
-    activeOptions: {
-      cache: false,
-      get: function get() {
-        var _this = this;
-
-        var activeValue = this.activeValue;
-        var configurableProps = ['label', 'value', 'children', 'disabled'];
-
-        var formatOptions = function formatOptions(options) {
-          options.forEach(function (option) {
-            if (option.__IS__FLAT__OPTIONS) return;
-            configurableProps.forEach(function (prop) {
-              var value = option[_this.props[prop] || prop];
-              if (value !== undefined) option[prop] = value;
-            });
-            if (Array.isArray(option.children)) {
-              formatOptions(option.children);
-            }
-          });
-        };
-
-        var loadActiveOptions = function loadActiveOptions(options) {
-          var activeOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-
-          var level = activeOptions.length;
-          activeOptions[level] = options;
-          var active = activeValue[level];
-          if ((0, _shared.isDef)(active)) {
-            options = options.filter(function (option) {
-              return option.value === active;
-            })[0];
-            if (options && options.children) {
-              loadActiveOptions(options.children, activeOptions);
-            }
-          }
-          return activeOptions;
-        };
-
-        var optionsCopy = copyArray(this.options, this.props);
-        formatOptions(optionsCopy);
-        return loadActiveOptions(optionsCopy);
-      }
-    }
-  },
-
-  methods: {
-    select: function select(item, menuIndex) {
-      if (item.__IS__FLAT__OPTIONS) {
-        this.activeValue = item.value;
-      } else if (menuIndex) {
-        this.activeValue.splice(menuIndex, this.activeValue.length - 1, item.value);
-      } else {
-        this.activeValue = [item.value];
-      }
-      this.$emit('pick', this.activeValue.slice());
-    },
-    handleMenuLeave: function handleMenuLeave() {
-      this.$emit('menuLeave');
-    },
-    activeItem: function activeItem(item, menuIndex) {
-      var len = this.activeOptions.length;
-      this.activeValue.splice(menuIndex, len, item.value);
-      this.activeOptions.splice(menuIndex + 1, len, item.children);
-      if (this.changeOnSelect) {
-        this.$emit('pick', this.activeValue.slice(), false);
-      } else {
-        this.$emit('activeItemChange', this.activeValue);
-      }
-    },
-    scrollMenu: function scrollMenu(menu) {
-      (0, _scrollIntoView2.default)(menu, menu.getElementsByClassName('is-active')[0]);
-    },
-    handleMenuEnter: function handleMenuEnter() {
-      var _this2 = this;
-
+      // nextTick is required, because checked nodes may not change right now
       this.$nextTick(function () {
-        return _this2.$refs.menus.forEach(function (menu) {
-          return _this2.scrollMenu(menu);
-        });
+        if (_this4.config.multiple) {
+          _this4.computePresentTags();
+          _this4.presentText = _this4.presentTags.length ? ' ' : null;
+        } else {
+          _this4.computePresentText();
+        }
       });
-    }
-  },
+    },
+    computePresentText: function computePresentText() {
+      var checkedValue = this.checkedValue,
+          config = this.config;
 
-  render: function render(h) {
-    var _this3 = this;
-
-    var activeValue = this.activeValue,
-        activeOptions = this.activeOptions,
-        visible = this.visible,
-        expandTrigger = this.expandTrigger,
-        popperClass = this.popperClass,
-        hoverThreshold = this.hoverThreshold;
-
-    var itemId = null;
-    var itemIndex = 0;
-
-    var hoverMenuRefs = {};
-    var hoverMenuHandler = function hoverMenuHandler(e) {
-      var activeMenu = hoverMenuRefs.activeMenu;
-      if (!activeMenu) return;
-      var offsetX = e.offsetX;
-      var width = activeMenu.offsetWidth;
-      var height = activeMenu.offsetHeight;
-
-      if (e.target === hoverMenuRefs.activeItem) {
-        clearTimeout(_this3.hoverTimer);
-        var _hoverMenuRefs = hoverMenuRefs,
-            activeItem = _hoverMenuRefs.activeItem;
-
-        var offsetY_top = activeItem.offsetTop;
-        var offsetY_Bottom = offsetY_top + activeItem.offsetHeight;
-
-        hoverMenuRefs.hoverZone.innerHTML = '\n          <path style="pointer-events: auto;" fill="transparent" d="M' + offsetX + ' ' + offsetY_top + ' L' + width + ' 0 V' + offsetY_top + ' Z" />\n          <path style="pointer-events: auto;" fill="transparent" d="M' + offsetX + ' ' + offsetY_Bottom + ' L' + width + ' ' + height + ' V' + offsetY_Bottom + ' Z" />\n        ';
-      } else {
-        if (!_this3.hoverTimer) {
-          _this3.hoverTimer = setTimeout(function () {
-            hoverMenuRefs.hoverZone.innerHTML = '';
-          }, hoverThreshold);
+      if (!Object(util_["isEmpty"])(checkedValue)) {
+        var node = this.panel.getNodeByValue(checkedValue);
+        if (node && (config.checkStrictly || node.isLeaf)) {
+          this.presentText = node.getText(this.showAllLevels, this.separator);
+          return;
         }
       }
-    };
+      this.presentText = null;
+    },
+    computePresentTags: function computePresentTags() {
+      var isDisabled = this.isDisabled,
+          leafOnly = this.leafOnly,
+          showAllLevels = this.showAllLevels,
+          separator = this.separator,
+          collapseTags = this.collapseTags;
 
-    var menus = this._l(activeOptions, function (menu, menuIndex) {
-      var isFlat = false;
-      var menuId = 'menu-' + _this3.id + '-' + menuIndex;
-      var ownsId = 'menu-' + _this3.id + '-' + (menuIndex + 1);
-      var items = _this3._l(menu, function (item) {
-        var events = {
-          on: {}
+      var checkedNodes = this.getCheckedNodes(leafOnly);
+      var tags = [];
+
+      var genTag = function genTag(node) {
+        return {
+          node: node,
+          key: node.uid,
+          text: node.getText(showAllLevels, separator),
+          hitState: false,
+          closable: !isDisabled && !node.isDisabled
         };
-
-        if (item.__IS__FLAT__OPTIONS) isFlat = true;
-
-        if (!item.disabled) {
-          // keydown up/down/left/right/enter
-          events.on.keydown = function (ev) {
-            var keyCode = ev.keyCode;
-            if ([37, 38, 39, 40, 13, 9, 27].indexOf(keyCode) < 0) {
-              return;
-            }
-            var currentEle = ev.target;
-            var parentEle = _this3.$refs.menus[menuIndex];
-            var menuItemList = parentEle.querySelectorAll("[tabindex='-1']");
-            var currentIndex = Array.prototype.indexOf.call(menuItemList, currentEle); // 当前索引
-            var nextIndex = void 0,
-                nextMenu = void 0;
-            if ([38, 40].indexOf(keyCode) > -1) {
-              if (keyCode === 38) {
-                // up键
-                nextIndex = currentIndex !== 0 ? currentIndex - 1 : currentIndex;
-              } else if (keyCode === 40) {
-                // down
-                nextIndex = currentIndex !== menuItemList.length - 1 ? currentIndex + 1 : currentIndex;
-              }
-              menuItemList[nextIndex].focus();
-            } else if (keyCode === 37) {
-              // left键
-              if (menuIndex !== 0) {
-                var previousMenu = _this3.$refs.menus[menuIndex - 1];
-                previousMenu.querySelector('[aria-expanded=true]').focus();
-              }
-            } else if (keyCode === 39) {
-              // right
-              if (item.children) {
-                // 有子menu 选择子menu的第一个menuitem
-                nextMenu = _this3.$refs.menus[menuIndex + 1];
-                nextMenu.querySelectorAll("[tabindex='-1']")[0].focus();
-              }
-            } else if (keyCode === 13) {
-              if (!item.children) {
-                var id = currentEle.getAttribute('id');
-                parentEle.setAttribute('aria-activedescendant', id);
-                _this3.select(item, menuIndex);
-                _this3.$nextTick(function () {
-                  return _this3.scrollMenu(_this3.$refs.menus[menuIndex]);
-                });
-              }
-            } else if (keyCode === 9 || keyCode === 27) {
-              // esc tab
-              _this3.$emit('closeInside');
-            }
-          };
-          if (item.children) {
-            (function () {
-              var triggerEvent = {
-                click: 'click',
-                hover: 'mouseenter'
-              }[expandTrigger];
-              var triggerHandler = function triggerHandler() {
-                if (_this3.visible) {
-                  _this3.activeItem(item, menuIndex);
-                  _this3.$nextTick(function () {
-                    // adjust self and next level
-                    _this3.scrollMenu(_this3.$refs.menus[menuIndex]);
-                    _this3.scrollMenu(_this3.$refs.menus[menuIndex + 1]);
-                  });
-                }
-              };
-              events.on[triggerEvent] = triggerHandler;
-              if (triggerEvent === 'mouseenter' && _this3.changeOnSelect) {
-                events.on.click = function () {
-                  if (_this3.activeValue.indexOf(item.value) !== -1) {
-                    _this3.$emit('closeInside', true);
-                  }
-                };
-              }
-              events.on['mousedown'] = function () {
-                _this3.clicking = true;
-              };
-              events.on['focus'] = function () {
-                // focus 选中
-                if (_this3.clicking) {
-                  _this3.clicking = false;
-                  return;
-                }
-                triggerHandler();
-              };
-            })();
-          } else {
-            events.on.click = function () {
-              _this3.select(item, menuIndex);
-              _this3.$nextTick(function () {
-                return _this3.scrollMenu(_this3.$refs.menus[menuIndex]);
-              });
-            };
-          }
-        }
-        if (!item.disabled && !item.children) {
-          // no children set id
-          itemId = menuId + '-' + itemIndex;
-          itemIndex++;
-        }
-        return h(
-          'li',
-          (0, _babelHelperVueJsxMergeProps2.default)([{
-            'class': {
-              'el-cascader-menu__item': true,
-              'el-cascader-menu__item--extensible': item.children,
-              'is-active': item.value === activeValue[menuIndex],
-              'is-disabled': item.disabled
-            },
-            ref: item.value === activeValue[menuIndex] ? 'activeItem' : null
-          }, events, {
-            attrs: {
-              tabindex: item.disabled ? null : -1,
-              role: 'menuitem',
-              'aria-haspopup': !!item.children,
-              'aria-expanded': item.value === activeValue[menuIndex],
-              id: itemId,
-              'aria-owns': !item.children ? null : ownsId
-            }
-          }]),
-          [item.label]
-        );
-      });
-      var menuStyle = {};
-      if (isFlat) {
-        menuStyle.minWidth = _this3.inputWidth + 'px';
-      }
-
-      var isHoveredMenu = expandTrigger === 'hover' && activeValue.length - 1 === menuIndex;
-      var hoverMenuEvent = {
-        on: {}
       };
 
-      if (isHoveredMenu) {
-        hoverMenuEvent.on.mousemove = hoverMenuHandler;
-        menuStyle.position = 'relative';
+      if (checkedNodes.length) {
+        var first = checkedNodes[0],
+            rest = checkedNodes.slice(1);
+
+        var restCount = rest.length;
+        tags.push(genTag(first));
+
+        if (restCount) {
+          if (collapseTags) {
+            tags.push({
+              key: -1,
+              text: '+ ' + restCount,
+              closable: false
+            });
+          } else {
+            rest.forEach(function (node) {
+              return tags.push(genTag(node));
+            });
+          }
+        }
       }
 
-      return h(
-        'ul',
-        (0, _babelHelperVueJsxMergeProps2.default)([{
-          'class': {
-            'el-cascader-menu': true,
-            'el-cascader-menu--flexible': isFlat
-          }
-        }, hoverMenuEvent, {
-          style: menuStyle,
-          refInFor: true,
-          ref: 'menus',
-          attrs: { role: 'menu',
-            id: menuId
-          }
-        }]),
-        [items, isHoveredMenu ? h(
-          'svg',
-          {
-            ref: 'hoverZone',
-            style: {
-              position: 'absolute',
-              top: 0,
-              height: '100%',
-              width: '100%',
-              left: 0,
-              pointerEvents: 'none'
-            }
-          },
-          []
-        ) : null]
-      );
-    });
+      this.checkedNodes = checkedNodes;
+      this.presentTags = tags;
+    },
+    getSuggestions: function getSuggestions() {
+      var _this5 = this;
 
-    if (expandTrigger === 'hover') {
-      this.$nextTick(function () {
-        var activeItem = _this3.$refs.activeItem;
+      var filterMethod = this.filterMethod;
 
-        if (activeItem) {
-          var activeMenu = activeItem.parentElement;
-          var hoverZone = _this3.$refs.hoverZone;
 
-          hoverMenuRefs = {
-            activeMenu: activeMenu,
-            activeItem: activeItem,
-            hoverZone: hoverZone
-          };
-        } else {
-          hoverMenuRefs = {};
-        }
+      if (!Object(types_["isFunction"])(filterMethod)) {
+        filterMethod = function filterMethod(node, keyword) {
+          return node.text.includes(keyword);
+        };
+      }
+
+      var suggestions = this.panel.getFlattedNodes(this.leafOnly).filter(function (node) {
+        if (node.isDisabled) return false;
+        node.text = node.getText(_this5.showAllLevels, _this5.separator) || '';
+        return filterMethod(node, _this5.inputValue);
       });
-    }
 
-    return h(
-      'transition',
-      {
-        attrs: { name: 'el-zoom-in-top' },
-        on: {
-          'before-enter': this.handleMenuEnter,
-          'after-leave': this.handleMenuLeave
+      if (this.multiple) {
+        this.presentTags.forEach(function (tag) {
+          tag.hitState = false;
+        });
+      } else {
+        suggestions.forEach(function (node) {
+          node.checked = Object(util_["isEqual"])(_this5.checkedValue, node.getValueByOption());
+        });
+      }
+
+      this.filtering = true;
+      this.suggestions = suggestions;
+      this.$nextTick(this.updatePopper);
+    },
+    handleSuggestionKeyDown: function handleSuggestionKeyDown(event) {
+      var keyCode = event.keyCode,
+          target = event.target;
+
+      switch (keyCode) {
+        case KeyCode.enter:
+          target.click();
+          break;
+        case KeyCode.up:
+          var prev = target.previousElementSibling;
+          prev && prev.focus();
+          break;
+        case KeyCode.down:
+          var next = target.nextElementSibling;
+          next && next.focus();
+          break;
+        case KeyCode.esc:
+        case KeyCode.tab:
+          this.toggleDropDownVisible(false);
+          break;
+      }
+    },
+    handleDelete: function handleDelete() {
+      var inputValue = this.inputValue,
+          pressDeleteCount = this.pressDeleteCount,
+          presentTags = this.presentTags;
+
+      var lastIndex = presentTags.length - 1;
+      var lastTag = presentTags[lastIndex];
+      this.pressDeleteCount = inputValue ? 0 : pressDeleteCount + 1;
+
+      if (!lastTag) return;
+
+      if (this.pressDeleteCount) {
+        if (lastTag.hitState) {
+          this.deleteTag(lastIndex);
+        } else {
+          lastTag.hitState = true;
         }
-      },
-      [h(
-        'div',
-        {
-          directives: [{
-            name: 'show',
-            value: visible
-          }],
+      }
+    },
+    handleSuggestionClick: function handleSuggestionClick(index) {
+      var multiple = this.multiple;
 
-          'class': ['el-cascader-menus el-popper', popperClass],
-          ref: 'wrapper'
-        },
-        [h(
-          'div',
-          {
-            attrs: { 'x-arrow': true },
-            'class': 'popper__arrow' },
-          []
-        ), menus]
-      )]
-    );
+      var targetNode = this.suggestions[index];
+
+      if (multiple) {
+        var checked = targetNode.checked;
+
+        targetNode.doCheck(!checked);
+        this.panel.calculateMultiCheckedValue();
+      } else {
+        this.checkedValue = targetNode.getValueByOption();
+        this.toggleDropDownVisible(false);
+      }
+    },
+    deleteTag: function deleteTag(index) {
+      var checkedValue = this.checkedValue;
+
+      var val = checkedValue[index];
+      this.checkedValue = checkedValue.filter(function (n, i) {
+        return i !== index;
+      });
+      this.$emit('remove-tag', val);
+    },
+    updateStyle: function updateStyle() {
+      var $el = this.$el,
+          inputInitialHeight = this.inputInitialHeight;
+
+      if (this.$isServer || !$el) return;
+
+      var suggestionPanel = this.$refs.suggestionPanel;
+
+      var inputInner = $el.querySelector('.el-input__inner');
+
+      if (!inputInner) return;
+
+      var tags = $el.querySelector('.el-cascader__tags');
+      var suggestionPanelEl = null;
+
+      if (suggestionPanel && (suggestionPanelEl = suggestionPanel.$el)) {
+        var suggestionList = suggestionPanelEl.querySelector('.el-cascader__suggestion-list');
+        suggestionList.style.minWidth = inputInner.offsetWidth + 'px';
+      }
+
+      if (tags) {
+        var offsetHeight = tags.offsetHeight;
+
+        var height = Math.max(offsetHeight + 6, inputInitialHeight) + 'px';
+        inputInner.style.height = height;
+        this.updatePopper();
+      }
+    },
+
+
+    /**
+     * public methods
+    */
+    getCheckedNodes: function getCheckedNodes(leafOnly) {
+      return this.panel.getCheckedNodes(leafOnly);
+    }
   }
+});
+// CONCATENATED MODULE: ./packages/cascader/src/cascader.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_cascadervue_type_script_lang_js_ = (cascadervue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__(0);
+
+// CONCATENATED MODULE: ./packages/cascader/src/cascader.vue
+
+
+
+
+
+/* normalize component */
+
+var component = Object(componentNormalizer["a" /* default */])(
+  src_cascadervue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "packages/cascader/src/cascader.vue"
+/* harmony default export */ var cascader = (component.exports);
+// CONCATENATED MODULE: ./packages/cascader/index.js
+
+
+/* istanbul ignore next */
+cascader.install = function (Vue) {
+  Vue.component(cascader.name, cascader);
 };
+
+/* harmony default export */ var packages_cascader = __webpack_exports__["default"] = (cascader);
 
 /***/ }),
 
-/***/ 357:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ 12:
+/***/ (function(module, exports) {
 
-"use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',{directives:[{name:"clickoutside",rawName:"v-clickoutside",value:(_vm.handleClickoutside),expression:"handleClickoutside"}],ref:"reference",staticClass:"el-cascader",class:[
-    {
-      'is-opened': _vm.menuVisible,
-      'is-disabled': _vm.cascaderDisabled
-    },
-    _vm.cascaderSize ? 'el-cascader--' + _vm.cascaderSize : ''
-  ],on:{"click":_vm.handleClick,"mouseenter":function($event){_vm.inputHover = true},"focus":function($event){_vm.inputHover = true},"mouseleave":function($event){_vm.inputHover = false},"blur":function($event){_vm.inputHover = false},"keydown":_vm.handleKeydown}},[_c('el-input',{ref:"input",class:{ 'is-focus': _vm.menuVisible },attrs:{"readonly":_vm.readonly,"placeholder":_vm.currentLabels.length ? undefined : _vm.placeholder,"validate-event":false,"size":_vm.size,"disabled":_vm.cascaderDisabled},on:{"input":_vm.debouncedInputChange,"focus":_vm.handleFocus,"blur":_vm.handleBlur},nativeOn:{"compositionstart":function($event){_vm.handleComposition($event)},"compositionend":function($event){_vm.handleComposition($event)}},model:{value:(_vm.inputValue),callback:function ($$v) {_vm.inputValue=$$v},expression:"inputValue"}},[_c('template',{attrs:{"slot":"suffix"},slot:"suffix"},[(_vm.clearable && _vm.inputHover && _vm.currentLabels.length)?_c('i',{key:"1",staticClass:"el-input__icon el-icon-circle-close el-cascader__clearIcon",on:{"click":_vm.clearValue}}):_c('i',{key:"2",staticClass:"el-input__icon el-icon-arrow-down",class:{ 'is-reverse': _vm.menuVisible }})])],2),_c('span',{directives:[{name:"show",rawName:"v-show",value:(_vm.inputValue === '' && !_vm.isOnComposition),expression:"inputValue === '' && !isOnComposition"}],staticClass:"el-cascader__label"},[(_vm.showAllLevels)?[_vm._l((_vm.currentLabels),function(label,index){return [_vm._v("\n        "+_vm._s(label)+"\n        "),(index < _vm.currentLabels.length - 1)?_c('span',{key:index},[_vm._v(" "+_vm._s(_vm.separator)+" ")]):_vm._e()]})]:[_vm._v("\n      "+_vm._s(_vm.currentLabels[_vm.currentLabels.length - 1])+"\n    ")]],2)],1)}
-var staticRenderFns = []
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
+module.exports = require("element-ui/lib/utils/clickoutside");
+
+/***/ }),
+
+/***/ 13:
+/***/ (function(module, exports) {
+
+module.exports = require("element-ui/lib/scrollbar");
+
+/***/ }),
+
+/***/ 15:
+/***/ (function(module, exports) {
+
+module.exports = require("element-ui/lib/utils/resize-event");
+
+/***/ }),
+
+/***/ 16:
+/***/ (function(module, exports) {
+
+module.exports = require("throttle-debounce/debounce");
+
+/***/ }),
+
+/***/ 19:
+/***/ (function(module, exports) {
+
+module.exports = require("element-ui/lib/utils/types");
+
+/***/ }),
+
+/***/ 20:
+/***/ (function(module, exports) {
+
+module.exports = require("element-ui/lib/locale");
+
+/***/ }),
+
+/***/ 21:
+/***/ (function(module, exports) {
+
+module.exports = require("element-ui/lib/utils/shared");
+
+/***/ }),
+
+/***/ 3:
+/***/ (function(module, exports) {
+
+module.exports = require("element-ui/lib/utils/util");
+
+/***/ }),
+
+/***/ 36:
+/***/ (function(module, exports) {
+
+module.exports = require("element-ui/lib/tag");
+
+/***/ }),
+
+/***/ 39:
+/***/ (function(module, exports) {
+
+module.exports = require("element-ui/lib/utils/aria-utils");
 
 /***/ }),
 
 /***/ 4:
 /***/ (function(module, exports) {
 
-module.exports = require("vue");
-
-/***/ }),
-
-/***/ 45:
-/***/ (function(module, exports) {
-
-module.exports = require("babel-helper-vue-jsx-merge-props");
+module.exports = require("element-ui/lib/mixins/emitter");
 
 /***/ }),
 
 /***/ 5:
 /***/ (function(module, exports) {
 
-module.exports = require("element-ui/lib/mixins/locale");
+module.exports = require("element-ui/lib/utils/vue-popper");
+
+/***/ }),
+
+/***/ 50:
+/***/ (function(module, exports) {
+
+module.exports = require("element-ui/lib/cascader-panel");
 
 /***/ }),
 
 /***/ 6:
 /***/ (function(module, exports) {
 
-module.exports = require("element-ui/lib/input");
-
-/***/ }),
-
-/***/ 7:
-/***/ (function(module, exports) {
-
-module.exports = require("element-ui/lib/utils/vue-popper");
+module.exports = require("element-ui/lib/mixins/locale");
 
 /***/ })
 

@@ -84,7 +84,8 @@
       cascader: {
         noMatch: 'Сәйкес деректер жоқ',
         loading: 'Жүктелуде',
-        placeholder: 'Таңдаңыз'
+        placeholder: 'Таңдаңыз',
+        noData: 'Деректер жоқ'
       },
       pagination: {
         goto: 'Бару',
@@ -121,6 +122,12 @@
         filterPlaceholder: 'Кілт сөзді енгізіңіз',
         noCheckedFormat: '{total} элэмэнт',
         hasCheckedFormat: '{checked}/{total} құсбелгісі қойылды'
+      },
+      image: {
+        error: 'FAILED' // to be translated
+      },
+      pageHeader: {
+        title: 'Back' // to be translated
       }
     }
   };

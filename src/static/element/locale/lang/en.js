@@ -36,7 +36,7 @@ exports.default = {
       month10: 'October',
       month11: 'November',
       month12: 'December',
-      // week: 'week',
+      week: 'week',
       weeks: {
         sun: 'Sun',
         mon: 'Mon',
@@ -70,7 +70,8 @@ exports.default = {
     cascader: {
       noMatch: 'No matching data',
       loading: 'Loading',
-      placeholder: 'Select'
+      placeholder: 'Select',
+      noData: 'No data'
     },
     pagination: {
       goto: 'Go to',
@@ -107,6 +108,12 @@ exports.default = {
       filterPlaceholder: 'Enter keyword', // to be translated
       noCheckedFormat: '{total} items', // to be translated
       hasCheckedFormat: '{checked}/{total} checked' // to be translated
+    },
+    image: {
+      error: 'FAILED'
+    },
+    pageHeader: {
+      title: 'Back' // to be translated
     }
   }
 };

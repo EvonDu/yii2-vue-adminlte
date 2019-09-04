@@ -84,7 +84,8 @@
       cascader: {
         noMatch: 'Duomenų nerasta',
         loading: 'Kraunasi',
-        placeholder: 'Pasirink'
+        placeholder: 'Pasirink',
+        noData: 'Nėra duomenų'
       },
       pagination: {
         goto: 'Eiti į',
@@ -121,6 +122,12 @@
         filterPlaceholder: 'Įvesk raktažodį',
         noCheckedFormat: 'Viso: {total}',
         hasCheckedFormat: 'Pažymėta {checked} iš {total}'
+      },
+      image: {
+        error: 'FAILED' // to be translated
+      },
+      pageHeader: {
+        title: 'Back' // to be translated
       }
     }
   };

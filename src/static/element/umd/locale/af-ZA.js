@@ -84,7 +84,8 @@
       cascader: {
         noMatch: 'Geen toepaslike data',
         loading: 'Laai',
-        placeholder: 'Kies'
+        placeholder: 'Kies',
+        noData: 'Geen data'
       },
       pagination: {
         goto: 'Gaan na',
@@ -121,6 +122,12 @@
         filterPlaceholder: 'Voer sleutelwoord in',
         noCheckedFormat: '{total} items',
         hasCheckedFormat: '{checked}/{total} gekies'
+      },
+      image: {
+        error: 'FAILED' // to be translated
+      },
+      pageHeader: {
+        title: 'Back' // to be translated
       }
     }
   };

@@ -37,12 +37,32 @@ module.exports =
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -60,48 +80,43 @@ module.exports =
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
+/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 319);
+/******/ 	return __webpack_require__(__webpack_require__.s = 82);
 /******/ })
 /************************************************************************/
 /******/ ({
 
 /***/ 0:
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return normalizeComponent; });
 /* globals __VUE_SSR_CONTEXT__ */
 
-// IMPORTANT: Do NOT use ES2015 features in this file.
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
 // This module is a runtime utility for cleaner component module output and will
 // be included in the final webpack user bundle.
 
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
   functionalTemplate,
   injectStyles,
   scopeId,
-  moduleIdentifier /* server only */
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
 ) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
   // Vue.extend constructor export interop
   var options = typeof scriptExports === 'function'
     ? scriptExports.options
     : scriptExports
 
   // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
     options._compiled = true
   }
 
@@ -112,7 +127,7 @@ module.exports = function normalizeComponent (
 
   // scopedId
   if (scopeId) {
-    options._scopeId = scopeId
+    options._scopeId = 'data-v-' + scopeId
   }
 
   var hook
@@ -140,34 +155,32 @@ module.exports = function normalizeComponent (
     // never gets called
     options._ssrRegister = hook
   } else if (injectStyles) {
-    hook = injectStyles
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
   }
 
   if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
+    if (options.functional) {
       // for template-only hot-reload because in that case the render fn doesn't
       // go through the normalizer
       options._injectStyles = hook
       // register for functioal component in vue file
+      var originalRender = options.render
       options.render = function renderWithStyleInjection (h, context) {
         hook.call(context)
-        return existing(h, context)
+        return originalRender(h, context)
       }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
     }
   }
 
   return {
-    esModule: esModule,
     exports: scriptExports,
     options: options
   }
@@ -176,87 +189,122 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ 3:
+/***/ 10:
+/***/ (function(module, exports) {
+
+module.exports = require("element-ui/lib/mixins/migrating");
+
+/***/ }),
+
+/***/ 19:
+/***/ (function(module, exports) {
+
+module.exports = require("element-ui/lib/utils/types");
+
+/***/ }),
+
+/***/ 2:
 /***/ (function(module, exports) {
 
 module.exports = require("element-ui/lib/utils/dom");
 
 /***/ }),
 
-/***/ 319:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _main = __webpack_require__(320);
-
-var _main2 = _interopRequireDefault(_main);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/* istanbul ignore next */
-_main2.default.install = function (Vue) {
-  Vue.component(_main2.default.name, _main2.default);
-};
-
-exports.default = _main2.default;
-
-/***/ }),
-
-/***/ 320:
+/***/ 82:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_main_vue__ = __webpack_require__(321);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_main_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_main_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_02f4e282_hasScoped_false_preserveWhitespace_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_main_vue__ = __webpack_require__(322);
-var normalizeComponent = __webpack_require__(0)
-/* script */
+__webpack_require__.r(__webpack_exports__);
 
-/* template */
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./packages/rate/src/main.vue?vue&type=template&id=ada57782&
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "el-rate",
+      attrs: {
+        role: "slider",
+        "aria-valuenow": _vm.currentValue,
+        "aria-valuetext": _vm.text,
+        "aria-valuemin": "0",
+        "aria-valuemax": _vm.max,
+        tabindex: "0"
+      },
+      on: { keydown: _vm.handleKey }
+    },
+    [
+      _vm._l(_vm.max, function(item, key) {
+        return _c(
+          "span",
+          {
+            key: key,
+            staticClass: "el-rate__item",
+            style: { cursor: _vm.rateDisabled ? "auto" : "pointer" },
+            on: {
+              mousemove: function($event) {
+                _vm.setCurrentValue(item, $event)
+              },
+              mouseleave: _vm.resetCurrentValue,
+              click: function($event) {
+                _vm.selectValue(item)
+              }
+            }
+          },
+          [
+            _c(
+              "i",
+              {
+                staticClass: "el-rate__icon",
+                class: [
+                  _vm.classes[item - 1],
+                  { hover: _vm.hoverIndex === item }
+                ],
+                style: _vm.getIconStyle(item)
+              },
+              [
+                _vm.showDecimalIcon(item)
+                  ? _c("i", {
+                      staticClass: "el-rate__decimal",
+                      class: _vm.decimalIconClass,
+                      style: _vm.decimalStyle
+                    })
+                  : _vm._e()
+              ]
+            )
+          ]
+        )
+      }),
+      _vm.showText || _vm.showScore
+        ? _c(
+            "span",
+            { staticClass: "el-rate__text", style: { color: _vm.textColor } },
+            [_vm._v(_vm._s(_vm.text))]
+          )
+        : _vm._e()
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
 
-/* template functional */
-  var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_main_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_02f4e282_hasScoped_false_preserveWhitespace_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_main_vue__["a" /* default */],
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
 
-/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+// CONCATENATED MODULE: ./packages/rate/src/main.vue?vue&type=template&id=ada57782&
 
+// EXTERNAL MODULE: external "element-ui/lib/utils/dom"
+var dom_ = __webpack_require__(2);
 
-/***/ }),
+// EXTERNAL MODULE: external "element-ui/lib/utils/types"
+var types_ = __webpack_require__(19);
 
-/***/ 321:
-/***/ (function(module, exports, __webpack_require__) {
+// EXTERNAL MODULE: external "element-ui/lib/mixins/migrating"
+var migrating_ = __webpack_require__(10);
+var migrating_default = /*#__PURE__*/__webpack_require__.n(migrating_);
 
-"use strict";
-
-
-exports.__esModule = true;
-
-var _dom = __webpack_require__(3);
-
-var _migrating = __webpack_require__(8);
-
-var _migrating2 = _interopRequireDefault(_migrating);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./packages/rate/src/main.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -292,10 +340,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 
-exports.default = {
+
+
+
+
+/* harmony default export */ var mainvue_type_script_lang_js_ = ({
   name: 'ElRate',
 
-  mixins: [_migrating2.default],
+  mixins: [migrating_default.a],
 
   inject: {
     elForm: {
@@ -330,7 +382,7 @@ exports.default = {
       default: 5
     },
     colors: {
-      type: Array,
+      type: [Array, Object],
       default: function _default() {
         return ['#F7BA2A', '#F7BA2A', '#F7BA2A'];
       }
@@ -344,7 +396,7 @@ exports.default = {
       default: '#EFF2F7'
     },
     iconClasses: {
-      type: Array,
+      type: [Array, Object],
       default: function _default() {
         return ['el-icon-star-on', 'el-icon-star-on', 'el-icon-star-on'];
       }
@@ -402,9 +454,8 @@ exports.default = {
     decimalStyle: function decimalStyle() {
       var width = '';
       if (this.rateDisabled) {
-        width = (this.valueDecimal < 50 ? 0 : 50) + '%';
-      }
-      if (this.allowHalf) {
+        width = this.valueDecimal + '%';
+      } else if (this.allowHalf) {
         width = '50%';
       }
       return {
@@ -415,23 +466,24 @@ exports.default = {
     valueDecimal: function valueDecimal() {
       return this.value * 100 - Math.floor(this.value) * 100;
     },
+    classMap: function classMap() {
+      var _ref;
+
+      return Array.isArray(this.iconClasses) ? (_ref = {}, _ref[this.lowThreshold] = this.iconClasses[0], _ref[this.highThreshold] = { value: this.iconClasses[1], excluded: true }, _ref[this.max] = this.iconClasses[2], _ref) : this.iconClasses;
+    },
     decimalIconClass: function decimalIconClass() {
       return this.getValueFromMap(this.value, this.classMap);
     },
     voidClass: function voidClass() {
-      return this.rateDisabled ? this.classMap.disabledVoidClass : this.classMap.voidClass;
+      return this.rateDisabled ? this.disabledVoidIconClass : this.voidIconClass;
     },
     activeClass: function activeClass() {
       return this.getValueFromMap(this.currentValue, this.classMap);
     },
     colorMap: function colorMap() {
-      return {
-        lowColor: this.colors[0],
-        mediumColor: this.colors[1],
-        highColor: this.colors[2],
-        voidColor: this.voidColor,
-        disabledVoidColor: this.disabledVoidColor
-      };
+      var _ref2;
+
+      return Array.isArray(this.colors) ? (_ref2 = {}, _ref2[this.lowThreshold] = this.colors[0], _ref2[this.highThreshold] = { value: this.colors[1], excluded: true }, _ref2[this.max] = this.colors[2], _ref2) : this.colors;
     },
     activeColor: function activeColor() {
       return this.getValueFromMap(this.currentValue, this.colorMap);
@@ -450,15 +502,6 @@ exports.default = {
         result.push(this.voidClass);
       }
       return result;
-    },
-    classMap: function classMap() {
-      return {
-        lowClass: this.iconClasses[0],
-        mediumClass: this.iconClasses[1],
-        highClass: this.iconClasses[2],
-        voidClass: this.voidIconClass,
-        disabledVoidClass: this.disabledVoidIconClass
-      };
     },
     rateDisabled: function rateDisabled() {
       return this.disabled || (this.elForm || {}).disabled;
@@ -481,15 +524,15 @@ exports.default = {
       };
     },
     getValueFromMap: function getValueFromMap(value, map) {
-      var result = '';
-      if (value <= this.lowThreshold) {
-        result = map.lowColor || map.lowClass;
-      } else if (value >= this.highThreshold) {
-        result = map.highColor || map.highClass;
-      } else {
-        result = map.mediumColor || map.mediumClass;
-      }
-      return result;
+      var matchedKeys = Object.keys(map).filter(function (key) {
+        var val = map[key];
+        var excluded = Object(types_["isObject"])(val) ? val.excluded : false;
+        return excluded ? value < key : value <= key;
+      }).sort(function (a, b) {
+        return a - b;
+      });
+      var matchedValue = map[matchedKeys[0]];
+      return Object(types_["isObject"])(matchedValue) ? matchedValue.value : matchedValue || '';
     },
     showDecimalIcon: function showDecimalIcon(item) {
       var showWhenDisabled = this.rateDisabled && this.valueDecimal > 0 && item - 1 < this.value && item > this.value;
@@ -498,7 +541,7 @@ exports.default = {
       return showWhenDisabled || showWhenAllowHalf;
     },
     getIconStyle: function getIconStyle(item) {
-      var voidColor = this.rateDisabled ? this.colorMap.disabledVoidColor : this.colorMap.voidColor;
+      var voidColor = this.rateDisabled ? this.disabledVoidColor : this.voidColor;
       return {
         color: item <= this.currentValue ? this.activeColor : voidColor
       };
@@ -552,10 +595,10 @@ exports.default = {
       /* istanbul ignore if */
       if (this.allowHalf) {
         var target = event.target;
-        if ((0, _dom.hasClass)(target, 'el-rate__item')) {
+        if (Object(dom_["hasClass"])(target, 'el-rate__item')) {
           target = target.querySelector('.el-rate__icon');
         }
-        if ((0, _dom.hasClass)(target, 'el-rate__decimal')) {
+        if (Object(dom_["hasClass"])(target, 'el-rate__decimal')) {
           target = target.parentNode;
         }
         this.pointerAtLeftHalf = event.offsetX * 2 <= target.clientWidth;
@@ -582,25 +625,44 @@ exports.default = {
       this.$emit('input', 0);
     }
   }
+});
+// CONCATENATED MODULE: ./packages/rate/src/main.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_mainvue_type_script_lang_js_ = (mainvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__(0);
+
+// CONCATENATED MODULE: ./packages/rate/src/main.vue
+
+
+
+
+
+/* normalize component */
+
+var component = Object(componentNormalizer["a" /* default */])(
+  src_mainvue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "packages/rate/src/main.vue"
+/* harmony default export */ var main = (component.exports);
+// CONCATENATED MODULE: ./packages/rate/index.js
+
+
+/* istanbul ignore next */
+main.install = function (Vue) {
+  Vue.component(main.name, main);
 };
 
-/***/ }),
-
-/***/ 322:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"el-rate",attrs:{"role":"slider","aria-valuenow":_vm.currentValue,"aria-valuetext":_vm.text,"aria-valuemin":"0","aria-valuemax":_vm.max,"tabindex":"0"},on:{"keydown":_vm.handleKey}},[_vm._l((_vm.max),function(item,key){return _c('span',{key:key,staticClass:"el-rate__item",style:({ cursor: _vm.rateDisabled ? 'auto' : 'pointer' }),on:{"mousemove":function($event){_vm.setCurrentValue(item, $event)},"mouseleave":_vm.resetCurrentValue,"click":function($event){_vm.selectValue(item)}}},[_c('i',{staticClass:"el-rate__icon",class:[_vm.classes[item - 1], { 'hover': _vm.hoverIndex === item }],style:(_vm.getIconStyle(item))},[(_vm.showDecimalIcon(item))?_c('i',{staticClass:"el-rate__decimal",class:_vm.decimalIconClass,style:(_vm.decimalStyle)}):_vm._e()])])}),(_vm.showText || _vm.showScore)?_c('span',{staticClass:"el-rate__text",style:({ color: _vm.textColor })},[_vm._v(_vm._s(_vm.text))]):_vm._e()],2)}
-var staticRenderFns = []
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
-
-/***/ }),
-
-/***/ 8:
-/***/ (function(module, exports) {
-
-module.exports = require("element-ui/lib/mixins/migrating");
+/* harmony default export */ var rate = __webpack_exports__["default"] = (main);
 
 /***/ })
 
