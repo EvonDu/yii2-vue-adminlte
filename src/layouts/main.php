@@ -5,21 +5,19 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yiivue\Import;
-use vuelte\assets\AppAsset;
 use vuelte\assets\ElementAsset;
 use vuelte\assets\AdminLteComponentsAsset;
 
 //加载资源
-AppAsset::register($this);
 ElementAsset::register($this);
 AdminLteComponentsAsset::register($this);
 
-//加载内容(组件形式)
-Import::componentByContent($this, $content);
+//加载内容组件
+Import::componentByContent($this, $content) || Import::componentByHtml($this, $content, "lte-content");
 
-//读取配置信息
+//加载配置信息
 $config = [];
-$config_path = Yii::getAlias("@app/config/adminlte.php");
+$config_path = isset(Yii::$app->params["adminLteConfig"]) ? Yii::getAlias(Yii::$app->params["adminLteConfig"]) : "";
 if(file_exists($config_path)){
     $config = include($config_path);
     $config = is_array($config) ? $config : [];
@@ -40,14 +38,14 @@ if(file_exists($config_path)){
 <?php $this->beginBody() ?>
 
 <div id="app" class="wrapper">
-    <lte-header :title="title" :url-home="urlHome" :signout="signout"
+    <lte-header :title="projectName" :url-home="urlHome" :signout="signout"
                 :messages="header.messages" :notifications="header.notifications" :tasks="header.tasks"
                 :user="user" :user-buttons="userButtons" :signout="signout" :profile="profile"></lte-header>
     <lte-sidebar :nav="nav" :user="user"></lte-sidebar>
     <div class="content-wrapper">
         <lte-content-header :small="small" :breadcrumbs="breadcrumbs"><?=$this->title?></lte-content-header>
         <div class="content">
-            <let-content></let-content>
+            <lte-content></lte-content>
         </div>
     </div>
     <lte-footer><?= isset($config['footer']) ? $config['footer'] : '<strong>Copyright &copy; 2017-2018 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights reserved.'?></lte-footer>
@@ -67,7 +65,7 @@ if(file_exists($config_path)){
         store:store,
         data: function() {
             return {
-                title:"<?= isset($config['productName']) ? $config['productName'] : 'Yii AdminLet'?>",
+                projectName:"<?= isset($config['projectName']) ? $config['projectName'] : 'Yii AdminLet'?>",
                 urlHome:"<?=Url::home()?>",
                 user:{
                     'name': "<?= isset($config['user']['name']) ? $config['user']['name'] : 'Admin'?>",

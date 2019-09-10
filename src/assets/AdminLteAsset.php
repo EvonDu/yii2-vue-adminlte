@@ -25,7 +25,7 @@ class AdminLteAsset extends AssetBundle
         'bower_components/jquery-slimscroll/jquery.slimscroll.min.js',
         'bower_components/fastclick/lib/fastclick.js',
         'js/adminlte.min.js',
-        'js/demo.js',
+        'js/adminlte-setting.js',
     ];
 
     //定义加载选项

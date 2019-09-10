@@ -15,11 +15,6 @@ class VueLte
         return "@vuelte/layouts/$name.php";
     }
 
-    static public function view($name){
-        self::init();
-        return "@vuelte/views/$name";
-    }
-
     static public function template($name="default"){
         self::init();
         return "@vuelte/template/$name";
