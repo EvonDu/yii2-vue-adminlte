@@ -1,10 +1,10 @@
 <?php
 
-namespace vuelte;
+namespace yiilte;
 
 use Yii;
 
-class VueLte
+class YiiLte
 {
     static protected function init(){
         Yii::setAlias('@vuelte',__DIR__);

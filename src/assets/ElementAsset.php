@@ -1,6 +1,6 @@
 <?php
 
-namespace vuelte\assets;
+namespace yiilte\assets;
 
 use yii\web\AssetBundle;
 

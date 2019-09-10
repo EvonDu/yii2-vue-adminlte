@@ -46,7 +46,7 @@ Import::component($this,'_form', ['model' => $model]);
 </component-template>
 
 <script>
-    Vue.component('let-content', {
+    Vue.component('lte-content', {
         template: '{{component-template}}',
         data: function(){
             return {

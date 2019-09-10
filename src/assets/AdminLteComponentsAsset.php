@@ -1,6 +1,6 @@
 <?php
 
-namespace vuelte\assets;
+namespace yiilte\assets;
 
 use yii\web\AssetBundle;
 
@@ -22,6 +22,6 @@ class AdminLteComponentsAsset extends AssetBundle
     //定义资源包的依赖
     public $depends = [
         'yiivue\assets\VueAsset',
-        'vuelte\assets\AdminLteAsset',
+        'yiilte\assets\AdminLteAsset',
     ];
 }

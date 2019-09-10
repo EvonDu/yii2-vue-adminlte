@@ -1,5 +1,5 @@
 <?php
-namespace vuelte\widgets;
+namespace yiilte\widgets;
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;

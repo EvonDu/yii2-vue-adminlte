@@ -5,8 +5,8 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yiivue\Import;
-use vuelte\assets\ElementAsset;
-use vuelte\assets\AdminLteComponentsAsset;
+use yiilte\assets\ElementAsset;
+use yiilte\assets\AdminLteComponentsAsset;
 
 //加载资源
 ElementAsset::register($this);
@@ -83,7 +83,7 @@ if(file_exists($config_path)){
                 signout : <?= isset($config['signout']) ? json_encode($config['signout']) : '{"text":"Sign Out"}'?>,
                 userButtons : <?= isset($config['userButtons']) ? json_encode($config['userButtons']) : '[]'?>,
                 small:"<?= isset($this->params['small']) ? $this->params['small'] : "";?>",
-                breadcrumbs:<?= json_encode(vuelte\lib\Breadcrumbs::getBreadcrumbs($this)) ?>
+                breadcrumbs:<?= json_encode(yiilte\lib\Breadcrumbs::getBreadcrumbs($this)) ?>
             }
         }
     });

@@ -4,8 +4,8 @@
 
 use yii\helpers\Html;
 use yiivue\Import;
-use vuelte\assets\ElementAsset;
-use vuelte\assets\AdminLteComponentsAsset;
+use yiilte\assets\ElementAsset;
+use yiilte\assets\AdminLteComponentsAsset;
 
 //加载资源
 ElementAsset::register($this);

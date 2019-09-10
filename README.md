@@ -8,11 +8,11 @@
 
 ## 配置方法
 #### 配置布局
-* 配置布局：`vuelte\VueLte::layout('main')`
-    * 如：`'layout' => vuelte\VueLte::layout('main')`
+* 配置布局：`yiilte\YiiLte::layout('main')`
+    * 如：`'layout' => yiilte\YiiLte::layout('main')`
     * 高级应用模板中配置文件为：`app/config/main.php`
-* 配置空白布局：`vuelte\VueLte::layout('space')`
-    * 如：`'layout' => vuelte\VueLte::layout('space')`
+* 配置空白布局：`yiilte\YiiLte::layout('space')`
+    * 如：`'layout' => yiilte\YiiLte::layout('space')`
 
 #### 配置布局信息
 * 新建配置文件：
@@ -102,7 +102,7 @@ return [
                 'crud' => [
                     'class' => 'yii\gii\generators\crud\Generator',
                     'templates' => [
-                        'vuelte' => vuelte\VueLte::template(),
+                        'yiilte' => yiilte\YiiLte::template(),
                     ]
                 ]
             ],
@@ -144,7 +144,7 @@ return [
 * 可以用配置好GII后用模板生成CRUD，然后对照其中的_form文件查看（此为一个完整混编Vue组件）
 
 #### 组件例子
-* 示例组件（路径：backend/views/components/test.php）：
+* 示例组件（路径：app/views/components/test.php）：
 ```
 <!-- 组件样式 -->
 <style>

@@ -9,11 +9,11 @@
     ],
     "require": {
 		"yiisoft/yii2": "*",
-		"evondu/yii2-vue": "~1.0.2"
+		"evondu/yii2-vue": "~1.1.0"
 	},
 	"autoload": {
 		"psr-4": {
-			"vuelte\\": "src"
+			"yiilte\\": "src"
 		}
 	},
 	"license": "MIT",

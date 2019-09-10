@@ -12,7 +12,7 @@ echo "<?php\n";
 ?>
 
 use yiivue\Import;
-use vuelte\widgets\DetailView;
+use yiilte\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
@@ -58,7 +58,7 @@ Import::component($this, '_options', ['model' => $model]);
 </component-template>
 
 <script>
-    Vue.component('let-content', {
+    Vue.component('lte-content', {
         template: '{{component-template}}'
     })
 </script>

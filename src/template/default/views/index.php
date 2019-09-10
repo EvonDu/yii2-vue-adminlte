@@ -13,7 +13,7 @@ echo "<?php\n";
 ?>
 
 use yiivue\Import;
-use <?= $generator->indexWidgetType === 'grid' ? "vuelte\\widgets\\GridView" : "yii\\widgets\\ListView" ?>;
+use <?= $generator->indexWidgetType === 'grid' ? "yiilte\\widgets\\GridView" : "yii\\widgets\\ListView" ?>;
 <?= $generator->enablePjax ? 'use yii\widgets\Pjax;' : '' ?>
 
 /* @var $this yii\web\View */
@@ -67,7 +67,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
 }
 ?>
 
-                        ['class' => 'vuelte\widgets\ActionColumn'],
+                        ['class' => 'yiilte\widgets\ActionColumn'],
                     ],
                 ]); ?>
 <?php else: ?>
@@ -87,7 +87,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
 </component-template>
 
 <script>
-    Vue.component('let-content', {
+    Vue.component('lte-content', {
         template: '{{component-template}}'
     })
 </script>
