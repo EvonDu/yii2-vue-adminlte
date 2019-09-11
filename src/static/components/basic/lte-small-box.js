@@ -8,8 +8,7 @@ Vue.component('lte-small-box', {
         'btnUrl': {type: String, default: "#"},
         'btnText': {type: String, default: "More info"},
     },
-    template: `<div class="col-lg-3 col-xs-6">
-        <div class="small-box" :class="'bg-'+bg">
+    template: `<div class="small-box" :class="'bg-'+bg">
             <div class="inner">
                 <h3><slot></slot></h3>
                  <p>{{title}}</p>
@@ -18,6 +17,5 @@ Vue.component('lte-small-box', {
                 <i :class="icon"></i>
             </div>
             <a :href="btnUrl" class="small-box-footer">{{btnText}} <i class="fa fa-arrow-circle-right"></i></a>
-        </div>
-    </div>`
+        </div>`
 });

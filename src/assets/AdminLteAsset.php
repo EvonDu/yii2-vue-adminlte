@@ -11,29 +11,21 @@ class AdminLteAsset extends AssetBundle
 {
     //参数
     public $sourcePath = __DIR__.'/../static/adminlte';
-
-    //定义资源包的css
     public $css = [
         'bower_components/font-awesome/css/font-awesome.min.css',
         'bower_components/Ionicons/css/ionicons.min.css',
         'css/AdminLTE.min.css',
         'css/skins/_all-skins.css',
     ];
-
-    //定义资源包的js
     public $js = [
         'bower_components/jquery-slimscroll/jquery.slimscroll.min.js',
         'bower_components/fastclick/lib/fastclick.js',
         'js/adminlte.min.js',
         'js/adminlte-setting.js',
     ];
-
-    //定义加载选项
     public $jsOptions = [
         'position' => \yii\web\View::POS_HEAD
     ];
-
-    //定义加载选项
     public $cssOptions = [
         'position' => \yii\web\View::POS_HEAD
     ];

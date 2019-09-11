@@ -23,5 +23,6 @@ class AdminLteComponentsAsset extends AssetBundle
     public $depends = [
         'yiivue\assets\VueAsset',
         'yiilte\assets\AdminLteAsset',
+        'yiilte\assets\JQueryUiAsset',
     ];
 }

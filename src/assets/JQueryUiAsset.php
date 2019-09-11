@@ -5,19 +5,17 @@ namespace yiilte\assets;
 use yii\web\AssetBundle;
 
 /**
- * Main backend application asset bundle.
+ * 版本2.4.3
  */
-class ElementAsset extends AssetBundle
+class JQueryUiAsset extends AssetBundle
 {
     //参数
-    public $sourcePath = __DIR__.'/../static/element';
+    public $sourcePath = __DIR__.'/../static/jquery-ui';
     public $css = [
-        //'https://unpkg.com/element-ui/lib/theme-chalk/index.css',
-        'theme-chalk/index.css'
+        'jquery-ui.min.css'
     ];
     public $js = [
-        //'https://unpkg.com/element-ui/lib/index.js',
-        'index.js'
+        'jquery-ui.min.js'
     ];
     public $jsOptions = [
         'position' => \yii\web\View::POS_HEAD
@@ -28,6 +26,6 @@ class ElementAsset extends AssetBundle
 
     //定义资源包的依赖
     public $depends = [
-        'yiivue\assets\VueAsset'
+        'yii\web\JqueryAsset',                  //依赖jquery
     ];
 }
