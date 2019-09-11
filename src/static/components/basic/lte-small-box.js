@@ -2,15 +2,18 @@ Vue.component('lte-small-box', {
     props:{
         'col-lg': {type: Number, default: 3},
         'col-xs': {type: Number, default: 6},
-        'bg': {type: String, default: "aqua"},
-        'title': {type: String, default: "New Orders"},
+        'bg': {type: String, default: "#00c0ef"},
+        'color': {type: String, default: "#ffffff"},
+        'title': {type: String, default: "New Tag"},
         'icon': {type: String, default: "ion ion-bag"},
         'btnUrl': {type: String, default: "#"},
         'btnText': {type: String, default: "More info"},
     },
-    template: `<div class="small-box" :class="'bg-'+bg">
+    template: `<div class="small-box" :style="{backgroundColor:bg,color:color}">
             <div class="inner">
-                <h3><slot></slot></h3>
+                <h3>
+                    <slot>0</slot>
+                 </h3>
                  <p>{{title}}</p>
             </div>
             <div class="icon">
