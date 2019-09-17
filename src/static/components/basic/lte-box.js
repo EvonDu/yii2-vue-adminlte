@@ -29,14 +29,22 @@ Vue.component('lte-box', {
             else
                 return false;
         },
+        existOverlay: function () {
+            if(this.$slots.overlay)
+                return true;
+            else
+                return false;
+        },
     },
     template: `<div :class="boxClass">
         <div class="box-header with-border" v-if="existHeader">
             <h3 class="box-title"><i :class="icon" v-if="icon"></i> {{title}}</h3>
             <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="tooltip" v-if="tooltip"><i class="fa fa-circle-o"></i></button>
-                <button type="button" class="btn btn-box-tool" data-widget="collapse" v-if="collapse"><i class="fa fa-minus"></i></button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove" v-if="remove"><i class="fa fa-times"></i></button>
+                <slot name="tools">
+                    <button type="button" class="btn btn-box-tool" data-widget="tooltip" v-if="tooltip"><i class="fa fa-circle-o"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse" v-if="collapse"><i class="fa fa-minus"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove" v-if="remove"><i class="fa fa-times"></i></button>
+                </slot>
             </div>
         </div>
         <div class="box-body" :class="{'no-padding':noPadding}">
@@ -44,6 +52,9 @@ Vue.component('lte-box', {
         </div>
         <div class="box-footer" v-if="existFooter">
             <slot name="footer"></slot>
+        </div>
+        <div class="overlay" v-if="existOverlay">
+            <slot name="overlay"></slot>
         </div>
     </div>`
 });

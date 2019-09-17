@@ -1,6 +1,6 @@
 Vue.component('lte-col', {
     props:{
-        'col': {type: String, default: "12"},
+        'col': {"default": "12"},
     },
     computed: {
         colClass: function () {
