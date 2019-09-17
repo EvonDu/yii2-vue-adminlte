@@ -27,38 +27,43 @@ $list[$this->context->action->id] = false;
 ?>
 <component-template>
     <div>
-        <?= "<?= " ?>$list["index"] ? Html::tag("lte-btn","<i class='glyphicon glyphicon-list'></i> 列表",[
+        <?= "<?= " ?>$list["index"] ? Html::tag("lte-btn","列表",[
             "href"=>Url::to(["index"]),
             "a"=>true,
             "block"=>true,
+            "icon"=>"glyphicon glyphicon-list"
         ]):null?>
-        <?= "<?= " ?>$list["create"] ? Html::tag("lte-btn","<i class='glyphicon glyphicon-plus'></i> 添加",[
+        <?= "<?= " ?>$list["create"] ? Html::tag("lte-btn","添加",[
             "href"=>Url::to(["create"]),
             "a"=>true,
             "block"=>true,
-            "type"=>"info"
+            "type"=>"info",
+            "icon"=>"glyphicon glyphicon-plus"
         ]):null?>
-        <?= "<?= " ?>$list["update"] ? Html::tag("lte-btn","<i class='glyphicon glyphicon-edit'></i> 修改",[
+        <?= "<?= " ?>$list["update"] ? Html::tag("lte-btn","修改",[
             "href"=>Url::to(["update", <?= $urlParams ?>]),
             "a"=>true,
             "block"=>true,
-            "type"=>"success"
+            "type"=>"success",
+            "icon"=>"glyphicon glyphicon-edit"
         ]):null?>
-        <?= "<?= " ?>$list["delete"] ? Html::tag("lte-btn","<i class='glyphicon glyphicon-remove'></i> 删除",[
+        <?= "<?= " ?>$list["delete"] ? Html::tag("lte-btn","删除",[
             "href"=>Url::to(["delete", <?= $urlParams ?>]),
             "a"=>true,
             "block"=>true,
             "type"=>"danger",
+            "icon"=>"glyphicon glyphicon-remove",
             'data' => [
                 'confirm' => Yii::t('yii', '是否要删除这个项目?'),
                 'method' => 'post',
             ]
         ]):null?>
-        <?= "<?= " ?>Html::tag("lte-btn","<i class='glyphicon glyphicon-share-alt'></i> 返回",[
+        <?= "<?= " ?>Html::tag("lte-btn","返回",[
             "href"=>"javascript:history.go(-1)",
             "a"=>true,
             "block"=>true,
-            "type"=>"warning"
+            "type"=>"warning",
+            "icon"=>"glyphicon glyphicon-share-alt"
         ])?>
     </div>
 </component-template>

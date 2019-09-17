@@ -27,16 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
 Import::component($this, '_options');
 ?>
 <component-template>
-    <lte-row>
-        <lte-col col="3">
+    <lte-sortable :columns="[3,9]">
+        <template slot="col_1">
             <lte-box title="选项" icon="fa fa-edit">
                 <model-options></model-options>
             </lte-box>
-            <lte-box title="搜索" icon="fa fa-search">
-                <?= "<?= " ?>$this->render('_search', ['model' => $searchModel]); ?>
-            </lte-box>
-        </lte-col>
-        <lte-col col="9">
+        </template>
+        <template slot="col_2">
             <lte-box title="列表" icon="fa fa-list">
 
 <?php if ($generator->indexWidgetType === 'grid'): ?>
@@ -82,8 +79,8 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
 <?= $generator->enablePjax ? "    <?php Pjax::end(); ?>\n" : '' ?>
 
             </lte-box>
-        </lte-col>
-    </lte-row>
+        </template>
+    </lte-sortable>
 </component-template>
 
 <script>

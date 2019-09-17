@@ -16,13 +16,15 @@ if (empty($safeAttributes)) {
 echo "<?php\n";
 ?>
 
-use yiilte\lib\ModelFields;
+use yiivue\Import;
+use yiilte\lib\ModelInfo;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 /* @var $form yii\widgets\ActiveForm */
 
-$fields = new ModelFields($model);
+$info = ModelInfo::get($model);
+Import::value($this, $info, "info");
 ?>
 <component-template>
     <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form">
@@ -33,7 +35,7 @@ $fields = new ModelFields($model);
     }
 } ?>
             <el-form-item>
-                <lte-btn type="info" @click="submit"><i class="glyphicon glyphicon-floppy-disk"></i> 保存</lte-btn>
+                <lte-btn type="info" @click="submit" icon="glyphicon glyphicon-floppy-disk">保存</lte-btn>
             </el-form-item>
         </el-form>
     </div>
@@ -42,8 +44,11 @@ $fields = new ModelFields($model);
 <script>
     Vue.component('model-form', {
         template: '{{component-template}}',
+        data: function(){
+            return { "info" : info }
+        },
         props:{
-            model:{ type: Object, default: function(){ return {}; }}
+            model:{ type: Object, "default": function(){ return {}; }}
         },
         methods: {
             submit: function (event) {
@@ -59,27 +64,27 @@ $fields = new ModelFields($model);
         $tableSchema = $generator->getTableSchema();
         $column = $tableSchema->columns[$attribute];
         if ($column->phpType === 'boolean') {
-            $html[] = '    <el-form-item prop="'.$attribute.'" label="<?= $fields->getLabel("'.$attribute.'")?>" error="<?= $fields->getError("'.$attribute.'")?>">';
+            $html[] = '    <el-form-item prop="'.$attribute.'" :label="info.'.$attribute.'.label" :error="info.'.$attribute.'.error">';
             $html[] = '                <el-input v-model="model.'.$attribute.'" type="password"></el-input>';
             $html[] = '            </el-form-item>';
             return implode("\n",$html);
         }
 
         if ($column->type === 'text') {
-            $html[] = '    <el-form-item prop="'.$attribute.'" label="<?= $fields->getLabel("'.$attribute.'")?>" error="<?= $fields->getError("'.$attribute.'")?>">';
+            $html[] = '    <el-form-item prop="'.$attribute.'" :label="info.'.$attribute.'.label" :error="info.'.$attribute.'.error">';
             $html[] = '                <el-input v-model="model.'.$attribute.'" type="textarea" rows="6"></el-input>';
             $html[] = '            </el-form-item>';
             return implode("\n",$html);
         }
 
         if (preg_match('/^(password|pass|passwd|passcode)$/i', $column->name)) {
-            $html[] = '    <el-form-item prop="'.$attribute.'" label="<?= $fields->getLabel("'.$attribute.'")?>" error="<?= $fields->getError("'.$attribute.'")?>">';
+            $html[] = '    <el-form-item prop="'.$attribute.'" :label="info.'.$attribute.'.label" :error="info.'.$attribute.'.error">';
             $html[] = '                <el-input v-model="model.'.$attribute.'" type="password"></el-input>';
             $html[] = '            </el-form-item>';
             return implode("\n",$html);
         }
 
-        $html[] = '    <el-form-item prop="'.$attribute.'" label="<?= $fields->getLabel("'.$attribute.'")?>" error="<?= $fields->getError("'.$attribute.'")?>">';
+        $html[] = '    <el-form-item prop="'.$attribute.'" :label="info.'.$attribute.'.label" :error="info.'.$attribute.'.error">';
         $html[] = '                <el-input v-model="model.'.$attribute.'"></el-input>';
         $html[] = '            </el-form-item>';
         return implode("\n",$html);

@@ -9,6 +9,7 @@ Vue.component('lte-btn', {
         'block': {type: Boolean, default: false},
         'submit': {type: Boolean, default: false},
         'disabled': {type: Boolean, default: false},
+        'icon': {type: String, default: null},
     },
     computed: {
         btnClass: function () {
@@ -30,6 +31,6 @@ Vue.component('lte-btn', {
             this.$emit('click');
         }
     },
-    template: `<a :class="btnClass" @click="click" :href="href" v-if="a"><slot></slot></a>
-        <button :class="btnClass" @click="click" :type="submit?'submit':'button'" v-else><slot></slot></button>`
+    template: `<a :class="btnClass" @click="click" :href="href" v-if="a"><i :class="icon" v-if="icon"></i><slot></slot></a>
+        <button :class="btnClass" @click="click" :type="submit?'submit':'button'" v-else><i :class="icon" v-if="icon"></i><slot></slot></button>`
 });

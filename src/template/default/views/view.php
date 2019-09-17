@@ -25,13 +25,13 @@ $this->params['breadcrumbs'][] = $this->title;
 Import::component($this, '_options', ['model' => $model]);
 ?>
 <component-template>
-    <lte-row>
-        <lte-col col="3">
+    <lte-sortable :columns="[3,9]">
+        <template slot="col_1">
             <lte-box title="选项" icon="fa fa-edit">
                 <model-options></model-options>
             </lte-box>
-        </lte-col>
-        <lte-col col="9">
+        </template>
+        <template slot="col_2">
             <lte-box title="详情" icon="fa fa-eye">
 
                 <?= "<?= " ?>DetailView::widget([
@@ -53,8 +53,8 @@ Import::component($this, '_options', ['model' => $model]);
                 ]) ?>
 
             </lte-box>
-        </lte-col>
-    </lte-row>
+        </template>
+    </lte-sortable>
 </component-template>
 
 <script>
