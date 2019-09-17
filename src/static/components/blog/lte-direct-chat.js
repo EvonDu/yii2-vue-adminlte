@@ -6,6 +6,8 @@ Vue.component('lte-direct-chat', {
             return [
                 {img:"http://adminlte.la998.com/dist/img/user4-128x128.jpg",name:"Mike Doe",time:"23 Jan 14:00 pm",content:"Is this template really for free? That's unbelievable!"},
                 {img:"http://adminlte.la998.com/dist/img/user3-128x128.jpg",name:"Alexander Pierce",time:"23 Jan 14:23 pm",content:"You better believe it!",right:true},
+                {img:"http://adminlte.la998.com/dist/img/user4-128x128.jpg",name:"Mike Doe",time:"23 Jan 15:37 pm ",content:"Working with AdminLTE on a great new app! Wanna join?"},
+                {img:"http://adminlte.la998.com/dist/img/user3-128x128.jpg",name:"Alexander Pierce",time:"23 Jan 16:10 pm ",content:"I would love to.",right:true},
             ];
         }},
         'contacts':{type: Array, "default": function(){
