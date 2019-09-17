@@ -1,8 +1,8 @@
 Vue.component('lte-direct-chat', {
     props:{
-        'type':{type: String, "default": "success"},
-        'openContacts':{type: Boolean, "default": false},
-        'items':{type: Array, "default": function(){
+        'type':{type: String, default: "success"},
+        'openContacts':{type: Boolean, default: false},
+        'items':{type: Array, default: function(){
             return [
                 {img:"http://adminlte.la998.com/dist/img/user4-128x128.jpg",name:"Mike Doe",time:"23 Jan 14:00 pm",content:"Is this template really for free? That's unbelievable!"},
                 {img:"http://adminlte.la998.com/dist/img/user3-128x128.jpg",name:"Alexander Pierce",time:"23 Jan 14:23 pm",content:"You better believe it!",right:true},
@@ -10,11 +10,11 @@ Vue.component('lte-direct-chat', {
                 {img:"http://adminlte.la998.com/dist/img/user3-128x128.jpg",name:"Alexander Pierce",time:"23 Jan 16:10 pm ",content:"I would love to.",right:true},
             ];
         }},
-        'contacts':{type: Array, "default": function(){
+        'contacts':{type: Array, default: function(){
             return [
                 {img:"http://adminlte.la998.com/dist/img/user4-128x128.jpg",name:"Mike Doe",date:"2/28/2015",content:"How have you been? I was..."},
             ];
-        }},
+        }}
     },
     computed: {
         chatClass: function () {
