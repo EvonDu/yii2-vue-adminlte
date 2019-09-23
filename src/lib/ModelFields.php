@@ -1,11 +1,12 @@
 <?php
 namespace yiilte\lib;
 
+use yii\base\Model;
 use yii\helpers\Html;
 
 class ModelFields{
     /**
-     * @var
+     * @var Model
      */
     private $model;
 
