@@ -25,11 +25,11 @@ Import::componentByContent($this, $content) || Import::componentByHtml($this, $c
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body class="hold-transition skin-blue fixed sidebar-mini">
+<body>
 <?php $this->beginBody() ?>
 
 <div id="app" class="wrapper">
-    <let-content></let-content>
+    <lte-content></lte-content>
 </div>
 
 <script>
