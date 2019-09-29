@@ -1,12 +1,11 @@
-Vue.component('lte-input', {
+Vue.component('lte-select', {
     model: {
         prop: 'value', event: 'change'
     },
     props:{
         'value': {default: ""},
-        'type': {type: String, default: ""},
-        'placeholder': {type: String, default: ""},
         'disabled': {type: Boolean, default: false},
+        'items': {type: Object, default: function(){ return {} }},
     },
     methods:{
         change:function(e){
@@ -14,5 +13,7 @@ Vue.component('lte-input', {
             this.$emit('change', value);
         }
     },
-    template: `<input :type="type" class="form-control" :placeholder="placeholder" :disabled="disabled" :value="value" @input="change">`
+    template: `<select class="form-control" :disabled="disabled" :value="value" @input="change">
+    <option v-for="(value,key) in items" :value="key" :key="key">{{value}}</option>
+</select>`
 });
