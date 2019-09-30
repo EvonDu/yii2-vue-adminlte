@@ -10,7 +10,7 @@ use yii\web\AssetBundle;
 class AdminLteComponentsAsset extends AssetBundle
 {
     //参数
-    public $sourcePath = __DIR__.'/../static/components';
+    public $sourcePath = __DIR__.'/../components';
     public $css = [];
     public $js = [
         'lte-components.js.php',
