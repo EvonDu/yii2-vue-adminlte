@@ -3,6 +3,7 @@ Vue.component('lte-input', {
         prop: 'value', event: 'change'
     },
     props:{
+        'name': {type:String, default: null},
         'value': {default: ""},
         'type': {type: String, default: ""},
         'placeholder': {type: String, default: ""},
@@ -14,5 +15,5 @@ Vue.component('lte-input', {
             this.$emit('change', value);
         }
     },
-    template: `<input :type="type" class="form-control" :placeholder="placeholder" :disabled="disabled" :value="value" @input="change">`
+    template: `<input :type="type" class="form-control" :name="name" :value="value" @input="change" :placeholder="placeholder" :disabled="disabled">`
 });
