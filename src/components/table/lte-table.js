@@ -28,14 +28,40 @@ Vue.component('lte-table', {
             return result;
         }
     },
-    template: `<table :class="tableClass">
-    <thead>
-        <tr><th v-for="(column,key) in columns">{{column.label}}</th></tr>
-    </thead>
-    <tbody>
-        <tr v-for="(item,key) in items">
-            <td v-for="(column,key) in columns">{{item[column.prop]}}</td>
-        </tr>
-    </tbody>
-</table>`
+    render: function(createElement){
+        //遍历获取th
+        var ths = [];
+        for(var i in this.columns){
+            var column = this.columns[i];
+            ths.push(createElement('th',[column.label]));
+        }
+
+        //遍历获取td
+        var trs = [];
+        for(var j in this.items){
+            var item = this.items[j];
+            var tds = [];
+            for(var k in this.columns){
+                var column = this.columns[k];
+                tds.push(createElement('td',item[column.prop]));
+                //console.log(this.$slots.default[k]);
+                //console.log(this.$slots.default[k].componentInstance);
+                //tds.push(createElement('td',[this.$slots.default[k]]));
+            }
+            trs.push(createElement('tr', tds))
+        }
+
+        //创建thead
+        var thead = createElement('thead', [createElement('tr', ths)]);
+
+        //创建tbody
+        var tbody = createElement('thead', trs);
+
+        //创建返回table
+        return createElement(
+            'table',
+            { 'class': this.tableClass },
+            [thead, tbody]
+        );
+    }
 });

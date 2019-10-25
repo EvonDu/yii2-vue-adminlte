@@ -3,5 +3,7 @@ Vue.component('lte-table-column', {
         'prop': {type: String, default: "default"},
         'label': {type: String, default: "default"},
     },
-    template: '<div></div>'
+    render:function(){
+        return null;
+    },
 });
