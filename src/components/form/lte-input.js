@@ -13,7 +13,10 @@ Vue.component('lte-input', {
         change:function(e){
             var value = e.target.value;
             this.$emit('change', value);
+        },
+        blur:function (e) {
+            this.$emit('blur', e);
         }
     },
-    template: `<input :type="type" class="form-control" :name="name" :value="value" @input="change" :placeholder="placeholder" :disabled="disabled">`
+    template: `<input :type="type" class="form-control" :name="name" :value="value" :placeholder="placeholder" :disabled="disabled" @input="change" @blur="blur">`
 });
