@@ -48,15 +48,12 @@ $list[$this->context->action->id] = false;
             "icon"=>"glyphicon glyphicon-edit"
         ]):null?>
         <?= "<?= " ?>$list["delete"] ? Html::tag("lte-btn","删除",[
-            "href"=>Url::to(["delete", <?= $urlParams ?>]),
+            "href"=>"#",
             "a"=>true,
             "block"=>true,
             "type"=>"danger",
             "icon"=>"glyphicon glyphicon-remove",
-            'data' => [
-                'confirm' => Yii::t('yii', '是否要删除这个项目?'),
-                'method' => 'post',
-            ]
+            "@click" => "toDelete()"
         ]):null?>
         <?= "<?= " ?>Html::tag("lte-btn","返回",[
             "href"=>"javascript:history.go(-1)",
@@ -70,8 +67,15 @@ $list[$this->context->action->id] = false;
 
 <script>
     Vue.component('model-options', {
-        template: '{{component-template}}'
+        template: '{{component-template}}',
+        methods: {
+            <?= "<? " ?>if($list["delete"]):?>
+            toDelete: function(){
+                if(!confirm("<?= "<?= " ?>Yii::t('yii', '是否要删除这个项目?')?>"))
+                    return;
+                this.$yii.submit(null, null, "<?= "<?= " ?>Url::to(["delete", 'id' => $model->id])?>");
+            }
+            <?= "<? " ?>endif?>
+        }
     });
 </script>
-
-
