@@ -17,6 +17,6 @@ class YiiLte
 
     static public function template($name="default"){
         self::init();
-        return "@vuelte/template/$name";
+        return "@vuelte/gii-template/curd/$name";
     }
 }

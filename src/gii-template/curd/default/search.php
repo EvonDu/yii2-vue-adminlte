@@ -24,7 +24,6 @@ echo "<?php\n";
 
 namespace <?= StringHelper::dirname(ltrim($generator->searchModelClass, '\\')) ?>;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use <?= ltrim($generator->modelClass, '\\') . (isset($modelAlias) ? " as $modelAlias" : "") ?>;
@@ -36,7 +35,7 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
 
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -46,7 +45,7 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function scenarios()
     {
@@ -58,10 +57,11 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
      * Creates data provider instance with search query applied
      *
      * @param array $params
+     * @param string $formName the form name to use to load the data into the model.
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $formName = null)
     {
         $query = <?= isset($modelAlias) ? $modelAlias : $modelClass ?>::find();
 
@@ -71,7 +71,7 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
             'query' => $query,
         ]);
 
-        $this->load($params);
+        $this->load($params, $formName);
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
