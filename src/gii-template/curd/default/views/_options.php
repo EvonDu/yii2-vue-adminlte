@@ -69,13 +69,13 @@ $list[$this->context->action->id] = false;
     Vue.component('model-options', {
         template: '{{component-template}}',
         methods: {
-            <?= "<? " ?>if($list["delete"]):?>
+            <?= "<?php " ?>if($list["delete"]):?>
             toDelete: function(){
-                if(!confirm("<?= "<?= " ?>Yii::t('yii', '是否要删除这个项目?')?>"))
+                if(!confirm("<?= "<?=" ?>Yii::t('yii', '是否要删除这个项目?')?>"))
                     return;
-                this.$yii.submit(null, null, "<?= "<?= " ?>Url::to(["delete", 'id' => $model->id])?>");
+                this.$yii.submit(null, null, "<?= "<?=" ?>Url::to(["delete", 'id' => $model->id])?>");
             }
-            <?= "<? " ?>endif?>
+            <?= "<?php " ?>endif;?>
         }
     });
 </script>
