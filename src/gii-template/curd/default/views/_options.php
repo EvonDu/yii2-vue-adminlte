@@ -73,7 +73,7 @@ $list[$this->context->action->id] = false;
             toDelete: function(){
                 if(!confirm("<?= "<?=" ?>Yii::t('yii', '是否要删除这个项目?')?>"))
                     return;
-                this.$yii.submit(null, null, "<?= "<?=" ?>Url::to(["delete", 'id' => $model->id])?>");
+                this.$yii.submit(null, null, "POST", "<?= "<?=" ?>Url::to(["delete", <?= $urlParams ?>])?>");
             }
             <?= "<?php " ?>endif;?>
         }
